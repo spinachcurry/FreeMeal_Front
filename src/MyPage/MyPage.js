@@ -1,7 +1,6 @@
 // MyPage.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import user1 from '../img/user1.png';
+import { Link } from 'react-router-dom'; 
 import './MyPage.css';
 import MyReviews from './MyReviews'; // 내가 쓴 리뷰 컴포넌트
 import MyFavoriteStores from './MyFavoriteStores'; // 내가 찜한 가게 컴포넌트
@@ -22,7 +21,7 @@ const MyPage = () => {
     return <p>로그인이 필요합니다.</p>;
   }
 
-  const profileImage = user.profileImageUrl ? host + user.profileImageUrl : user1;
+  const profileImage = user.profileImageUrl ? host + user.profileImageUrl :'./img/user1.png';
 
   return (
     <>

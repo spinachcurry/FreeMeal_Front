@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import './MyPage.css';
 
 const Dids = ({ address, userId }) => {
   const [isDibbed, setIsDibbed] = useState(false);
@@ -66,11 +67,28 @@ const Dids = ({ address, userId }) => {
   };
 
   return (
-    <div>
-      <button className='btn btn-light' onClick={handleDidsToggle}>
-        {userId ? (isDibbed ? `찜♥:${dibsCount}` : `찜♡:${dibsCount}`) : `찜♡:${dibsCount}`}
-      </button> 
-    </div>
+    <div className="dibs-container">
+    <button className='btn' onClick={handleDidsToggle}>
+      {userId ? (
+        isDibbed ? (
+          <>
+            <img src='/img/hart1.png' alt="" className="dibs-image" />
+            <span className="dibs-text">{dibsCount}</span>
+          </>
+        ) : (
+          <>
+            <img src='/img/hart2.png' alt="" className="dibs-image" />
+            <span className="dibs-text">{dibsCount}</span>
+          </>
+        )
+      ) : (
+        <>
+          <img src='/img/heart2.png' alt="" className="dibs-image" />
+          <span className="dibs-text">{dibsCount}</span>
+        </>
+      )}
+    </button>
+  </div> 
   );
 };
 

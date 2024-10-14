@@ -6,8 +6,8 @@ import 'swiper/swiper-bundle.css';
 import './DetailPage.css';
 import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection';
-import Dids from '../MyPage/Dids';
-import logo from '../img/logo.jpg';
+import Dids from '../MyPage/Dids'; 
+import Signup from '../MyPage/Signup';
 
 const DetailPage = () => {
     const { storeId } = useParams();
@@ -15,10 +15,10 @@ const DetailPage = () => {
     const [user, setUser] = useState(null);
     const [store, setStore] = useState(null);
     const [images, setImages] = useState([
-        './static/img/pasta.jpg',
-        './static/img/pasta.jpg',
-        './static/img/pasta.jpg',
-        './static/img/pasta.jpg',
+        './img/pasta.jpg',
+        './img/pasta.jpg',
+        './img/pasta.jpg',
+        './img/pasta.jpg',
     ]);
     const [loading, setLoading] = useState(true);
     const [isSignupOpen, setSignupModalOpen] = useState(false);
@@ -71,7 +71,7 @@ const DetailPage = () => {
                     <ul className='nav justify-content-end'>
                         <nav className='navbar navbar-expand-sm navbar-dark'>
                             <div className="container-fluid fixed-top"> 
-                                <Link to ="/"><img src={logo} alt="로고자리" width="50" height="50" />  </Link>    
+                                <Link to ="/"><img src='/img/logo.jpg' alt="로고자리" width="50" height="50" />  </Link>    
                             </div>
                         </nav>
                         {user ? (
@@ -90,6 +90,7 @@ const DetailPage = () => {
                                 </li>
                             </>
                         )}
+                         {isSignupOpen && <Signup onClose={handleSignupClose} />}
                     </ul>
                     <div className="container-fluid input-group mt-3 mb-3" style={{ margin: '0 30vw', width: '40vw' }}>
                         <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{backgroundColor:'red'}}>지역 선택</button>
@@ -128,7 +129,9 @@ const DetailPage = () => {
                     </ul>
                 </div>
             </div>
-            <div><Dids address={store.address} userId={user ? user.userId : null}  /></div>
+            <div >
+                <Dids address={store.address} userId={user ? user.userId : null}  />
+            </div>
             
             <div className="map-section" style={{ border: '1px solid black', padding: '10px', margin: '20px 0' }}>
                 <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>

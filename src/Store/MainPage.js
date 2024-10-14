@@ -10,6 +10,7 @@ import Signup from '../MyPage/Signup';
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const [areaNm] = useState();
     const [user, setUser] = useState(null);
     const [location, setLocation] = useState({ latitude: null, longitude: null });
     const [fancyStores, setFancyStores] = useState([]);
@@ -45,21 +46,24 @@ const MainPage = () => {
           title: item.title,
           address: item.address,
           rating: "⭐️⭐️⭐️⭐️",
-          imgSrc: ""
+          imgSrc: "", 
+          areaNm : item.areaNm
         })));
         setFancyStores(res.data.highPrice.map((item, i) => ({
           id: i,
           title: item.title,
           address: item.address,
           rating: "⭐️⭐️⭐️⭐️",
-          imgSrc: ""
+          imgSrc: "", 
+          areaNm : item.areaNm
         })));
         setFootStores(res.data.footStores.map((item, i) => ({
           id: i,
           title: item.title,
           address: item.address,
           rating: "⭐️⭐️⭐️⭐️",
-          imgSrc: ""
+          imgSrc: "", 
+          areaNm: item.areaNm
         })));
       } catch (error) {
         console.error("가게 목록 불러오기 오류:", error);
@@ -148,10 +152,11 @@ const MainPage = () => {
             {stores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
-                  <Link to={`/detail/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
+                  <Link to={`/detail/${store.title}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
                   <h3>{store.title}</h3>
                   <span>{store.rating}</span>
                   <p>{store.address}</p>
+                  <p>{store.areaNm}</p>
                 </div>
               </SwiperSlide>
             ))}
