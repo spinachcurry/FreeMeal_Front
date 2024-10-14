@@ -93,7 +93,7 @@ const MainPage = () => {
   
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
-        <img src='../img/back.jpg' className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
+        <img src='../img/back.jpg ' className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
   
         <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 }}>
           <ul className='nav justify-content-end'>
