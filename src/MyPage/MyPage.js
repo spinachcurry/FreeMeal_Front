@@ -41,14 +41,14 @@ const MyPage = () => {
         <div>
           <Link to="/updateUserInfo" className="btn btn-primary my-2">회원정보 수정</Link>  
           <button onClick={() => setActiveTab('MyReviews')} className="btn btn-primary my-2">내가 쓴 리뷰</button>
-          <button onClick={() => setActiveTab('favoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
+          <button onClick={() => setActiveTab('MyfavoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
         </div>
       </div> 
 
       {/* 조건부 렌더링 */}
       <div className="container mt-5">
         {activeTab === 'MyReviews' && <MyReviews />}
-        {activeTab === 'favoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
+        {activeTab === 'MyfavoriteStores' && <MyFavoriteStores/>} 
       </div>
     </>
   );

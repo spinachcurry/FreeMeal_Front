@@ -6,8 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import axios from 'axios';
 import 'swiper/swiper-bundle.css'; 
 import { Link , useNavigate } from 'react-router-dom';
-import Signup from '../MyPage/Signup';
-import backImg from '../img/back.jpg'
+import Signup from '../MyPage/Signup'; 
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -94,7 +93,7 @@ const MainPage = () => {
   
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
-        <img src={backImg} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
+        <img src='../img/back.jpg' className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
   
         <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 }}>
           <ul className='nav justify-content-end'>
@@ -165,7 +164,7 @@ const MainPage = () => {
             {fancyStores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
-                  <Link to="/detail"><img src={store.imgSrc} alt={store.title} /></Link>
+                  <Link to= {`/detail/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
                   <h3>{store.title}</h3>
                   <span>{store.rating}</span>
                   <p>{store.address}</p>
@@ -181,7 +180,7 @@ const MainPage = () => {
             {footStores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
-                  <Link to="/detail"><img src={store.imgSrc} alt={store.title} /></Link>
+                  <Link to={`/detail/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
                   <h3>{store.title}</h3>
                   <span>{store.rating}</span>
                   <p>{store.address}</p>

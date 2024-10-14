@@ -50,7 +50,7 @@ const Dids = ({ address, userId }) => {
       });
 
       if (response.status === 200) {
-        alert(isDibbed ? "찜하기가 해제되었습니다." : "찜하기가 성공적으로 추가되었습니다.");
+       
         setIsDibbed(!isDibbed);
 
         // 찜 카운트 업데이트

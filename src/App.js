@@ -10,7 +10,7 @@ import MyPage from './MyPage/MyPage';
 import Login from './MyPage/Login';
 import UpdateUserInfo from './MyPage/UpdateUserInfo';
 import Signup from './MyPage/Signup'; 
-import FavoriteStores from './MyPage/FavoriteStores'; 
+import MyfavoriteStores from './MyPage/MyFavoriteStores'; 
 import MyReview from './MyPage/MyReviews';
 
 
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/login" element={<Login />} /> 
           <Route path="/myPage" element={<MyPage />} /> 
           <Route path="/myReview" element={<MyReview />} />
-          <Route path="/favoriteStores" element={<FavoriteStores />} />
+          <Route path="/MyfavoriteStores" element={<MyfavoriteStores />} />
           <Route path="/updateUserInfo" element={<UpdateUserInfo />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

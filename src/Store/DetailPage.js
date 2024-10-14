@@ -7,6 +7,7 @@ import './DetailPage.css';
 import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection';
 import Dids from '../MyPage/Dids';
+import logo from '../img/logo.jpg';
 
 const DetailPage = () => {
     const { storeId } = useParams();
@@ -70,7 +71,7 @@ const DetailPage = () => {
                     <ul className='nav justify-content-end'>
                         <nav className='navbar navbar-expand-sm navbar-dark'>
                             <div className="container-fluid fixed-top"> 
-                                <Link to ="/"><img src='/logo.png' alt="로고자리" /> </Link> 
+                                <Link to ="/"><img src={logo} alt="로고자리" width="50" height="50" />  </Link>    
                             </div>
                         </nav>
                         {user ? (

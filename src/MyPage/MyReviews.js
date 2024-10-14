@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './MyPage.css';
+import { Link } from 'react-router-dom';
 
 const MyReviews = () => {
   const [user, setUser] = useState(null);
@@ -87,7 +88,7 @@ const MyReviews = () => {
 
   return (
     <div>
-      <h2>내 리뷰 목록</h2>
+      <h2 style={{color:'white'}}>내 리뷰 목록</h2>
       <table className="table table-dark table-hover">
         <thead>
           <tr>
@@ -102,7 +103,7 @@ const MyReviews = () => {
           {currentReviews.length > 0 ? (
             currentReviews.map((review, index) => (
               <tr key={`${review.reviewNo}-${index}`}>
-                <td>{review.title}</td>
+                <td><Link to={`/detail/${review.title}`}style={{ color: 'white', textDecoration: 'none' }}>{review.title}</Link></td> 
                 <td>{review.category}</td>
                 <td>{user.status === "3" && `${review.userId}:`} {review.content}</td>
                 <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
