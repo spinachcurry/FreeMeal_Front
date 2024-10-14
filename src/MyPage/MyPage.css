@@ -1,0 +1,83 @@
+/* MyPage.css */ 
+body {
+    background-color: #212529; /* 이미지에서 추출한 배경색 */
+    color: #fff; /* 기본 텍스트 색상을 흰색으로 설정 */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* 기본 글꼴 */
+  }
+  
+/* 전체 배경 검정색 설정 */
+.container {
+    position: relative;
+    padding: 2rem;
+    color: #000000;
+    border-radius: 10px;
+    
+  }
+    
+    /* 기본 텍스트 흰색 설정 */
+    .container p, 
+    .container h1 {
+      color: #fff;
+    }  
+  /* 오른쪽 상단에 배치되는 버튼 스타일 */
+  .back-to-home {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #fff;
+    color: #212529;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+  }
+  
+  .back-to-home:hover {
+    background-color: #f8f9fa; /* 살짝 회색으로 변경 */
+    color: #212529;
+    text-decoration: none;
+  }
+/* 모달 배경 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  } 
+  
+  /* 모달 콘텐츠 */
+  .modal-content {
+    color: #000000;
+    border-radius: 20px; /* 원하는 정도로 조절 */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; 
+    position: relative;
+  }
+  
+  /* 닫기 버튼 */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+ 
