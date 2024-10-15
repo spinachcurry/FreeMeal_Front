@@ -1,7 +1,7 @@
 // MyPage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import user1 from '../img/user1.png';
+import user1 from '../user1.png';
 import './MyPage.css';
 import MyReviews from './MyReviews'; // 내가 쓴 리뷰 컴포넌트
 import MyFavoriteStores from './MyFavoriteStores'; // 내가 찜한 가게 컴포넌트

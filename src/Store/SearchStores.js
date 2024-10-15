@@ -2,9 +2,9 @@
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'swiper/swiper-bundle.css'; // Swiper 스타일
 import React, { useState, useEffect } from 'react';
-import { Navigation, Pagination } from 'swiper/modules';
+// import { Navigation, Pagination } from 'swiper/modules';
 import axios from 'axios';
-import { Swiper, SwiperSlide } from 'swiper/react'; 
+// import { Swiper, SwiperSlide } from 'swiper/react'; 
 // import { Navigation, Pagination } from 'swiper/modules';
 import { Link , useNavigate } from 'react-router-dom';
 
@@ -103,8 +103,13 @@ const fetchStores = async (coords) => {
                     </div>
                 </div>
 
+                    <div className='container fluid' style={{width:'6454px', height:'492px'}}>
+                        <ul className='container fluid' img src={`${process.env.PUBLIC_URL}/img/logo.jpg`}></ul>
 
-                    <div>
+                    </div>
+
+
+                    {/* <div>
                     <h2 style={{ textAlign: 'left', fontSize: '25px' }}>검색 결과</h2>
                     <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={2} navigation className="swiper-container">
                         {stores.map(store => (
@@ -119,7 +124,7 @@ const fetchStores = async (coords) => {
                         ))}
                     </Swiper>
                     <br></br>
-                    </div>
+                    </div> */}
 
                 <footer className="footer">
                     <div className="footer-info">

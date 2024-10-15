@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import user1 from '../img/user1.png';
+import user1 from '../user1.png';
 import axios from 'axios';
 import './MyPage.css';
 
