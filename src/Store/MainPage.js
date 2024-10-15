@@ -152,7 +152,7 @@ const MainPage = () => {
             {stores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
-                  <Link to={`/detail/${store.title}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
+                  <Link to={`/detail/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
                   <h3>{store.title}</h3>
                   <span>{store.rating}</span>
                   <p>{store.address}</p>
