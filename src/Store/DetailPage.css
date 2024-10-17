@@ -2,7 +2,7 @@
     width:auto;
     height:220px;
     overflow:hidden;
-    margin:0 0;
+    margin-top:10vw;
 } 
 .btn-primary {
     margin-left: 10px;
@@ -32,6 +32,32 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px 0;
+}
+.row {
+  padding: 20px 20px;
+}
+.box{
+  border: 1px solid gray;
+  border-Radius:10px;
+  height:100%
+}
+.logo {
+  display: flex;
+  /* width: 50px; */
+  height: 50px;
+  margin-top: 5px;
+}
+.btn-danger {
+  flex: 0.5;
+  background-Color:red;
+  height:40px;
+  /* width: 20vw; */
+  min-width: 100px;
+}
+.input {
+  display: flex;
+  /* align-items: center;  */
+  /* margin: 0 30vw; */
 }
 /* 모달 배경 */
 .modal-overlay {

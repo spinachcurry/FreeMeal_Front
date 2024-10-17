@@ -59,7 +59,7 @@ const DetailPage = () => {
             setLoading(false);
         }
     };
-
+//찜하기
     const fetchDibsCount = async (address) => {
         try {
             const response = await axios.get('http://localhost:8080/count', { params: { address } });
@@ -67,8 +67,7 @@ const DetailPage = () => {
         } catch (error) {
             console.error("찜 카운트 불러오기 중 오류가 발생했습니다:", error);
         }
-    };
-
+    }; 
     const checkDibsStatus = async (address) => {
         if (!user) return;
         try {
@@ -117,7 +116,9 @@ const DetailPage = () => {
                     <ul className='nav justify-content-end'>
                         <nav className='navbar navbar-expand-sm navbar-dark'>
                             <div className="container-fluid fixed-top"> 
-                                <Link to="/"><img src='/img/logo.jpg' alt="로고자리" width="50" height="50" /></Link>    
+                                <Link to="/">
+                                 <img src='/img/logo.jpg' alt="로고자리" width="50" height="50" />
+                                </Link>    
                             </div>
                         </nav>
                         {user ? (
@@ -157,26 +158,33 @@ const DetailPage = () => {
                     <p>{store.description}</p>
                 </div>
             </header>
-
+        {/* ///////////////////////////// */}
             <div className="image-section" style={{ border: '1px solid white', padding: '0px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 {images.map((image, index) => (
-                    <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
+                    <img 
+                        key={index}
+                        src={image} 
+                        alt={`식당 이미지 ${index + 1}`} 
+                        style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} 
+                    />
                 ))}
             </div>
-            
+            <br></br>
+        {/* ///////////////////////////// */} 
             <div className="store-info" style={{border:'solid 1px white'}}> 
                 <h4>둘이 먹다가 하나가 죽어도 모를 맛</h4>
                 <div className="menu-section">
                     <h2>메뉴 목록</h2>
                     <img src='/img/bg_ico_s_like.png' alt=""/> {dibsCount}
                     <ul>
-                        {store.menu && store.menu.map((item, idx) => (
+                         <li >카테고리 - {store.category}</li>
+                        {store.menu && store.menu.map((item, idx) => ( 
                             <li key={idx}>{item.name} - {item.price}원</li>
                         ))}
                     </ul>
                 </div>
             </div>
-
+{/* / 찜하기/리뷰로 가기/공유하기/ */}
             <div className="dibs-container">
                 <button className='btn btn-light' onClick={toggleDibs}>
                     {isDibbed ? "찜하기" : "찜하기"}
@@ -193,9 +201,10 @@ const DetailPage = () => {
                     </div>
                 </div>
             )}
-
+{/* / 찜하기/리뷰로 가기/공유하기/ */} 
             <div ref={reviewSectionRef} className="map-section" style={{ border: '1px solid black', padding: '10px', margin: '20px 0' }}>
-                <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>
+                <KakaoMap />
+                <div className=''></div>
             </div>
             <ReviewSection address={store.address} title={store.title} category={store.category}/>
 
