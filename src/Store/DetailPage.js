@@ -1,7 +1,9 @@
+//DetailPage.js
+
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './DetailPage.css';
 import KakaoMap from '../components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection';
@@ -77,9 +79,9 @@ const DetailPage = () => {
                             <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
                         </a>
                     </h1>
+                    
                     <div className="input">
                         <input type="text" className="form-control s9-3" placeholder="음식, 지역, 매장" style={{ width:'30vw' }} />
-                            
                         <button type="button" className="btn btn-danger">
                             <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{width: '20px'}}></img>
                             <span style={{margin:'5px'}}>찾기</span>

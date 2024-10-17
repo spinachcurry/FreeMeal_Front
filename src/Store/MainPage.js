@@ -41,8 +41,18 @@ const MainPage = () => {
       localStorage.removeItem('user');
       localStorage.removeItem('jwtToken');
     };
-  
-   
+    
+      const [keyword, setKeyword] = useState('');
+      const [areaNm, setAreaNm] = useState('전체');
+      const handleSearch = () => {
+        if(keyword === ""){
+          alert("검색어를 입력해주세요");
+        }else {
+          navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
+        };
+      }    
+
+  //  가게 목록
     const fetchStores = async (coords) => {
         try {
             const url = "http://localhost:8080/storeNearby";
@@ -108,7 +118,6 @@ const MainPage = () => {
         <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
   
         <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 }}>
-          <ul className='nav justify-content-end'>
             <nav className='navbar navbar-expand-sm navbar-dark fixed-top'>
               <div className="nav-item dropdown" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <button className='btn btn-primary' style={{ backgroundColor: 'red' }}>메뉴</button>
@@ -121,20 +130,31 @@ const MainPage = () => {
                 )}
               </div>
             </nav>
+          <ul className='nav justify-content-end' style={{ color: 'white', fontWeight: '1000' }}>
             {user ? (
-              <li className="nav-item">
-                <p className="nav-link" style={{ color: 'white', fontWeight: '1000' }}>
-                  환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
-                  <a onClick={handleLogout} className="btn btn-primary"> 로그아웃</a> 
-                </p> 
-              </li>
+              <>
+                <li className="nav-item">
+                  <p className="nav-link">
+                    환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
+                  </p> 
+                </li>
+                <li className="nav-item">
+                  <p>
+                    <a onClick={handleLogout} className="nav-link"> 로그아웃</a> 
+                  </p>
+                </li>
+              </>
             ) : (
               <>
                 <li className="nav-item">
-                  <a onClick={handleLoginOpen} className="nav-link">로그인</a>
+                  <p>
+                    <a onClick={handleLoginOpen} className="nav-link">로그인</a>
+                  </p>
                 </li>
                 <li className="nav-item">
-                  <a onClick={handleSignupOpen} className="nav-link">회원가입</a>
+                  <p>
+                    <a onClick={handleSignupOpen} className="nav-link">회원가입</a>
+                  </p>
                 </li>
               </>
             )}
@@ -144,19 +164,20 @@ const MainPage = () => {
           <h1 className="gff">꽁밥</h1>
           <p className="secTitle">우리동네 믿고 먹는 맛집 대장!</p>
   
-          <div className="container-fluid input-group mt-3" style={{ margin: '0 30vw', width: '40vw' }}>
-            <select className="form-select" aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
-              <option value="" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
-              <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>
-                  <option value="강동구" style={{backgroundColor:'white', color:'black'}}>강동구</option>
-                  <option value="강서구" style={{backgroundColor:'white', color:'black'}}>강서구</option>
-                  <option value="양천구" style={{backgroundColor:'white', color:'black'}}>양천구</option>
-                  <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
-                  <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
-            </select>
-            <input type="text" className="form-control s9-3" placeholder="오늘 뭐 먹지?" style={{ width:'15vw' }} />
-            <button type="button" className="btn btn-primary" style={{ flex: 0.5, backgroundColor: 'red', border: 'red' }}>검색</button>
-          </div>
+              <div className="container-fluid input-group mt-3" style={{ margin: '0 30vw', width: '48vw'}}>
+                  <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
+                    <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
+                    <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>
+                    <option value="강동구" style={{backgroundColor:'white', color:'black'}}>강동구</option>
+                    <option value="강서구" style={{backgroundColor:'white', color:'black'}}>강서구</option>
+                    <option value="양천구" style={{backgroundColor:'white', color:'black'}}>양천구</option>
+                    <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
+                    <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
+                  </select>
+                  <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ width:'15vw' }} />
+                    {/* 가게 검색 결과 */}
+                  <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red'}}>검색</button>
+              </div>
         </div>
   
         <div>
@@ -209,7 +230,7 @@ const MainPage = () => {
         </div>
   
         <footer className="footer">
-          <div className="footer-info">
+          <div className="footer-info" >
             <h2>꽁밥</h2>
             <p>주소: 서울특별시 종로구 평창로 123</p>
             <p>전화: 02-1234-5678</p>
