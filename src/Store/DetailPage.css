@@ -1,0 +1,63 @@
+.row {
+  padding: 20px 20px;
+}
+
+.box{
+  border: 1px solid gray;
+  border-Radius:10px;
+  height:100%
+}
+.logo {
+  display: flex;
+  /* width: 50px; */
+  height: 50px;
+  margin-top: 5px;
+}
+
+.btn-danger {
+  flex: 0.5;
+  background-Color:red;
+  height:40px;
+  /* width: 20vw; */
+  min-width: 100px;
+}
+
+.input {
+  display: flex;
+  /* align-items: center;  */
+  /* margin: 0 30vw; */
+}
+
+.image-section {
+    width:auto;
+    height:220px;
+    overflow:hidden;
+    margin-top:10vw;
+}
+
+
+.btn-primary {
+    margin-left: 10px;
+    background-color: transparent; /* 배경색 제거 */
+    border: none; /* 테두리 제거 */
+    color: white; /* 글자색을 흰색으로 */
+  }
+  
+  .btn-primary:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* 마우스 오버 시 배경색 추가 */
+  }
+
+.detail-page {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.menu-section, .review-section, .footer {
+    margin: 20px 0;
+}
+
+.review {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
