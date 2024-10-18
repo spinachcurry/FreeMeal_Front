@@ -1,16 +1,16 @@
 //DetailPage.js
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import './DetailPage.css';
 import KakaoMap from '../components/KakaoMap';
-import ReviewSection from '../MyPage/ReviewSection';
-import Dids from '../MyPage/Dids';
+import ReviewSection from '../MyPage/ReviewSection'; 
 import Signup from '../MyPage/Signup';
+import Shares from '../MyPage/Shares';
 
-
+ 
 const DetailPage = () => {
     const { area } = useParams();
     const { storeId } = useParams();
@@ -63,9 +63,62 @@ const DetailPage = () => {
     };
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (loading) return <p>로딩 중입니다...</p>;
-    if (!store) return <p>가게 정보를 불러올 수 없습니다.</p>;
+   ////////////////////////////
 
+   //찜하기
+   const [dibsCount, setDibsCount] = useState(0);
+   const [isDibbed, setIsDibbed] = useState(false);
+   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+   
+   const reviewSectionRef = useRef(null);
+
+   const fetchDibsCount = async (address) => {
+    try {
+        const response = await axios.get('http://localhost:8080/count', { params: { address } });
+        setDibsCount(response.data);
+    } catch (error) {
+        console.error("찜 카운트 불러오기 중 오류가 발생했습니다:", error);
+    }
+}; 
+const checkDibsStatus = async (address) => {
+    if (!user) return;
+    try {
+        const response = await axios.get('http://localhost:8080/didCheck', { params: { userId: user.userId, address } });
+        setIsDibbed(response.data === "이미 찜한 상태입니다.");
+    } catch (error) {
+        console.error("찜 상태 확인 중 오류가 발생했습니다:", error);
+    }
+};
+
+const toggleDibs = async () => {
+    if (!user) {
+        alert("로그인 후 이용해 주세요.");
+        return;
+    }
+    try {
+        const response = await axios.post('http://localhost:8080/toggleDibs', null, {
+            params: {
+                userId: user.userId,
+                address: store.address,
+                didStatus: isDibbed ? 0 : 1
+            }
+        });
+        if (response.status === 200) {
+            setIsDibbed(!isDibbed);
+            setDibsCount(isDibbed ? dibsCount - 1 : dibsCount + 1);
+        }
+    } catch (error) {
+        console.error("찜 상태 변경 중 오류가 발생했습니다:", error);
+    }
+};
+
+const openShareModal = () => setIsShareModalOpen(true);
+const closeShareModal = () => setIsShareModalOpen(false);
+const scrollToReview = () => reviewSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+if (loading || !store) {
+    return <div>로딩 중...</div>;
+} 
     return (
 
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
@@ -121,8 +174,27 @@ const DetailPage = () => {
                     <h2>{store.title}</h2>
                     <h3>{store.address}</h3> 
                     <p3>{store.description}</p3>
+                    <img src='/img/bg_ico_s_like.png' alt=""/> {dibsCount}
                 </div>   
             
+{/* / 찜하기/리뷰로 가기/공유하기/ */}
+            <div className="dibs-container"style={{padding:'10px 10px'}}>
+                <button className='btn btn-light' onClick={toggleDibs}>
+                    {isDibbed ? "찜하기" : "찜하기"}
+                </button>
+                <button className='btn btn-light' onClick={scrollToReview}>리뷰보기</button>
+                <button className='btn btn-light' onClick={openShareModal}>공유하기</button>
+            </div>
+
+            {isShareModalOpen && (
+                <div className="modal-overlay" onClick={closeShareModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="close-button" onClick={closeShareModal}>X</button>
+                        <Shares title={store.title} />
+                    </div>
+                </div>
+            )}
+{/* / 찜하기/리뷰로 가기/공유하기/ */} 
             {/* <div><Dids address={store.address} userId={user ? user.userId : null}  /></div> */}
             
         <div className='container-fluid'>
@@ -197,13 +269,14 @@ const DetailPage = () => {
                 </div>
                 <div className="col-5" >
                   <div className='box' style={{overflow:'hidden'}}>                    
-                    <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>
+                    <KakaoMap  location={{ latitude: store.lat, longitude: store.lng }}/>
                   </div>                                       
                 </div>
             </div>
         </div>  
             
-            <ReviewSection/>
+        <ReviewSection ref={reviewSectionRef} address={store.address} title={store.title} category={store.category}/>
+
           
             <footer className="footer">
                 <div className="footer-info">
@@ -220,4 +293,4 @@ const DetailPage = () => {
     );
 };
 
-export default DetailPage;
+export default DetailPage;  
