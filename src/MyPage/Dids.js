@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+
 import './MyPage.css';
+
 
 const Dids = ({ address, userId }) => {
   const [isDibbed, setIsDibbed] = useState(false);
@@ -51,7 +53,7 @@ const Dids = ({ address, userId }) => {
       });
 
       if (response.status === 200) {
-       
+
         setIsDibbed(!isDibbed);
 
         // 찜 카운트 업데이트
@@ -67,6 +69,7 @@ const Dids = ({ address, userId }) => {
   };
 
   return (
+
     <div className="dibs-container">
     <button className='btn' onClick={handleDidsToggle}>
       {userId ? (
@@ -89,6 +92,7 @@ const Dids = ({ address, userId }) => {
       )}
     </button>
   </div> 
+
   );
 };
 

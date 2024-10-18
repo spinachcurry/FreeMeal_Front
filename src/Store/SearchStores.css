@@ -1,0 +1,20 @@
+.data {
+  width: 50%; 
+  box-Sizing: border-box; 
+  padding: 10px;  
+}
+
+.img {
+  width: 100%;
+}
+
+body {
+    padding-top: 10px;
+    /* 생략 */
+  }
+
+.box{
+  border: 1px solid gray;
+  border-Radius:10px;
+  height:800%
+}

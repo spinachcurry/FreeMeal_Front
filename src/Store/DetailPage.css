@@ -1,9 +1,42 @@
+
+.row {
+  padding: 20px 20px;
+}
+
+.box{
+  border: 1px solid gray;
+  border-Radius:10px;
+  height:100%
+}
+.logo {
+  display: flex;
+  /* width: 50px; */
+  height: 50px;
+  margin-top: 5px;
+}
+
+.btn-danger {
+  flex: 0.5;
+  background-Color:red;
+  height:40px;
+  /* width: 20vw; */
+  min-width: 100px;
+}
+
+.input {
+  display: flex;
+  /* align-items: center;  */
+  /* margin: 0 30vw; */
+}
+
+
 .image-section {
     width:auto;
     height:220px;
     overflow:hidden;
     margin-top:10vw;
 } 
+
 .btn-primary {
     margin-left: 10px;
     background-color: transparent; /* 배경색 제거 */
@@ -24,6 +57,7 @@
     text-align: center;
 }
 
+
 .menu-section, .review-section, .footer {
     margin: 20px 0;
 }
@@ -33,32 +67,7 @@
     padding: 10px;
     margin: 10px 0;
 }
-.row {
-  padding: 20px 20px;
-}
-.box{
-  border: 1px solid gray;
-  border-Radius:10px;
-  height:100%
-}
-.logo {
-  display: flex;
-  /* width: 50px; */
-  height: 50px;
-  margin-top: 5px;
-}
-.btn-danger {
-  flex: 0.5;
-  background-Color:red;
-  height:40px;
-  /* width: 20vw; */
-  min-width: 100px;
-}
-.input {
-  display: flex;
-  /* align-items: center;  */
-  /* margin: 0 30vw; */
-}
+
 /* 모달 배경 */
 .modal-overlay {
     position: fixed;
@@ -94,3 +103,4 @@
   cursor: pointer;
   z-index: 10001; /* 닫기 버튼이 가장 위에 오도록 설정 */
 }
+

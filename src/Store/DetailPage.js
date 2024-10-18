@@ -1,47 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//DetailPage.js
+
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'swiper/swiper-bundle.css';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 import './DetailPage.css';
-import '../MyPage/MyPage.css';
-import KakaoMap from './components/KakaoMap';
+import KakaoMap from '../components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection';
+import Dids from '../MyPage/Dids';
 import Signup from '../MyPage/Signup';
-import Shares from '../MyPage/Shares';
+
 
 const DetailPage = () => {
+    const { area } = useParams();
     const { storeId } = useParams();
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [store, setStore] = useState(null);
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState([
+    
+    ]);
     const [loading, setLoading] = useState(true);
     const [isSignupOpen, setSignupModalOpen] = useState(false);
-    const [dibsCount, setDibsCount] = useState(0);
-    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-    const [isDibbed, setIsDibbed] = useState(false);
-    const reviewSectionRef = useRef(null);
-
     const handleSignupOpen = () => setSignupModalOpen(true);
     const handleSignupClose = () => setSignupModalOpen(false);
     const handleLoginOpen = () => navigate('/login');
     const handleLogout = () => {
-        setUser(null);
-        localStorage.removeItem('user');
-        localStorage.removeItem('jwtToken');
+
+      setUser(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('jwtToken');
     };
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
     }, []);
 
+
     useEffect(() => {
-        const decodedStoreId = decodeURIComponent(storeId);
-        fetchStoreDetail(decodedStoreId);
+        const decodedStoreId = decodeURIComponent(storeId); 
+        fetchStoreDetail(decodedStoreId); 
+
     }, [storeId]);
 
     const fetchStoreDetail = async (decodedStoreId) => {
@@ -50,164 +52,159 @@ const DetailPage = () => {
                 params: { store: decodedStoreId },
             });
             setStore(response.data);
-            setImages(response.data.images || []);
-            fetchDibsCount(response.data.address);
-            checkDibsStatus(response.data.address);
+
+            setImages(response.data.images || images);
+
         } catch (error) {
             console.error("가게 정보를 불러오는 중 오류가 발생했습니다:", error);
         } finally {
             setLoading(false);
         }
     };
-//찜하기
-    const fetchDibsCount = async (address) => {
-        try {
-            const response = await axios.get('http://localhost:8080/count', { params: { address } });
-            setDibsCount(response.data);
-        } catch (error) {
-            console.error("찜 카운트 불러오기 중 오류가 발생했습니다:", error);
-        }
-    }; 
-    const checkDibsStatus = async (address) => {
-        if (!user) return;
-        try {
-            const response = await axios.get('http://localhost:8080/didCheck', { params: { userId: user.userId, address } });
-            setIsDibbed(response.data === "이미 찜한 상태입니다.");
-        } catch (error) {
-            console.error("찜 상태 확인 중 오류가 발생했습니다:", error);
-        }
-    };
-
-    const toggleDibs = async () => {
-        if (!user) {
-            alert("로그인 후 이용해 주세요.");
-            return;
-        }
-        try {
-            const response = await axios.post('http://localhost:8080/toggleDibs', null, {
-                params: {
-                    userId: user.userId,
-                    address: store.address,
-                    didStatus: isDibbed ? 0 : 1
-                }
-            });
-            if (response.status === 200) {
-                setIsDibbed(!isDibbed);
-                setDibsCount(isDibbed ? dibsCount - 1 : dibsCount + 1);
-            }
-        } catch (error) {
-            console.error("찜 상태 변경 중 오류가 발생했습니다:", error);
-        }
-    };
-
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-    const openShareModal = () => setIsShareModalOpen(true);
-    const closeShareModal = () => setIsShareModalOpen(false);
-    const scrollToReview = () => reviewSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-    if (loading || !store) {
-        return <div>로딩 중...</div>;
-    }
+    if (loading) return <p>로딩 중입니다...</p>;
+    if (!store) return <p>가게 정보를 불러올 수 없습니다.</p>;
 
     return (
-        <div className="container-fluid p-0 bg-dark text-white" style={{ height: '2000px' }}>
-            <header className="header text-center fixed-top bg-dark">
-                <div>
+
+        <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
+            <div className='header '>
+                <h1><a href='/'></a></h1>
+            </div>
+            
+            <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" style={{borderBottom:'1px solid white'}}>
+                <div className='container-fluid'>
+
+                    <h1 className='header'>
+                        <a className='logo' href='/'>
+                            <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
+                        </a>
+                    </h1>
+                    
+                    <div className="input">
+                        <input type="text" className="form-control s9-3" placeholder="음식, 지역, 매장" style={{ width:'30vw' }} />
+                        <button type="button" className="btn btn-danger">
+                            <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{width: '20px'}}></img>
+                            <span style={{margin:'5px'}}>찾기</span>
+                        </button>
+                    </div>
+                    <div>
                     <ul className='nav justify-content-end'>
-                        <nav className='navbar navbar-expand-sm navbar-dark'>
-                            <div className="container-fluid fixed-top"> 
-                                <Link to="/">
-                                 <img src='/img/logo.jpg' alt="로고자리" width="50" height="50" />
-                                </Link>    
-                            </div>
-                        </nav>
                         {user ? (
-                            <li className="nav-item">
-                                <p className="nav-link" style={{ color: 'white', fontWeight: '1000' }}>
-                                    환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
-                                    <button onClick={handleLogout} className="btn btn-primary"> 로그아웃</button> 
-                                </p> 
+                        <li className="nav-item">
+                            <p className="nav-link" style={{ color: 'white', fontWeight: '1000' }}>
+                            환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
+                            <a onClick={handleLogout} className="btn btn-primary"> 로그아웃</a> 
+                            </p> 
+                        </li> ) : (
+                        <>
+                            <li className="nav-item" style={{listStyle:'none'}}>
+                            <a onClick={handleLoginOpen} className="nav-link">로그인</a>
                             </li>
-                        ) : ( 
-                            <>
-                                <li className="nav-item">
-                                    <button onClick={handleLoginOpen} className="nav-link"> 로그인 </button>
-                                </li>
-                                <li className="nav-item">
-                                    <button onClick={handleSignupOpen} className="nav-link">회원가입</button>
-                                </li>
-                            </>
+                            <li className="nav-item" style={{listStyle:'none'}}>
+                            <a onClick={handleSignupOpen} className="nav-link">회원가입</a>
+                            </li>
+                        </>
                         )}
                         {isSignupOpen && <Signup onClose={handleSignupClose} />}
                     </ul>
-                    <div className="container-fluid input-group mt-3 mb-3" style={{ margin: '0 30vw', width: '40vw' }}>
-                        <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{ backgroundColor: 'red' }}>지역 선택</button>
-                        <ul className="dropdown-menu" style={{ width: '200px' }}>
-                            <li><a className="dropdown-item" href="#">강남구</a></li>
-                            <li><a className="dropdown-item" href="#">강동구</a></li>
-                            <li><a className="dropdown-item" href="#">강서구</a></li>
-                            <li><a className="dropdown-item" href="#">양천구</a></li>
-                            <li><a className="dropdown-item" href="#">마포구</a></li>
-                            <li><a className="dropdown-item" href="#">종로구</a></li>
-                        </ul>
-                        <input type="text" className="form-control s9-3" placeholder="오늘 뭐 먹지?" />
-                        <button type="button" className="btn btn-primary" style={{ flex: 0.4, backgroundColor: 'red', border: 'red' }}>검색</button>
                     </div>
-                    <h1>{store.title}</h1>
-                    <h5>{store.address}</h5> 
-                    <p>{store.description}</p>
                 </div>
-            </header>
-        {/* ///////////////////////////// */}
-            <div className="image-section" style={{ border: '1px solid white', padding: '0px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            </nav>
+            <div className="image-section" style={{ border: '1px solid white', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 {images.map((image, index) => (
-                    <img 
-                        key={index}
-                        src={image} 
-                        alt={`식당 이미지 ${index + 1}`} 
-                        style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} 
-                    />
+                    <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
                 ))}
             </div>
-            <br></br>
-        {/* ///////////////////////////// */} 
-            <div className="store-info" style={{border:'solid 1px white'}}> 
-                <h4>둘이 먹다가 하나가 죽어도 모를 맛</h4>
-                <div className="menu-section">
-                    <h2>메뉴 목록</h2>
-                    <img src='/img/bg_ico_s_like.png' alt=""/> {dibsCount}
-                    <ul>
-                         <li >카테고리 - {store.category}</li>
-                        {store.menu && store.menu.map((item, idx) => ( 
-                            <li key={idx}>{item.name} - {item.price}원</li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-{/* / 찜하기/리뷰로 가기/공유하기/ */}
-            <div className="dibs-container">
-                <button className='btn btn-light' onClick={toggleDibs}>
-                    {isDibbed ? "찜하기" : "찜하기"}
-                </button>
-                <button className='btn btn-light' onClick={scrollToReview}>리뷰 보기</button>
-                <button className='btn btn-light' onClick={openShareModal}>공유하기</button>
-            </div>
-
-            {isShareModalOpen && (
-                <div className="modal-overlay" onClick={closeShareModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button" onClick={closeShareModal}>X</button>
-                        <Shares title={store.title} />
+                <div className='info' style={{textAlign:'center'}}>
+                    <h2>{store.title}</h2>
+                    <h3>{store.address}</h3> 
+                    <p3>{store.description}</p3>
+                </div>   
+            
+            {/* <div><Dids address={store.address} userId={user ? user.userId : null}  /></div> */}
+            
+        <div className='container-fluid'>
+            <div className='row' style={{height:'400px'}}>
+                <div className='col-7'>
+                    <div className='box'>
+                        <div className='info_text'>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                    <th><h4>영업시간</h4></th>
+                                    <td></td>
+                                        <div>
+                                           <div className='inline-div'>
+                                             <div className='inline-div'>일 11:30 ~ 22:30
+                                            </div>
+                                             <div className='inline-div'>
+                                                <label>월,화,수,목,금,토 11:30 ~ 22:00</label>
+                                             </div>
+                                            </div> 
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                    <th><h4>주차</h4></th>
+                                    <td></td>
+                                        <div>
+                                           <div className='inline-div'>
+                                             <div className='inline-div'>주차, 발렛</div>
+                                            </div> 
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                    <th><h4>메뉴</h4></th>
+                                    <td></td>
+                                        <div>
+                                           <div className='inline-div'>
+                                             <div className='inline-div'>(1인)코스(※설명 확인必)
+                                            </div>
+                                             <div className='inline-div'>
+                                                <label>180,000원</label>
+                                             </div>
+                                            </div> 
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                    <th><h4>주소</h4></th>
+                                    <td></td>
+                                        <div>
+                                           <div className='inline-div'>
+                                             <div className='inline-div'>서울특별시 강남구 영동대로 142길 13-3</div>
+                                                <span>지번</span>
+                                             <div className='inline-div'>
+                                                <label>서울특별시 강남구 청담동 130-13</label>
+                                             </div>
+                                            </div> 
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                    <th><h4>전화번호</h4></th>
+                                    <td></td>
+                                        <div>
+                                           <div className='inline-div'>
+                                             <div className='inline-div'>02-543-2987</div>
+                                                <span>지번</span>
+                                            </div> 
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            )}
-{/* / 찜하기/리뷰로 가기/공유하기/ */} 
-            <div ref={reviewSectionRef} className="map-section" style={{ border: '1px solid black', padding: '10px', margin: '20px 0' }}>
-                <KakaoMap />
-                <div className=''></div>
+                <div className="col-5" >
+                  <div className='box' style={{overflow:'hidden'}}>                    
+                    <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>
+                  </div>                                       
+                </div>
             </div>
-            <ReviewSection address={store.address} title={store.title} category={store.category}/>
-
+        </div>  
+            
+            <ReviewSection/>
+          
             <footer className="footer">
                 <div className="footer-info">
                     <h2>꽁밥</h2>

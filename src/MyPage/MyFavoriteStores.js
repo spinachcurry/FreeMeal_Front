@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -61,6 +62,7 @@ const MyFavoriteStores = () => {
       ) : (
         <p style={{ textAlign: 'center', marginTop: '20px' }}>찜한 가게가 없습니다.</p>
       )}
+
     </div>
   );
 };

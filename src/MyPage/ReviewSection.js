@@ -15,7 +15,8 @@ const ReviewSection = ({ address,title,category }) => {
       setUser(parsedUser);
     }
   }, []); 
-   
+
+  // 새로운 리뷰 추가 함수
   const handleSubmit = async () => { 
     if (!newReviewContent) {
       setError("리뷰 내용을 입력하세요.");
@@ -28,7 +29,8 @@ const ReviewSection = ({ address,title,category }) => {
         content: newReviewContent 
       });
   
-      if (response.status === 200 || response.status === 201) { 
+
+      if (response.status === 200 || response.status === 201) {
         setReviews([...reviews, { userId: user.userId, title: title  , category: category  , content: newReviewContent, modifiedDate: new Date().toISOString(), hidden: false }]);
         setNewReviewContent('');
       }
@@ -36,7 +38,10 @@ const ReviewSection = ({ address,title,category }) => {
       setError("리뷰를 추가하는 중 오류가 발생했습니다.");
     }
   };
- 
+
+
+  // 리뷰 신고 함수
+
   const handleReport = async (index, reviewId) => {
     try {
       const response = await axios.post('http://localhost:8080/report', { reviewNo: reviewId });
@@ -51,9 +56,11 @@ const ReviewSection = ({ address,title,category }) => {
     } catch (err) {
       alert("리뷰 신고 처리 중 오류가 발생했습니다.");
     }
-  }; 
-  
-  useEffect(() => { 
+
+  // 가게 주소에 따른 리뷰 가져오기
+  useEffect(() => {
+    // React에서 서버에 get 요청을 보낼 때 
+
   const fetchReviews = async () => {
     try {
       const response = await axios.get('http://localhost:8080/getReviews', {
@@ -69,14 +76,16 @@ const ReviewSection = ({ address,title,category }) => {
       }
     }
   }; 
-    if (address) fetchReviews();  
-  }, [address]); 
+    if (address) fetchReviews();  // address가 존재할 때만 리뷰 가져오기
+  }, [address]);
+//찜하기 만들기
 
   return (
     <div className="review-section" style={{ padding: '20px', margin: '20px 0' }}>
-       
+      {/* 로그인한 사용자만 리뷰 작성 가능 */}
       {user ? (
-        <table className="table table-dark table-hover" >
+        <table className="table table-dark table-hover">
+
           <thead>
             <tr>
               <th colSpan='5'><h2>리뷰 작성</h2></th>
@@ -94,6 +103,7 @@ const ReviewSection = ({ address,title,category }) => {
               <th style={{ textAlign: 'center' }}>
                 <button onClick={handleSubmit} className="btn btn-primary" style={{height:'80px'}}
                 >리뷰 추가</button>
+
               </th>
             </tr>
           </thead>
@@ -101,13 +111,16 @@ const ReviewSection = ({ address,title,category }) => {
       ) : (
         <p style={{ textAlign: 'center', color: 'red' }}>리뷰를 작성하려면 로그인이 필요합니다.</p>
       )}
- 
+
+      {/* 모든 사용자가 리뷰 목록 볼 수 있음 */}
+
       <table className="table table-dark table-hover">
         <thead>
           <tr>
             <th colSpan='6'><h2>리뷰</h2></th>
           </tr>
           <tr>
+
             <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>가게 명</th>
             <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>카테고리</th> 
             <th style={{ textAlign: 'center', lineHeight: '50px', width: '40%' }}>리뷰 내용</th> 
@@ -119,6 +132,7 @@ const ReviewSection = ({ address,title,category }) => {
           {reviews.length > 0 ? (
             reviews.map((review, index) => (
               !review.hidden && (
+
                 <tr key={`${index}`}style={{textAlign : 'center', lineHeight : '50px'}}>
                   <td>{review.title || "N/A"}</td>
                   <td>{review.category || "N/A"}</td> 
