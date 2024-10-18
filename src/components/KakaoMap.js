@@ -14,13 +14,16 @@ const KakaoMap = () => {
     const list = [
         {
             location : { 
+
                 lat: 37.5280,
                 lng: 127.1236
             },
+
         }
     ];
 
     return (
+
         <Map center={location} style={{width: '100%', height: '400px'}} level={3}>
             {
                 list.map((v, i) => 
@@ -29,6 +32,7 @@ const KakaoMap = () => {
             }
             <MapTypeControl position={"TOPRIGHT"}/>
             <ZoomControl position={"RIGHT"}/>
+
         </Map>
     );
 };

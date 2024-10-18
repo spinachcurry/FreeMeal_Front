@@ -21,7 +21,7 @@ const MainPage = () => {
     const [fancyStores, setFancyStores] = useState([]);
     //방문순
     const [footStores, setFootStores] = useState([]);
-   
+
     const [isSignupOpen, setSignupModalOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [check, setCheck] = useState(false);
@@ -41,6 +41,7 @@ const MainPage = () => {
       localStorage.removeItem('user');
       localStorage.removeItem('jwtToken');
     };
+
     
       const [keyword, setKeyword] = useState('');
       const [areaNm, setAreaNm] = useState('전체');
@@ -64,6 +65,7 @@ const MainPage = () => {
           rating: "⭐️⭐️⭐️⭐️",
           imgSrc: "",
           areaNm: item.areaNm
+
         })));
         setFancyStores(res.data.highPrice.map((item, i) => ({
           id: i,
@@ -92,6 +94,7 @@ const MainPage = () => {
         // longitude: event.coords.longitude,
         latitude: 37.514575,
         longitude: 127.0495556
+
       };
       setLocation(coords);
       fetchStores(coords);
@@ -163,7 +166,6 @@ const MainPage = () => {
   
           <h1 className="gff">꽁밥</h1>
           <p className="secTitle">우리동네 믿고 먹는 맛집 대장!</p>
-  
               <div className="container-fluid input-group mt-3" style={{ margin: '0 30vw', width: '48vw'}}>
                   <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
                     <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
@@ -231,6 +233,7 @@ const MainPage = () => {
   
         <footer className="footer">
           <div className="footer-info" >
+
             <h2>꽁밥</h2>
             <p>주소: 서울특별시 종로구 평창로 123</p>
             <p>전화: 02-1234-5678</p>

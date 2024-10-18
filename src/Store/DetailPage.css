@@ -1,3 +1,4 @@
+
 .row {
   padding: 20px 20px;
 }
@@ -28,13 +29,13 @@
   /* margin: 0 30vw; */
 }
 
+
 .image-section {
     width:auto;
     height:220px;
     overflow:hidden;
     margin-top:10vw;
-}
-
+} 
 
 .btn-primary {
     margin-left: 10px;
@@ -52,6 +53,11 @@
     margin: 20px;
 }
 
+.header {
+    text-align: center;
+}
+
+
 .menu-section, .review-section, .footer {
     margin: 20px 0;
 }
@@ -61,3 +67,40 @@
     padding: 10px;
     margin: 10px 0;
 }
+
+/* 모달 배경 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }   
+ /* 모달 컨텐츠 */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+  position: relative;
+  z-index: 10000; /* 모달 오버레이보다 위에 위치하도록 설정 */
+}
+/* 닫기 버튼 */
+.close-button {
+  position: absolute; 
+  top: -60px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10001; /* 닫기 버튼이 가장 위에 오도록 설정 */
+}
+

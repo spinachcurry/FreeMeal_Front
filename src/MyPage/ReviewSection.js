@@ -15,7 +15,7 @@ const ReviewSection = ({ address,title,category }) => {
       setUser(parsedUser);
     }
   }, []); 
-  
+
   // 새로운 리뷰 추가 함수
   const handleSubmit = async () => { 
     if (!newReviewContent) {
@@ -29,8 +29,8 @@ const ReviewSection = ({ address,title,category }) => {
         content: newReviewContent 
       });
   
+
       if (response.status === 200 || response.status === 201) {
-        alert("리뷰가 성공적으로 추가되었습니다."); 
         setReviews([...reviews, { userId: user.userId, title: title  , category: category  , content: newReviewContent, modifiedDate: new Date().toISOString(), hidden: false }]);
         setNewReviewContent('');
       }
@@ -39,7 +39,9 @@ const ReviewSection = ({ address,title,category }) => {
     }
   };
 
+
   // 리뷰 신고 함수
+
   const handleReport = async (index, reviewId) => {
     try {
       const response = await axios.post('http://localhost:8080/report', { reviewNo: reviewId });
@@ -54,11 +56,11 @@ const ReviewSection = ({ address,title,category }) => {
     } catch (err) {
       alert("리뷰 신고 처리 중 오류가 발생했습니다.");
     }
-  };
 
   // 가게 주소에 따른 리뷰 가져오기
   useEffect(() => {
     // React에서 서버에 get 요청을 보낼 때 
+
   const fetchReviews = async () => {
     try {
       const response = await axios.get('http://localhost:8080/getReviews', {
@@ -83,6 +85,7 @@ const ReviewSection = ({ address,title,category }) => {
       {/* 로그인한 사용자만 리뷰 작성 가능 */}
       {user ? (
         <table className="table table-dark table-hover">
+
           <thead>
             <tr>
               <th colSpan='5'><h2>리뷰 작성</h2></th>
@@ -92,13 +95,15 @@ const ReviewSection = ({ address,title,category }) => {
                 <textarea
                   value={newReviewContent}
                   onChange={(e) => setNewReviewContent(e.target.value)}
-                  placeholder="리뷰 내용을 입력하세요"
+                  placeholder="오늘의 맛! 모두가 주목하는 당신의 한줄 평가!"
                   className="form-control"
                   rows="3"
                 ></textarea> 
               </th>
-              <th style={{ textAlign: 'center' }}>          
-                <button onClick={handleSubmit} className="btn btn-primary">리뷰 추가</button>
+              <th style={{ textAlign: 'center' }}>
+                <button onClick={handleSubmit} className="btn btn-primary" style={{height:'80px'}}
+                >리뷰 추가</button>
+
               </th>
             </tr>
           </thead>
@@ -108,30 +113,35 @@ const ReviewSection = ({ address,title,category }) => {
       )}
 
       {/* 모든 사용자가 리뷰 목록 볼 수 있음 */}
+
       <table className="table table-dark table-hover">
         <thead>
           <tr>
             <th colSpan='6'><h2>리뷰</h2></th>
           </tr>
           <tr>
-            <th>가게 명</th>
-            <th>카테고리</th> 
-            <th>리뷰 내용</th>
-            <th>작성일</th> 
-            <th>작성자</th>  
+
+            <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>가게 명</th>
+            <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>카테고리</th> 
+            <th style={{ textAlign: 'center', lineHeight: '50px', width: '40%' }}>리뷰 내용</th> 
+            <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>작성일</th> 
+            <th style={{textAlign : 'center', lineHeight : '50px', width:'15%'}}>작성자</th>  
           </tr>
         </thead>
         <tbody> 
           {reviews.length > 0 ? (
             reviews.map((review, index) => (
               !review.hidden && (
-                <tr key={`${index}`}>
+
+                <tr key={`${index}`}style={{textAlign : 'center', lineHeight : '50px'}}>
                   <td>{review.title || "N/A"}</td>
                   <td>{review.category || "N/A"}</td> 
-                  <td>{review.content}
-                    <button onClick={() => handleReport(index, review.reviewNo)} className="btn btn-primary my-2">신고</button></td>
+                  <td style={{ width:'500px', wordBreak: 'break-word', whiteSpace: 'normal'}}>{review.content}</td>
                   <td>{new Date(review.modifiedDate).toLocaleDateString()}</td> 
-                  <td>{review.userId || "익명"}</td>
+                  <td>{review.userId || "익명"}
+                    <button onClick={() => handleReport(index, review.reviewNo)} style={{float: 'right'}}
+                      className=" btn btn-dark my-2">신고</button>
+                  </td>
                 </tr>
               )
             ))

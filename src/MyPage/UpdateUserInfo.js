@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import user1 from '../user1.png';
 import axios from 'axios';
 import './MyPage.css';
 
@@ -28,7 +27,9 @@ const UpdateUserInfo = () => {
       setUser_Nnm(parsedUser.user_Nnm || '');
       setPhone(parsedUser.phone || '');
       setEmail(parsedUser.email || '');
-      setPreviewImage(parsedUser.profileImageUrl ? host + parsedUser.profileImageUrl : user1);
+
+      setPreviewImage(parsedUser.profileImageUrl ? host + parsedUser.profileImageUrl : './img/user1.png');
+
     }
   }, []);
 

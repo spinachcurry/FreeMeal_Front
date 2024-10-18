@@ -18,15 +18,15 @@ const DetailPage = () => {
     const [user, setUser] = useState(null);
     const [store, setStore] = useState(null);
     const [images, setImages] = useState([
-       
+    
     ]);
     const [loading, setLoading] = useState(true);
     const [isSignupOpen, setSignupModalOpen] = useState(false);
-
     const handleSignupOpen = () => setSignupModalOpen(true);
     const handleSignupClose = () => setSignupModalOpen(false);
     const handleLoginOpen = () => navigate('/login');
     const handleLogout = () => {
+
       setUser(null);
       localStorage.removeItem('user');
       localStorage.removeItem('jwtToken');
@@ -43,6 +43,7 @@ const DetailPage = () => {
     useEffect(() => {
         const decodedStoreId = decodeURIComponent(storeId); 
         fetchStoreDetail(decodedStoreId); 
+
     }, [storeId]);
 
     const fetchStoreDetail = async (decodedStoreId) => {
@@ -51,14 +52,15 @@ const DetailPage = () => {
                 params: { store: decodedStoreId },
             });
             setStore(response.data);
+
             setImages(response.data.images || images);
+
         } catch (error) {
             console.error("가게 정보를 불러오는 중 오류가 발생했습니다:", error);
         } finally {
             setLoading(false);
         }
     };
-
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (loading) return <p>로딩 중입니다...</p>;
@@ -202,7 +204,7 @@ const DetailPage = () => {
         </div>  
             
             <ReviewSection/>
-            
+          
             <footer className="footer">
                 <div className="footer-info">
                     <h2>꽁밥</h2>
