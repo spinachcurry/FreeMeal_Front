@@ -15,7 +15,6 @@ body {
     border-radius: 10px;
     
   }
-
     /* 기본 텍스트 흰색 설정 */
     .container p, 
     .container h1 {
@@ -80,7 +79,6 @@ body {
     font-size: 0.9rem;
     margin-top: 10px;
   }
-
   .dibs-container12 {
     position: relative;
     display: inline-block;
