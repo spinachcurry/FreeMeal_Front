@@ -63,15 +63,11 @@ const DetailPage = () => {
     };
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-   ////////////////////////////
-
    //찜하기
    const [dibsCount, setDibsCount] = useState(0);
    const [isDibbed, setIsDibbed] = useState(false);
    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-   
-   const reviewSectionRef = useRef(null);
-
+    
    const fetchDibsCount = async (address) => {
     try {
         const response = await axios.get('http://localhost:8080/count', { params: { address } });
@@ -114,7 +110,17 @@ const toggleDibs = async () => {
 
 const openShareModal = () => setIsShareModalOpen(true);
 const closeShareModal = () => setIsShareModalOpen(false);
-const scrollToReview = () => reviewSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+// 버튼 클릭 시 스크롤 함수  
+  const reviewSectionRef = useRef(null);
+
+  // 버튼 클릭 시 스크롤 함수
+  const scrollToReview = () => {
+    if (reviewSectionRef.current) {
+      reviewSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      console.error("reviewSectionRef가 초기화되지 않았습니다.");
+    }
+  };
 
 if (loading || !store) {
     return <div>로딩 중...</div>;
@@ -274,10 +280,9 @@ if (loading || !store) {
                 </div>
             </div>
         </div>  
-            
-        <ReviewSection ref={reviewSectionRef} address={store.address} title={store.title} category={store.category}/>
+              
+        <ReviewSection ref={reviewSectionRef}  address={store.address} title={store.title} category={store.category}/>
 
-          
             <footer className="footer">
                 <div className="footer-info">
                     <h2>꽁밥</h2>
