@@ -56,11 +56,12 @@ const ReviewSection = ({ address,title,category }) => {
     } catch (err) {
       alert("리뷰 신고 처리 중 오류가 발생했습니다.");
     }
+  }
 
   // 가게 주소에 따른 리뷰 가져오기
+
   useEffect(() => {
     // React에서 서버에 get 요청을 보낼 때 
-
   const fetchReviews = async () => {
     try {
       const response = await axios.get('http://localhost:8080/getReviews', {
@@ -78,6 +79,7 @@ const ReviewSection = ({ address,title,category }) => {
   }; 
     if (address) fetchReviews();  // address가 존재할 때만 리뷰 가져오기
   }, [address]);
+
 //찜하기 만들기
 
   return (
@@ -157,5 +159,4 @@ const ReviewSection = ({ address,title,category }) => {
     </div>
   );
 };
-
 export default ReviewSection;

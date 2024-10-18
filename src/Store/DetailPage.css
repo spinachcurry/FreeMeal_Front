@@ -6,8 +6,9 @@
 .box{
   border: 1px solid gray;
   border-Radius:10px;
-  height:100%
+  height: 400px;
 }
+
 .logo {
   display: flex;
   /* width: 50px; */
@@ -18,7 +19,7 @@
 .btn-danger {
   flex: 0.5;
   background-Color:red;
-  height:40px;
+  /* height:40px; */
   /* width: 20vw; */
   min-width: 100px;
 }
@@ -32,7 +33,7 @@
 
 .image-section {
     width:auto;
-    height:220px;
+    height:100px;
     overflow:hidden;
     margin-top:10vw;
 } 

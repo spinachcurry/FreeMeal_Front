@@ -11,7 +11,8 @@ const Signup = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [duplicateError, setDuplicateError] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  
   const handleSignup = (e) => {
     e.preventDefault();
 
@@ -30,8 +31,7 @@ const Signup = ({ onClose }) => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  };
-
+  }; 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -45,6 +45,7 @@ const Signup = ({ onClose }) => {
 
         <form onSubmit={handleSignup}>
           <div className="mb-3">
+          <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
             <label htmlFor="userId" className="form-label">ID</label>
             <input type="text" className="form-control" id="userId" value={userId} onChange={(e) => setUserId(e.target.value)} required />
           </div>

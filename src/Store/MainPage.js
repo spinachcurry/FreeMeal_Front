@@ -5,8 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import axios from 'axios';
 import 'swiper/swiper-bundle.css'; 
-import { Link , useNavigate } from 'react-router-dom';
+import  { Link , useNavigate } from 'react-router-dom';
 import Signup from '../MyPage/Signup';
+import SwiperCore from "swiper";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -42,7 +43,6 @@ const MainPage = () => {
       localStorage.removeItem('jwtToken');
     };
 
-    
       const [keyword, setKeyword] = useState('');
       const [areaNm, setAreaNm] = useState('전체');
       const handleSearch = () => {
@@ -53,7 +53,7 @@ const MainPage = () => {
         };
       }    
 
-  //  가게 목록
+  //  메인 화면 가게 목록 가져오기
     const fetchStores = async (coords) => {
         try {
             const url = "http://localhost:8080/storeNearby";
@@ -115,7 +115,7 @@ const MainPage = () => {
     const handleMouseLeave = () => setDropdownOpen(false);
   
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-  
+    
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
         <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
@@ -166,7 +166,7 @@ const MainPage = () => {
   
           <h1 className="gff">꽁밥</h1>
           <p className="secTitle">우리동네 믿고 먹는 맛집 대장!</p>
-              <div className="container-fluid input-group mt-3" style={{ margin: '0 30vw', width: '48vw'}}>
+              <div className="container-fluid input-group mt-3" style={{width: '48vw'}}>
                   <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
                     <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
                     <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>
@@ -183,15 +183,15 @@ const MainPage = () => {
         </div>
   
         <div>
-          <h2 style={{ textAlign: 'left', fontSize: '25px' }}>나와 가장 가까운 맛집 추천</h2>
-          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={4} navigation className="swiper-container">
+          <h2 style={{ textAlign: 'left', fontSize: '18px' }}>나와 가장 가까운 맛집 추천</h2>
+          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={5} navigation className="swiper-container">
             {stores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
                   <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
-                  <h3>{store.title}</h3>
+                  <h6 className='h6'>{store.title}</h6>
                   <span>{store.rating}</span>
-                  <p>{store.address}</p>
+                  <p className='p'>{store.address}</p>
                 </div>
               </SwiperSlide>
             ))}
@@ -200,15 +200,15 @@ const MainPage = () => {
         </div>
   
         <div>
-          <h2 style={{ textAlign: 'left', fontSize: '25px' }}>구매 금액 가장 높은 맛집 추천</h2>
-          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={4} navigation className="swiper-container">
+          <h2 style={{ textAlign: 'left', fontSize: '18px' }}>구매 금액 가장 높은 맛집 추천</h2>
+          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={5} navigation className="swiper-container">
             {fancyStores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
                   <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
-                  <h3>{store.title}</h3>
+                  <h6 className='h6'>{store.title}</h6>
                   <span>{store.rating}</span>
-                  <p>{store.address}</p>
+                  <p className='p'>{store.address}</p>
                 </div>
               </SwiperSlide>
             ))}
@@ -216,15 +216,15 @@ const MainPage = () => {
         </div>
   
         <div>
-          <h2 style={{ textAlign: 'left', fontSize: '25px' }}>방문이 가장 많은 맛집 추천</h2>
-          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={4} navigation className="swiper-container">
+          <h2 style={{ textAlign: 'left', fontSize: '18px' }}>방문이 가장 많은 맛집 추천</h2>
+          <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={5} navigation className="swiper-container">
             {footStores.map(store => (
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
                   <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
-                  <h3>{store.title}</h3>
+                  <h6 className='h6'>{store.title}</h6>
                   <span>{store.rating}</span>
-                  <p>{store.address}</p>
+                  <p className='p'>{store.address}</p>
                 </div>
               </SwiperSlide>
             ))}

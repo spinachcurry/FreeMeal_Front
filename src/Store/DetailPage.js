@@ -126,7 +126,7 @@ const DetailPage = () => {
             {/* <div><Dids address={store.address} userId={user ? user.userId : null}  /></div> */}
             
         <div className='container-fluid'>
-            <div className='row' style={{height:'400px'}}>
+            <div className='row'>
                 <div className='col-7'>
                     <div className='box'>
                         <div className='info_text'>

@@ -10,7 +10,9 @@ const LoginModal = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // 모달을 닫는 함수
   const handleLoginClose = () => window.history.back();
+
   const handleLogin = (user) => {
     setUser(user);
     localStorage.setItem('user', JSON.stringify(user));
@@ -25,8 +27,8 @@ const LoginModal = () => {
         const { user, jwtToken } = response.data;
         localStorage.setItem('jwtToken', jwtToken);
         localStorage.setItem('user', JSON.stringify(user));
-        handleLogin(user); // 로그인 성공 시 사용자 정보 전달
-        handleLoginClose(); // 모달 닫기
+        handleLogin(user);
+        handleLoginClose(); // 로그인 성공 시 모달 닫기
         navigate('/'); // 메인 페이지로 리다이렉트
       } else {
         setError("아이디 또는 비밀번호가 틀렸습니다.");
@@ -39,36 +41,35 @@ const LoginModal = () => {
 
   return (
     <div className="modal-overlay">
-    <div className="modal-content">
-      <button className="close-button rounded" onClick={handleLoginClose}>&times;</button>
-      <h2>로그인</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="userId">User ID</label>
-        <input
-          type="text"
-          id="userId"
-          className="form-control rounded"  /* form-control과 rounded 클래스 추가 */
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          required
-        />
-  
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          className="form-control rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-  
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="btn btn-light"style={{marginTop:'10px'}}>로그인</button>  {/* rounded-pill 사용하여 더 둥글게 */}
-      </form>
+      <div className="modal-content">
+        <button className="close-button" onClick={handleLoginClose} style={{top: '10px'}}>X</button>
+        <h2>로그인</h2>
+        <form onSubmit={handleSubmit}> 
+          <label htmlFor="userId">User ID</label>
+          <input
+            type="text"
+            id="userId"
+            className="form-control rounded"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            required
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            className="form-control rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="btn btn-light" style={{ marginTop: '10px' }}>로그인</button>
+        </form>
+      </div>
     </div>
-  </div>
-  
   );
 };
 
