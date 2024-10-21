@@ -25,9 +25,9 @@ const MyFavoriteStores = () => {
 
     const fetchFavoriteStores = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/getDibsByUserId', {
-          params: { userId: user.userId },
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        const response = await axios.post('http://localhost:8080/handleDibs', { 
+            action: "list",
+            userId: user.userId   
         });
         setFavoriteStores(response.data);
       } catch (error) {
