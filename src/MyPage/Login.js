@@ -17,12 +17,18 @@ const LoginModal = () => {
     setUser(user);
     localStorage.setItem('user', JSON.stringify(user));
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
-      const response = await axios.post('http://localhost:8080/login', { userId, password });
-
+      // 'action' 파라미터를 추가하여 서버에 어떤 요청인지 전달 (여기서는 'login')
+      const response = await axios.post('http://localhost:8080/userAction', { 
+        action: 'login',  // 로그인 액션 명시
+        userId,           // 사용자 ID
+        password          // 비밀번호
+      });
+   
       if (response.data.status) {
         const { user, jwtToken } = response.data;
         localStorage.setItem('jwtToken', jwtToken);
@@ -37,8 +43,7 @@ const LoginModal = () => {
       console.error("Error details:", err);
       setError("서버 오류가 발생했습니다.");
     }
-  };
-
+  }; 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -73,4 +78,5 @@ const LoginModal = () => {
   );
 };
 
-export default LoginModal;
+ 
+export default LoginModal; 

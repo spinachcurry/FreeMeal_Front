@@ -11,47 +11,33 @@ const Signup = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [duplicateError, setDuplicateError] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const navigate = useNavigate();   
-
-  const handleSignup = async (e) => {
+  const navigate = useNavigate();
+  const handleSignup = (e) => {
     e.preventDefault();
-  
-    try {
-      // 'action' 파라미터를 추가하여 서버에 어떤 요청인지 전달 (여기서는 'signup')
-      const response = await fetch('http://localhost:8080/userAction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'signup',  // 회원가입 액션 명시
-          userId,            // 사용자 ID
-          password,          // 비밀번호
-          name,              // 이름
-          user_Nnm,          // 닉네임
-          phone,             // 전화번호
-          email              // 이메일
-        }),
-      });
-  
-      if (response.ok) {
-        const data = await response.text(); // 응답을 텍스트로 처리
+
+    // 회원가입 API 요청
+    fetch('http://localhost:8080/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, password, name, user_Nnm, phone, email }),
+    })
+      .then((response) => response.text()) // 응답을 JSON이 아닌 텍스트로 처리
+      .then((data) => {
         alert('회원가입이 완료되었습니다.');
         onClose(); // 모달 닫기
         navigate('/'); // 홈 페이지로 이동
-      } else {
-        const errorMessage = await response.text();
-        alert(`회원가입에 실패했습니다: ${errorMessage}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('서버 오류가 발생했습니다.');
-    }
-  }; 
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-button" onClick={onClose}>X</button>
-        <div className="container">
-          <h2 >회원가입</h2>
+        <div className="container" style={{color:'none'}}>
+          <h2 className="text-center mb-3" style={{color: 'black', backgroundColor:'none'}}>회원가입</h2>
         </div>
         
         {duplicateError && <div className="alert alert-danger">{duplicateError}</div>}
@@ -59,7 +45,6 @@ const Signup = ({ onClose }) => {
 
         <form onSubmit={handleSignup}>
           <div className="mb-3">
-          <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
             <label htmlFor="userId" className="form-label">ID</label>
             <input type="text" className="form-control" id="userId" value={userId} onChange={(e) => setUserId(e.target.value)} required />
           </div>
@@ -89,6 +74,12 @@ const Signup = ({ onClose }) => {
             <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
 
+          <div className="form-check mb-3">
+            <input type="checkbox" className="form-check-input" id="termsCheck" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} required />
+            <label className="form-check-label" htmlFor="termsCheck">
+              "꽁밥”의 이용 약관, 개인정보 보호정책 및 콘텐츠 정책에 동의합니다.
+            </label>
+          </div>
           <div className="mb-3">
         <textarea cols="50" rows="5" readOnly className="form-control"  defaultValue=" 
 회사 꽁밥(이하 '회사' 이라 한다)은 「개인정보보호법」제15조 제1항 제1호, 제17조 제1항 제1호, 제23조 제1호 따라 아래와 같이 개인정보의 수집. 이용에 관하여 귀하의 동의를 얻고자 합니다.
@@ -138,19 +129,11 @@ const Signup = ({ onClose }) => {
   
         />
     </div>
-    
-    <div className="form-check mb-3">
-        <input type="checkbox" className="form-check-input" id="termsCheck" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} required />
-        <label className="form-check-label" htmlFor="termsCheck">
-          "꽁밥”의 이용 약관, 개인정보 보호정책 및 콘텐츠 정책에 동의합니다.
-        </label>
-      </div>
-
-          <button type="submit" className="btn btn-light my-2" disabled={!termsAccepted}>회원가입</button>
+          <button type="submit" className="btn btn-primary my-2" disabled={!termsAccepted}>회원가입</button>
         </form>
       </div>
     </div>
   );
-}; 
- 
+};
+
 export default Signup;

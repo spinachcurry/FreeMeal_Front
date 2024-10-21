@@ -113,6 +113,6 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
       </table>
     </div>
   );
-});
-
+}); 
 export default ReviewSection;
+ 

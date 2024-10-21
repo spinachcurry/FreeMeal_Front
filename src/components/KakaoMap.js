@@ -13,14 +13,15 @@ const KakaoMap = () => {
     };
     const list = [
         {
-            location : { 
+            location : {  
+
                 lat: 37.5280,
                 lng: 127.1236
-            },
+            }, 
         }
     ];
 
-    return (
+    return ( 
         <Map center={location} style={{width: '100%', height: '400px'}} level={3}>
             {
                 list.map((v, i) => 

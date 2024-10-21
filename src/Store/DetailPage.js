@@ -345,6 +345,5 @@ useEffect(() => {
             </footer>
         </div>
     );
-};
-
+}; 
 export default DetailPage;   
