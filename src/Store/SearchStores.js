@@ -56,20 +56,39 @@ const SearchStores = () => {
   }, []);
 
   // 검색 후 가게 목록 반복할 코드
+  const jointImageList = (menuItems, imgURLs) => {
+    let imageList = [];
+
+    menuItems.forEach(item => {
+      if(item.image != null){
+        imageList = [...imageList, item.image];
+      }
+    });
+
+    imgURLs.forEach(item => {
+      imageList = [...imageList, item];
+    })
+
+    if(imageList.length === 0) {
+      imageList = ["/img/noimage.png"]; 
+    }
+    return imageList;
+  }
+
   const ShowstoreList = async(keykeyword) =>  {
      try {
-         const url = "http://localhost:8080/searchStore";
-         const res = await axios.post(url, keykeyword);
-         console.log(res.data);
-         setStores(res.data.map((item, i) => ({ 
-          address: item.address, 
-          category: item.category,
-          id: 1,
-          title: item.title,
-          imgSrc: "",
-          rating: "⭐️⭐️⭐️⭐️",
-          areaNm: item.areaNm,
-        })));
+          const url = "http://localhost:8080/searchStore";
+          const res = await axios.post(url, keykeyword);
+          console.log(res.data);
+        setStores(res.data.map((item, i) => ({ 
+        address: item.address, 
+        category: item.category,
+        id: 1,
+        title: item.title,
+        imgSrc: jointImageList(item.menuItems, item.imgURLs),
+        rating: "⭐️⭐️⭐️⭐️",
+        areaNm: item.areaNm,
+      })));
        } catch(error) {
         console.log("오류났다잉~:", error);
       }
@@ -148,7 +167,7 @@ const SearchStores = () => {
             </div>
         </nav>
         </header>
-{/* <!-- Nav tabs --> */}
+{/* <!-- Nav tabs -->  수정하자...*/}
             <ul className='nav nav-pills' role='tablist'>
               <li className='tab'style={{ marginRight: '20px' }}>
                 <a className='nav-link active' onClick={()=>{setCriteria('party')}} data-bs-toggle='tab'>문전성시</a>
@@ -166,24 +185,23 @@ const SearchStores = () => {
                   <div className='search_menu'>
                     
                   <ul className='localFood_list' style={{ display: 'flex', flexWrap: 'wrap', padding: '0'}}>
-                      {/* li 태그 반복! >> 마우스 클릭 시 문전성시 탭으로 가야함 */}
+{/* li 태그 반복! >> 마우스 클릭 시 문전성시 탭으로 가야함 */}
                       {stores.map((store) => (
                         <li className='data' key={store.id}>
-                          <div style={{margin:'5px', border:'1px solid yellow', height:'100%', overflow:'hidden'}}>
+                          <div style={{margin:'5px', border:'1px solid grey', height:'100%', overflow:'hidden'}}>
                               <figure>
                                 <a target='_blank'>
-                                  <img className='img' src={store.imgSrc} alt={store.title}></img>
+                                  <img className='img' src={store.imgSrc[0]} alt={store.title}></img>
                                 </a>
                               </figure>
                               <figcaption>
                                 <a className='textBox' target='_blank'>
-                                <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc} alt={store.title} /></Link>
                                   <h2>{store.title}</h2>
+                                  <Link to={`/detail/${store.areaNm}/${store.title}`}></Link>
                                   <span className='score' style={{color:'white'}}>{store.rating}</span>
                                 </a>
-                                <p className='cafe'>
                                   <span><a>{store.address}</a></span>
-                                </p>
+                               
                               </figcaption>
                             </div>
                           </li>

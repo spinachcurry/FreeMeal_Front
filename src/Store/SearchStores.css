@@ -3,25 +3,23 @@
   list-style: none;
 }
 
-
 .nav-pills > .tab > .active {
   color: #ffffff !important;
   background-color: rgb(253, 0, 0) !important;   
-  font-weight: 500;
 }
 
-
 .data {
-  width: 50%; 
+  width: 50%;
   box-Sizing: border-box; 
   padding: 10px;  
 }
 
 .img {
   width: 100%;
+  height: 200px;
 }
 
-.box{
-  border: 1px solid gray;
-  border-Radius:10px;
+.textBox {
+  color: #ffffff;
+  text-decoration:none;
 }
