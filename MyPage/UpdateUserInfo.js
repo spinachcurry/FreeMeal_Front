@@ -115,7 +115,7 @@ const UpdateUserInfo = () => {
             </div>
             <div className="mb-3">
               <label>한마디</label> 
-              <input type="text" value={status}/>
+              <input type="hidden" value={status}/>
               <input type="text" value={review} onChange={(e) => setReview(e.target.value)} required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
