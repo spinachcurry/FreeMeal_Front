@@ -32,6 +32,8 @@ const Signup = ({ onClose }) => {
         console.error('Error:', error);
       });
   };  
+
+  
   return (
     <div className="modal-overlay">
       <div className="modal-content" > 

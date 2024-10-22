@@ -7,6 +7,7 @@ body {
   font-family: Arial, sans-serif; /* 기본 글꼴 */
 } 
 .container {
+
   color:black;
   position: relative;
   padding: 1rem;
