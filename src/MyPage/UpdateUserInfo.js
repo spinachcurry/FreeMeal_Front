@@ -106,36 +106,37 @@ const UpdateUserInfo = () => {
     isModalOpen && (
       <div className="modal-overlay">
         <div className="modal-content">
-          <button className="close-button" onClick={closeModal}>&times;</button>
-          <h1>프로필 수정</h1>
+          <button className="close-button" onClick={closeModal}>&times;</button> 
+            <h1>프로필 수정</h1> 
+          <div className="modal-overflow">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="profile-image mb-3">
               <img src={previewImage} alt="Profile" className="rounded-circle" style={{ width: 80, height: 80 }} />
               <input type="file" accept="image/*" onChange={handleImageChange} className="form-control mt-2 rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>한마디</label> 
               <input type="hidden" value={status}/>
+              <label>{'\u00A0'+'\u00A0'}한마디</label> 
               <input type="text" value={review} onChange={(e) => setReview(e.target.value)} required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>닉네임</label>
+              <label>{'\u00A0'+'\u00A0'}닉네임</label>
               <input type="text" value={user_Nnm} onChange={(e) => setUser_Nnm(e.target.value)} required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>전화번호</label>
+              <label>{'\u00A0'+'\u00A0'}전화번호</label>
               <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="010-0000-0000" required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>이메일</label>
+              <label>{'\u00A0'+'\u00A0'}이메일</label>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일을 입력하세요" required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>새 비밀번호</label>
+              <label>{'\u00A0'+'\u00A0'}비밀번호</label>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="새 비밀번호를 입력하세요" required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>새 비밀번호 확인</label>
+              <label>{'\u00A0'+'\u00A0'}비밀번호 확인</label>
               <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="form-control rounded-pill" />
               <label style={{ color: passwordMessage === "비밀번호가 일치합니다." ? 'green' : 'red' }}>{passwordMessage}</label>
             </div>
@@ -154,12 +155,13 @@ const UpdateUserInfo = () => {
             <button 
               type="button" 
               onClick={closeModal} 
-              className="btn btn-secondary rounded-pill my-2"
+              className="btn  btn-light rounded-pill my-2"
               style={{ width: '100%' }}
             >
               수정 취소
             </button>
           </form>
+          </div>
         </div>
       </div>
     )

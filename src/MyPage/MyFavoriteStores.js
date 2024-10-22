@@ -56,8 +56,8 @@ const MyFavoriteStores = () => {
         <Swiper modules={[Navigation, Pagination]} spaceBetween={30} slidesPerView={3} navigation className="swiper-container">
           {favoriteStores.map((store, index) => (
             <SwiperSlide key={index} className="swiper-slide">
-              <div className="restaurant-item">
-                <Link to={`/detail/${store.title}`}>
+              <div className="restaurant-item"> 
+                <Link to={`/detail/${store.areaNm}/${store.title}`}style={{ color: 'white', textDecoration: 'none' }}> 
                   <img src={store.imgSrc || 'default-image.jpg'} alt={store.title} className="img-fluid" />
                 </Link>
                 <h3 style={{color:'white'}}>{store.title}</h3>

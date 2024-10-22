@@ -96,7 +96,7 @@
 /* 닫기 버튼 */
 .close-button {
   position: absolute; 
-  top: -60px;
+  top: 8px;
   right: 10px;
   border: none;
   background: none;

@@ -2,7 +2,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
-import './DetailPage.css';
+import './DetailPage.css'; 
 import KakaoMap from '../components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection'; 
 import Signup from '../MyPage/Signup';
@@ -232,25 +232,15 @@ useEffect(() => {
             </div>
 
             {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
-            <div className="dibs-container" style={{padding:'10px 10px'}}>
+            <div className="dibs-container" style={{ display: 'flex', alignItems: 'center', padding: '10px 10px' }} >
                 <button className='btn btn-light' onClick={toggleDibs}>
                     {isDibbed ? "찜하기" : "찜하기"} 
                 </button>
-                <button className='btn btn-light' onClick={scrollToReview}>리뷰보기</button>
-                <button className='btn btn-light' onClick={openShareModal}>공유하기</button>
-            </div>
+                <button className='btn btn-light' onClick={scrollToReview}>리뷰보기</button>  
+                <Shares className='btn btn-light' areaNm={store.areaNm} title={store.title} />
+            </div>  
+            {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
 
-            {isShareModalOpen && (
-                <div className="modal-overlay" onClick={closeShareModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button" onClick={closeShareModal}>X</button>
-                        <Shares title={store.title} />
-                    </div>
-                </div>
-            )}
-{/* / 찜하기/리뷰로 가기/공유하기/ */} 
-            {/* <div><Dids address={store.address} userId={user ? user.userId : null}  /></div> */}
-            
         <div className='container-fluid'>
             <div className='row' style={{height:'400px'}}>
                 <div className='col-7'>
