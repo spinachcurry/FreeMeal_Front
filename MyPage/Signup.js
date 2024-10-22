@@ -11,17 +11,18 @@ const Signup = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [duplicateError, setDuplicateError] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  
   const handleSignup = (e) => {
     e.preventDefault();
 
     // 회원가입 API 요청
-    fetch('http://localhost:8080/signup', {
+    fetch('http://localhost:8080/mypage/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, password, name, user_Nnm, phone, email }),
     })
-      .then((response) => response.text()) // 응답을 JSON이 아닌 텍스트로 처리
+      .then((response) => response.text()) 
       .then((data) => {
         alert('회원가입이 완료되었습니다.');
         onClose(); // 모달 닫기
@@ -30,58 +31,48 @@ const Signup = ({ onClose }) => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  };
-
+  };  
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-button" onClick={onClose}>X</button>
-        <div className="container" style={{color:'none'}}>
-          <h2 className="text-center mb-3" style={{color: 'black', backgroundColor:'none'}}>회원가입</h2>
-        </div>
-        
+      <div className="modal-content" > 
+        <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
+        <div className="container">
+          <h2 >회원가입</h2>
+        </div >
         {duplicateError && <div className="alert alert-danger">{duplicateError}</div>}
- 
-
+          <div className="modal-overflow">
         <form onSubmit={handleSignup}>
+          <table className="table1">
+              <tbody>
+                <tr>
+                  <td><label htmlFor="userId" className="form-label">아이디</label></td>
+                  <td><input type="text" className="form-control" id="userId" value={userId} onChange={(e) => setUserId(e.target.value)} required /></td>
+                </tr>
+                <tr>
+                  <td><label htmlFor="password" className="form-label">비밀번호</label></td>
+                  <td><input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></td>
+                </tr>
+                <tr>
+                  <td><label htmlFor="name" className="form-label">이름</label></td>
+                  <td><input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} required /></td>
+                </tr>
+                <tr>
+                  <td><label htmlFor="user_Nnm" className="form-label">닉네임</label></td>
+                  <td><input type="text" className="form-control" id="user_Nnm" value={user_Nnm} onChange={(e) => setUserNnm(e.target.value)} required /></td>
+                </tr>
+                <tr>
+                  <td><label htmlFor="phone" className="form-label">전화번호</label></td>
+                  <td><input type="text" className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /></td>
+                </tr>
+                <tr>
+                  <td><label htmlFor="email" className="form-label">이메일</label></td>
+                  <td><input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></td>
+                </tr>
+              </tbody>
+            </table>
           <div className="mb-3">
-            <label htmlFor="userId" className="form-label">ID</label>
-            <input type="text" className="form-control" id="userId" value={userId} onChange={(e) => setUserId(e.target.value)} required />
-          </div>
-          
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">이름</label>
-            <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="user_Nnm" className="form-label">닉네임</label>
-            <input type="text" className="form-control" id="user_Nnm" value={user_Nnm} onChange={(e) => setUserNnm(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="phone" className="form-label">전화번호</label>
-            <input type="text" className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">이메일</label>
-            <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-
-          <div className="form-check mb-3">
-            <input type="checkbox" className="form-check-input" id="termsCheck" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} required />
-            <label className="form-check-label" htmlFor="termsCheck">
-              "꽁밥”의 이용 약관, 개인정보 보호정책 및 콘텐츠 정책에 동의합니다.
-            </label>
-          </div>
-          <div className="mb-3">
-        <textarea cols="50" rows="5" readOnly className="form-control"  defaultValue=" 
+        <textarea cols="50" rows="5" readOnly className="form-control"  defaultValue="
+        
 회사 꽁밥(이하 '회사' 이라 한다)은 「개인정보보호법」제15조 제1항 제1호, 제17조 제1항 제1호, 제23조 제1호 따라 아래와 같이 개인정보의 수집. 이용에 관하여 귀하의 동의를 얻고자 합니다.
 재단은 이용자의 사전 동의 없이는 이용자의 개인정보를 함부로 공개하지 않으며, 수집된 정보는 아래와 같이 이용하고 있습니다.
 이용자가 제공한 모든 정보는 아래의 목적에 필요한 용도 이외로는 사용되지 않으며 이용 목적이 변경될 시에는 이를 알리고 동의를 구할 것입니다
@@ -127,10 +118,19 @@ const Signup = ({ onClose }) => {
 준거법 및 관할 법원
 본 약관은 대한민국 법률에 따라 해석되며, 서비스와 관련한 분쟁 발생 시 회사의 본사 소재지 관할 법원을 전속 관할 법원으로 합니다."
   
-        />
+  />
     </div>
-          <button type="submit" className="btn btn-primary my-2" disabled={!termsAccepted}>회원가입</button>
+    
+    <div className="form-check mb-3">
+        <input type="checkbox" className="form-check-input" id="termsCheck" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} required />
+        <label className="form-check-label" htmlFor="termsCheck">
+          "꽁밥”의 이용 약관, 개인정보 보호정책 및 콘텐츠 정책에 동의합니다.
+        </label>
+      </div>
+
+          <button type="submit" className="btn btn-light my-2" disabled={!termsAccepted}>회원가입</button>
         </form>
+  </div>
       </div>
     </div>
   );

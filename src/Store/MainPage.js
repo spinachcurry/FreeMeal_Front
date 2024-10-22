@@ -7,6 +7,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import axios from 'axios';
 import  { Link , useNavigate } from 'react-router-dom';
 import Signup from '../MyPage/Signup';
+import SwiperCore from "swiper";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -52,6 +53,7 @@ const MainPage = () => {
       }    
 
   //  메인 화면 가게 목록 가져오기
+
       const jointImageList = (menuItems, imgURLs) => {
         let imageList = [];
 
@@ -132,7 +134,6 @@ const MainPage = () => {
   
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     
-
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
         <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
@@ -178,8 +179,10 @@ const MainPage = () => {
             {isSignupOpen && <Signup onClose={handleSignupClose} />}
           </ul>   
   
+
           <h1 className="headerfont">꽁밥</h1>
           <p className="font">우리동네 믿고 먹는 맛집 대장!</p>
+
               <div className="container-fluid input-group mt-3" style={{width: '48vw'}}>
                   <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
                     <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
@@ -210,10 +213,12 @@ const MainPage = () => {
                   <span>{store.rating}</span>
                   <p className='p'>{store.address}</p>
               </div>
+
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
+
         <br></br>
         <div className='main-list'> 
           <h2 className='subfont' style={{ textAlign: 'left'}}>구매 금액 가장 높은 맛집 추천</h2>
@@ -225,6 +230,7 @@ const MainPage = () => {
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
                   <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc[0]} alt={store.title} /></Link>
+
                   <h6 className='h6'>{store.title}</h6>
                   <span>{store.rating}</span>
                   <p className='p'>{store.address}</p>
@@ -233,6 +239,7 @@ const MainPage = () => {
             ))}
           </Swiper>
         </div>
+
         <br></br>
         <div className='main-list'>
           <h2 className='subfont' style={{ textAlign: 'left'}}>방문이 가장 많은 맛집 추천</h2>
@@ -244,6 +251,7 @@ const MainPage = () => {
               <SwiperSlide key={store.id} className="swiper-slide">
                 <div className="restaurant-item">
                   <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc[0]} alt={store.title} /></Link>
+
                   <h6 className='h6'>{store.title}</h6>
                   <span>{store.rating}</span>
                   <p className='p'>{store.address}</p>

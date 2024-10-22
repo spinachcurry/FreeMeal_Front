@@ -88,6 +88,7 @@ const SearchStores = () => {
         rating: "⭐️⭐️⭐️⭐️",
         areaNm: item.areaNm,
       })));
+
        } catch(error) {
         console.log("오류났다잉~:", error);
       }
@@ -105,12 +106,15 @@ const SearchStores = () => {
       // console.log("키워드: " + searching);
   }, [criteria]);
 
+
   //enter키 이벤트
   const [keyword, setKeyword] = useState('');
+
 
   // 화면에 렌더링할 JSX
   return (
     <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
+
           <header className='header'>
             <div className='container-fluid'>
              {/* <header className='headers'style={{borderBottom:'1px solid #ddd'}}> */}

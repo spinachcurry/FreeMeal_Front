@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './MyPage.css';
 
 const LoginModal = () => {
   const [user, setUser] = useState(null);
@@ -21,7 +22,7 @@ const LoginModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/login', { userId, password });
+      const response = await axios.post('http://localhost:8080/mypage/login', { userId, password });
 
       if (response.data.status) {
         const { user, jwtToken } = response.data;

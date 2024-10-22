@@ -22,6 +22,18 @@
 }
 
 .imgBox {
+
+/* .input {
+  display: flex;
+  /* align-items: center;  */
+  /* margin: 0 30vw; */
+}
+
+
+.image-section {
+    width:auto;
+    height:100px; */
+
     overflow:hidden;
     margin-top:10vw;
     border-color:1px solid white;
@@ -85,7 +97,7 @@
 /* 닫기 버튼 */
 .close-button {
   position: absolute; 
-  top: -60px;
+  top: 8px;
   right: 10px;
   border: none;
   background: none;
