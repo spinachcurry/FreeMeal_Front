@@ -1,127 +1,180 @@
-import React, { useState, useEffect } from 'react';  
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './MyPage.css';
+import { Link } from 'react-router-dom';
 
-const MyReviews = () => { 
+const MyReviews = () => {
   const [user, setUser] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
-  const [updatedContent, setUpdatedContent] = useState('');   
+  const [updatedContent, setUpdatedContent] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 5; // 한 페이지에 5개의 리뷰 표시
 
+  // 컴포넌트 로드 시 로컬 스토리지에서 사용자 정보 가져오기
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
-      fetchReviews(parsedUser.userId);
+      // 사용자 정보가 있을 경우 리뷰 가져오기
+      handleReviewAction("getReviews", parsedUser.userId, parsedUser.status);
     }
   }, []);
 
-  const fetchReviews = async (userId) => {
+  // 리뷰 조회 및 수정 API
+  const handleReviewAction = async (action, userId, statusOrReviewData) => {
     try {
-      const response = await axios.get('http://localhost:8080/getReviewsByStatus', {
-        params: { userId },
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
-      
-      console.log('Fetched reviews data:', response.data); // reviews 데이터 콘솔 출력
+      const token = localStorage.getItem('token');  // 로컬 스토리지에서 토큰 가져오기
 
-      setReviews(response.data);
-      
-      const fetchedData = response.data;
-    
-      console.log('Fetched reviews data:', fetchedData); // 콘솔 출력
-      alert('Fetched reviews data: ' + JSON.stringify(fetchedData, null, 2)); // JSON 데이터를 문자열로 변환하여 alert로 출력
-  
-      setReviews(fetchedData);
+      let requestBody;
+
+      // getReviews 요청일 경우
+      if (action === "getReviews") {
+        requestBody = {
+          action: "getReviews",
+          userId: userId,
+          status: statusOrReviewData
+        };
+      } 
+      // updateReview 요청일 경우
+      else if (action === "updateReview") {
+        requestBody = {
+          action: "updateReview",
+          reviewNo: statusOrReviewData.reviewNo,
+          userId: statusOrReviewData.userId,
+          address: statusOrReviewData.address,
+          content: updatedContent,  // 수정된 리뷰 내용
+          rating: statusOrReviewData.rating
+        };
+      }
+
+      // 디버깅을 위한 콘솔 로그 추가
+      console.log("Request Body: ", requestBody);
+      console.log("Token: ", token);
+
+      // 서버로 요청 보내기 (토큰 포함)
+      const response = await axios.post('http://localhost:8080/mypage/reviewAction', requestBody, {
+        headers: { Authorization: `Bearer ${token}` }  // 토큰을 헤더에 추가
+      });
+
+      // getReviews 요청에 대한 처리
+      if (action === "getReviews") {
+        setReviews(Array.isArray(response.data) ? response.data : []);
+      } 
+      // updateReview 요청에 대한 처리
+      else if (action === "updateReview") {
+        alert('리뷰 수정 성공');
+        setIsModalOpen(false);
+        handleReviewAction("getReviews", user.userId, user.status); // 수정 후 리뷰 목록 다시 불러오기
+      }
     } catch (error) {
+      // 오류 발생 시 처리
       console.error('리뷰 데이터를 가져오는 중 오류가 발생했습니다:', error);
+      if (action === "getReviews") {
+        setReviews([]);  // 오류 시 빈 배열로 설정
+      } else {
+        alert('리뷰 수정 실패');
+      }
     }
   };
 
+  // 모달 열기
   const handleOpenModal = (review) => {
     setSelectedReview(review);
-    setUpdatedContent(review.content); 
+    setUpdatedContent(review.content);
     setIsModalOpen(true);
   };
 
+  // 모달 닫기
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedReview(null);
     setUpdatedContent('');
   };
 
-  const handleSaveChanges = async () => {
+  // 리뷰 수정 저장
+  const handleSaveChanges = () => {
     if (!selectedReview) return;
-
-    try {
-      const response = await axios.post(`http://localhost:8080/updateReview`, {
-        reviewNo: selectedReview.reviewNo,
-        content: updatedContent,
-        rating: selectedReview.rating,
-      }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
-
-      if (response.status === 200) {
-        alert('리뷰 수정 성공');
-        setIsModalOpen(false);
-        fetchReviews(user.userId); 
-      } else {
-        alert(`리뷰 수정 실패: ${response.data}`);
-      }
-    } catch (error) {
-      console.error('리뷰 수정 중 오류 발생:', error);
-      alert(`리뷰 수정 실패: ${error.response?.data || error.message}`);
-    }
+    handleReviewAction("updateReview", null, selectedReview); // 리뷰 수정 요청
   };
-  
+
+  // 페이징 처리
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (!user) {
     return <p>로그인이 필요합니다.</p>;
   }
 
   return (
-    <div> 
-      <table className="table table-dark table-hover" >
+    <div className="container">
+      <h2 style={{color:'white'}}>내 리뷰 목록</h2>
+
+      <table className="table table-dark table-hover">
         <thead>
           <tr>
-            <th>가게명</th>
-            <th>메뉴</th> 
+            <th>가게 명</th>
+            <th>카테고리</th>
             <th>리뷰 내용</th>
             <th>작성일</th>
             <th>수정</th>
           </tr>
         </thead>
         <tbody>
-          {reviews.map((review, index) => (
-            <tr key={`${review.reviewNo}-${index}`}>
-              <td>{review.title}</td>
-              <td>{review.category}</td> 
-              <td>{review.content}</td>
-              <td>{new Date(review.createDate).toLocaleDateString()}</td>
-              <td>
-                <button onClick={() => handleOpenModal(review)}className="btn btn-primary my-2">수정</button>
-              </td>
+          {currentReviews.length > 0 ? (
+            currentReviews.map((review, index) => (
+              <tr key={`${review.reviewNo}-${index}`}>
+                <td><Link to={`/detail/${review.areaNm}/${review.title}`}style={{ color: 'white', textDecoration: 'none' }}>{review.title}</Link></td>
+                <td>{review.category}</td>
+                <td>{user.status === "3" && `${review.userId}:`} {review.content}</td>
+                <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
+                <td>
+                  <button onClick={() => handleOpenModal(review)} className="btn btn-primary my-2">수정</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" style={{ textAlign: 'center' }}>리뷰가 없습니다.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
+      {/* 페이지 네비게이션 */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => handlePageChange(i + 1)}
+            className={`btn ${currentPage === i + 1 ? 'btn-primary' : 'btn-secondary'} m-1`}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+
+      {/* 모달 창 */}
       {isModalOpen && (
-        <div style={{
-          position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.3)'
-        }}>
-          <h3 style={{color:'#000000'}}>리뷰 수정</h3>
-          <textarea
-            rows="5"
-            style={{ width: '100%' }}
-            value={updatedContent}
-            onChange={(e) => setUpdatedContent(e.target.value)}
-          />
-          <button onClick={handleSaveChanges}className="btn btn-dark my-2"style={{margin:'10px'}}>저장</button>  
-          <button onClick={handleCloseModal}className="btn btn-dark my-2">취소</button>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>리뷰 수정</h3>
+            <textarea
+              rows="5"
+              value={updatedContent}
+              onChange={(e) => setUpdatedContent(e.target.value)}
+            />
+            <button onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
+            <button onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+          </div>
         </div>
       )}
     </div>
