@@ -1,3 +1,16 @@
+.localFood_list {
+  width: calc(50%-50px);
+  list-style: none;
+}
+
+
+.nav-pills > .tab > .active {
+  color: #ffffff !important;
+  background-color: rgb(253, 0, 0) !important;   
+  font-weight: 500;
+}
+
+
 .data {
   width: 50%; 
   box-Sizing: border-box; 
@@ -8,13 +21,7 @@
   width: 100%;
 }
 
-body {
-    padding-top: 10px;
-    /* 생략 */
-  }
-
 .box{
   border: 1px solid gray;
   border-Radius:10px;
-  height:800%
 }
