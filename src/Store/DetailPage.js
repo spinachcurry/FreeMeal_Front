@@ -17,9 +17,9 @@ const DetailPage = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [store, setStore] = useState(null);
-    const [images, setImages] = useState([
-    
-    ]);
+    const [images, setImages] = useState([]);
+    const [keyword, setKeyword] = useState('');
+    const [areaNm, setAreaNm] = useState('전체');
     const [loading, setLoading] = useState(true);
     const [isSignupOpen, setSignupModalOpen] = useState(false);
     const handleSignupOpen = () => setSignupModalOpen(true);
@@ -66,63 +66,101 @@ const DetailPage = () => {
     if (loading) return <p>로딩 중입니다...</p>;
     if (!store) return <p>가게 정보를 불러올 수 없습니다.</p>;
 
+      //검색 버튼 눌렀을 때!
+  const handleSearch = () => {
+    if(keyword === ""){
+      alert("검색어를 입력해주세요");
+    }else {
+      navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
+    };
+  } 
+  // 엔터키 눌렀을 때!
+    const onSubmitSearch = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    };
+
+
     return (
-
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
-            <div className='header '>
-                <h1><a href='/'></a></h1>
-            </div>
-            
-            <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" style={{borderBottom:'1px solid white'}}>
-                <div className='container-fluid'>
-
-                    <h1 className='header'>
-                        <a className='logo' href='/'>
-                            <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
-                        </a>
-                    </h1>
-                    
-                    <div className="input">
-                        <input type="text" className="form-control s9-3" placeholder="음식, 지역, 매장" style={{ width:'30vw' }} />
-                        <button type="button" className="btn btn-danger">
-                            <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{width: '20px'}}></img>
-                            <span style={{margin:'5px'}}>찾기</span>
-                        </button>
-                    </div>
-                    <div>
-                    <ul className='nav justify-content-end'>
-                        {user ? (
-                        <li className="nav-item">
-                            <p className="nav-link" style={{ color: 'white', fontWeight: '1000' }}>
-                            환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
-                            <a onClick={handleLogout} className="btn btn-primary"> 로그아웃</a> 
-                            </p> 
-                        </li> ) : (
-                        <>
-                            <li className="nav-item" style={{listStyle:'none'}}>
-                            <a onClick={handleLoginOpen} className="nav-link">로그인</a>
-                            </li>
-                            <li className="nav-item" style={{listStyle:'none'}}>
-                            <a onClick={handleSignupOpen} className="nav-link">회원가입</a>
-                            </li>
-                        </>
-                        )}
-                        {isSignupOpen && <Signup onClose={handleSignupClose} />}
-                    </ul>
-                    </div>
+            <header className='header'>
+            <div className='container-fluid'>
+              <div className='row' style={{borderBottom:'1px solid white'}}>
+                <a className='logo col-1' href='/'>
+                  <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고' />
+                </a>
+                <div className='col-4' style={{marginTop:'5px'}}>
+                  <div className="container-fluid input-group" style={{width:'30vw', marginLeft:'0', marginRight:'0', height:'20px'}} >
+                      <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
+                          <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역</option>
+                          <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>
+                          <option value="강동구" style={{backgroundColor:'white', color:'black'}}>강동구</option>
+                          <option value="강서구" style={{backgroundColor:'white', color:'black'}}>강서구</option>
+                          <option value="양천구" style={{backgroundColor:'white', color:'black'}}>양천구</option>
+                          <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
+                          <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
+                      </select>
+                      <input type="text" className="form-control s9-3" placeholder="음식, 매장" value={keyword}
+                              onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e)=> { if(e.key === 'Enter') {handleSearch(); } }} style={{ width:'10vw' }} />
+                      <button type="button" className="btn btn-danger" onClick={handleSearch} style={{flex: 0.5, backgroundColor: 'red', border: 'red'}}>
+                        <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{ width: '20px' }} alt="search"/>
+                        <span style={{ margin: '5px' }}>검색</span>
+                      </button>
+                  </div>
                 </div>
-            </nav>
-            <div className="image-section" style={{ border: '1px solid white', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                <div className='col-4'>
+                </div>
+                <div className='col-3'>
+                  <ul className='nav justify-content-end' style={{ color: 'white', fontWeight: '1000' }}>
+                  {user ? (
+                    <>
+                      <li className="nav-item">
+                        <p className="nav-link">
+                          환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
+                        </p> 
+                      </li>
+                      <li className="nav-item">
+                        <p>
+                          <a onClick={handleLogout} className="nav-link"> 로그아웃</a> 
+                        </p>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="nav-item">
+                        <p>
+                          <a onClick={handleLoginOpen} className="nav-link">로그인</a>
+                        </p>
+                      </li>
+                      <li className="nav-item">
+                        <p>
+                          <a onClick={handleSignupOpen} className="nav-link">회원가입</a>
+                        </p>
+                      </li>
+                    </>
+                  )}
+                  {isSignupOpen && <Signup onClose={handleSignupClose} />}
+                  </ul>
+                </div>          
+              </div>
+          </div>
+        </header>  
+        {/* 이미지 들어갈 곳 */}
+          <div className='imgBox'>
+            <div>
                 {images.map((image, index) => (
                     <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
                 ))}
             </div>
-                <div className='info' style={{textAlign:'center'}}>
-                    <h2>{store.title}</h2>
-                    <h3>{store.address}</h3> 
-                    <p3>{store.description}</p3>
-                </div>   
-            
+            </div>
+          <div>
+            <div className='info' style={{textAlign:'center'}}>
+                <h2>{store.title}</h2>
+                <h3>{store.address}</h3> 
+                <p3>{store.description}</p3>
+            </div>
+          </div>
             {/* <div><Dids address={store.address} userId={user ? user.userId : null}  /></div> */}
             
         <div className='container-fluid'>
