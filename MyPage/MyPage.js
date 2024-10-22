@@ -1,14 +1,12 @@
-// MyPage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import user1 from '../img/user1.png';
 import './MyPage.css';
-import MyReviews from './MyReviews'; // 내가 쓴 리뷰 컴포넌트
-import FavoriteStores from './FavoriteStores'; // 내가 찜한 가게 컴포넌트
+import MyReviews from './MyReviews';
+import MyFavoriteStores from './MyFavoriteStores';
 
 const MyPage = () => {
   const [user, setUser] = useState(null);
-  const [activeTab, setActiveTab] = useState('MyReviews'); // 'myReviews' 또는 'favoriteStores'
+  const [activeTab, setActiveTab] = useState('MyReviews');
   const host = "http://localhost:8080/view?url=";
 
   useEffect(() => {
@@ -18,36 +16,53 @@ const MyPage = () => {
     }
   }, []);
 
+  // 회원정보 수정 시 로컬 스토리지 및 상태 업데이트 함수
+  const handleUpdateUserInfo = () => {
+    const updatedUser = { ...user, review: '업데이트된 정보' }; // 업데이트된 유저 정보
+    console.log("Updated User: ", updatedUser);
+
+    // 로컬 스토리지 업데이트
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+
+    // 상태 업데이트 및 렌더링 확인
+    setUser(updatedUser);
+    console.log("User state after update:", updatedUser);
+    setActiveTab('MyReviews');
+  };
+
   if (!user) {
     return <p>로그인이 필요합니다.</p>;
   }
 
-  const profileImage = user.profileImageUrl ? host + user.profileImageUrl : user1;
+  const profileImage = user.profileImageUrl ? host + user.profileImageUrl : './img/user1.png';
 
   return (
     <>
       <div className="container text-center py-5">
-        <h1>마이 페이지</h1> 
+        <h1>마이 페이지</h1>
         <Link to="/" className="btn btn-secondary my-3 nav-item back-to-home">꽁밥으로 돌아가기</Link>
-        <img 
-          src={profileImage} 
-          alt="프로필 이미지" 
-          className="rounded-circle" 
-          style={{ width: '250px', height: '250px', objectFit: 'cover' }} 
+        <img
+          src={profileImage}
+          alt="프로필 이미지"
+          className="rounded-circle"
+          style={{ width: '250px', height: '250px', objectFit: 'cover' }}
         />
-        <p className="mt-3">사용자 {user.user_Nnm}님, 환영합니다.</p> 
-        <p>한마디: {user.review}</p>
+        <p className="mt-3">사용자 {user.user_Nnm}님, 환영합니다.</p>
+        <p>한마디: {user.review}</p> {/* 여기에서 업데이트된 review가 반영되어야 함 */}
         <div>
-          <Link to="/updateUserInfo" className="btn btn-primary my-2">회원정보 수정</Link>  
+          {/* 회원정보 수정 버튼 */}
+          <Link to="/updateUserInfo" className="btn btn-primary my-2" onClick={handleUpdateUserInfo}>
+            회원정보 수정
+          </Link>
           <button onClick={() => setActiveTab('MyReviews')} className="btn btn-primary my-2">내가 쓴 리뷰</button>
-          <button onClick={() => setActiveTab('favoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
+          <button onClick={() => setActiveTab('MyfavoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
         </div>
-      </div> 
+      </div>
 
       {/* 조건부 렌더링 */}
       <div className="container mt-5">
         {activeTab === 'MyReviews' && <MyReviews />}
-        {activeTab === 'favoriteStores' && <FavoriteStores />}
+        {activeTab === 'MyfavoriteStores' && <MyFavoriteStores userId={user.userId} />}
       </div>
     </>
   );

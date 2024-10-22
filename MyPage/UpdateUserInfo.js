@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import user1 from '../img/user1.png';
 import axios from 'axios';
 import './MyPage.css';
 
@@ -8,6 +7,7 @@ const UpdateUserInfo = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [user_Nnm, setUser_Nnm] = useState('');
+  const [status, setStatus] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [review, setReview] = useState('');
@@ -25,12 +25,14 @@ const UpdateUserInfo = () => {
       const parsedUser = JSON.parse(storedUser);
       setReview(parsedUser.review);
       setUser(parsedUser);
+      setStatus(parsedUser.status);
       setUser_Nnm(parsedUser.user_Nnm || '');
       setPhone(parsedUser.phone || '');
       setEmail(parsedUser.email || '');
-      setPreviewImage(parsedUser.profileImageUrl ? host + parsedUser.profileImageUrl : user1);
+
+      setPreviewImage(parsedUser.profileImageUrl ? host + parsedUser.profileImageUrl : './img/user1.png');
     }
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (password === confirmPassword && password.length > 0) {
@@ -58,11 +60,19 @@ const UpdateUserInfo = () => {
 
     const formData = new FormData();
     formData.append('userId', user.userId);
-    formData.append('user_Nnm', user_Nnm);
-    formData.append('phone', phone);
-    formData.append('email', email);
-    formData.append('review', review);
-    formData.append('password', password);
+    formData.append('user_Nnm', user_Nnm || '기본 닉네임'); // 기본 닉네임 설정
+    formData.append('phone', phone || '000-0000-0000'); // 기본 전화번호 설정
+    formData.append('email', email || 'default@example.com'); // 기본 이메일 설정
+    formData.append('review', review || '한마디가 없습니다.'); // 기본 한마디 설정 
+    formData.append('status', status ); // 기본 한마디 설정
+    
+    
+    // 비밀번호가 입력되었을 때만 추가
+    if (password) {
+      formData.append('password', password);
+    }
+
+    // 프로필 이미지가 있을 때만 추가
     if (profileImage) {
       formData.append('profileImage', profileImage);
     }
@@ -75,6 +85,7 @@ const UpdateUserInfo = () => {
       .then(res => {
         console.log(res);
         if (res.data.status) {
+          // 서버로부터 받은 사용자 정보를 로컬 스토리지에 저장
           localStorage.setItem('user', JSON.stringify(res.data.user));
           navigate("/myPage");
         } else {
@@ -103,7 +114,8 @@ const UpdateUserInfo = () => {
               <input type="file" accept="image/*" onChange={handleImageChange} className="form-control mt-2 rounded-pill" />
             </div>
             <div className="mb-3">
-              <label>한마디</label>
+              <label>한마디</label> 
+              <input type="hidden" value={status}/>
               <input type="text" value={review} onChange={(e) => setReview(e.target.value)} required className="form-control rounded-pill" />
             </div>
             <div className="mb-3">
