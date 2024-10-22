@@ -115,7 +115,7 @@ const MyReviews = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container1">
       <h2 style={{color:'white'}}>내 리뷰 목록</h2>
 
       <table className="table table-dark table-hover">

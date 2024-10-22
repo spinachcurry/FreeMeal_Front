@@ -26,7 +26,7 @@ const MyPage = () => {
   const profileImage = user.profileImageUrl ? host + user.profileImageUrl :'./img/user1.png';
   return (
     <>
-      <div className="container text-center py-5">
+      <div className="container1 text-center py-5">
       <h1 className='header'>
             <a className='logo' href='/'>
                 <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
@@ -47,7 +47,7 @@ const MyPage = () => {
           <button onClick={() => setActiveTab('MyFavoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
         </div>
       </div>   
-      <div className="container  ">
+      <div className="container1 ">
         {activeTab === 'MyReviews' && <MyReviews />}
         {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
  

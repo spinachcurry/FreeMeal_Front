@@ -48,7 +48,7 @@ const MyFavoriteStores = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container1">
       <h2 style={{color:'white'}}>나의 찜 목록 </h2>
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       

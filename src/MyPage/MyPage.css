@@ -6,14 +6,15 @@ body {
   padding: 0;
   font-family: Arial, sans-serif; /* 기본 글꼴 */
 } 
-.container {
+.container1 {
+
   color:black;
   position: relative;
   padding: 1rem;
   border-radius: 10px;
   
 } 
-.container p, .container h1 {
+.container1 p, .container1 h1 {
     color: #fff;
   }   
 .back-to-home {
