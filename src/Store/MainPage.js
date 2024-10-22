@@ -53,7 +53,6 @@ const MainPage = () => {
       }    
 
   //  메인 화면 가게 목록 가져오기
-
       const jointImageList = (menuItems, imgURLs) => {
         let imageList = [];
 
@@ -71,6 +70,14 @@ const MainPage = () => {
         }
         return imageList;
       }
+
+    // 엔터키 눌렀을 때!
+    const onSubmitSearch = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    };
+    
 
     const fetchStores = async (coords) => {
         try {
@@ -193,8 +200,8 @@ const MainPage = () => {
                     <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
                     <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
                   </select>
-                  <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ width:'15vw' }} />
-                    {/* 가게 검색 결과 */}
+                  <input type="text" className="form-control s9-3" placeholder="음식, 매장" value={keyword}
+                              onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e)=> { if(e.key === 'Enter') {handleSearch(); } }} style={{ width:'10vw' }} />
                   <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red'}}>검색</button>
               </div>
         </div>
@@ -213,7 +220,6 @@ const MainPage = () => {
                   <span>{store.rating}</span>
                   <p className='p'>{store.address}</p>
               </div>
-
               </SwiperSlide>
             ))}
           </Swiper>

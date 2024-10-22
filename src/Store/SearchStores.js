@@ -8,6 +8,7 @@ import './SearchStores.css';
 const SearchStores = () => {  
   const [searchParams, setSearchParams] = useSearchParams();
   const [areaNm, setAreaNm] = useState('전체');
+  const [keyword, setKeyword] = useState('');
   const [criteria, setCriteria] = useState('party');
   const [stores, setStores] = useState([]);
   const localNm = searchParams.get("areaNm");
@@ -19,7 +20,7 @@ const SearchStores = () => {
       alert("검색어를 입력해주세요");
     }else {
       navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
-    };
+    }
   } 
   // 엔터키 눌렀을 때!
     const onSubmitSearch = (e) => {
@@ -82,7 +83,7 @@ const SearchStores = () => {
         setStores(res.data.map((item, i) => ({ 
         address: item.address, 
         category: item.category,
-        id: 1,
+        id: i,
         title: item.title,
         imgSrc: jointImageList(item.menuItems, item.imgURLs),
         rating: "⭐️⭐️⭐️⭐️",
@@ -108,9 +109,7 @@ const SearchStores = () => {
 
 
   //enter키 이벤트
-  const [keyword, setKeyword] = useState('');
-
-
+  
   // 화면에 렌더링할 JSX
   return (
     <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
@@ -190,30 +189,28 @@ const SearchStores = () => {
             {/* </header>  */}
           </div>
         </header>  
-        
-            <div className='container' >
+        <main style={{display:'flex', justifyContent:'center'}}>
+            <div className='container'>
               {/* <div className='contents'> */}
                 {/* <section className='center'> */}
                   {/* <div className='search_menu'> */}
-                  <ul className='localFood_list' >
+                  <ul className='localFood_list'>
 {/* li 태그 반복! >> 마우스 클릭 시 문전성시 탭으로 가야함 */}
                       {stores.map((store) => (
                         <li className='data' key={store.id}>
                           <div style={{margin:'10px', border:'1px solid grey', height:'100%', overflow:'hidden'}}>
+                           <Link to={`/detail/${store.areaNm}/${store.title}`}>
                               <figure>
-                                <a target='_blank'>
                                   <img className='img' src={store.imgSrc[0]} alt={store.title}></img>
-                                </a>
                               </figure>
                               <figcaption>
-                                <a className='textBox' target='_blank'>
+                                <div className='textBox' target='_blank'>
                                   <h2>{store.title}</h2>
-                                  <Link to={`/detail/${store.areaNm}/${store.title}`}></Link>
                                   <span className='score' style={{color:'white'}}>{store.rating}</span>
-                                </a>
-                                  <span><a>{store.address}</a></span>
-                               
+                                </div>
+                                  <span>{store.address}</span>
                               </figcaption>
+                            </Link>
                             </div>
                           </li>
                         ))}
@@ -222,17 +219,18 @@ const SearchStores = () => {
                 {/* </section> */}
               {/* </div> */}
             </div>
-      <footer className="footer">
-          <div className="footer-info">
-            <h2>꽁밥</h2>
-            <p>주소: 서울특별시 종로구 평창로 123</p>
-            <p>전화: 02-1234-5678</p>
-            <p>이메일: info@ggongbob.com</p>
-            <p>개인정보처리방침 | 이용약관</p>
-            <p>&copy; 2024 꽁밥. All rights reserved.</p>
-            <button className="scroll-to-top" onClick={scrollToTop}>맨 위로 가기</button>
-          </div>
-        </footer>
+        </main>
+        <footer className="footer">
+            <div className="footer-info">
+              <h2>꽁밥</h2>
+              <p>주소: 서울특별시 종로구 평창로 123</p>
+              <p>전화: 02-1234-5678</p>
+              <p>이메일: info@ggongbob.com</p>
+              <p>개인정보처리방침 | 이용약관</p>
+              <p>&copy; 2024 꽁밥. All rights reserved.</p>
+              <button className="scroll-to-top" onClick={scrollToTop}>맨 위로 가기</button>
+            </div>
+          </footer>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import './DetailPage.css'; 
-import KakaoMap from '../components/KakaoMap';
+import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection'; 
 import Signup from '../MyPage/Signup';
 import Shares from '../MyPage/Shares';
@@ -228,7 +228,7 @@ useEffect(() => {
                       <li className="nav-item">
                         <p className="nav-link">
                           환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
-                        </p> 
+                        </p>
                       </li>
                       <li className="nav-item">
                         <p>
@@ -375,6 +375,7 @@ useEffect(() => {
                 </div>
             </footer>
         </div>
+    </div>
     );
 };
 
