@@ -5,23 +5,17 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif; /* 기본 글꼴 */
-  }
-  
-/* 전체 배경 검정색 설정 */
+  } 
 .container {
     position: relative;
-    padding: 2rem;
-    color: #fff;
+    padding: 1rem;
+    /* color: #000000; */
     border-radius: 10px;
-    background-color: #212529; /* 페이지 배경색 */
-  }
     
-    /* 기본 텍스트 흰색 설정 */
-    .container p, 
-    .container h1 {
+  } 
+.container p, .container h1 {
       color: #fff;
-    }  
-  /* 오른쪽 상단에 배치되는 버튼 스타일 */
+    }   
   .back-to-home {
     position: absolute;
     top: 1rem;
@@ -32,41 +26,48 @@ body {
     border: none;
     border-radius: 30px;
     padding: 0.5rem 1rem;
-  }
-  
-  .back-to-home:hover {
+  } 
+.back-to-home:hover {
     background-color: #f8f9fa; /* 살짝 회색으로 변경 */
     color: #212529;
     text-decoration: none;
-  }
-/* 모달 배경 */
+  } 
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 0; 
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  } 
-  
-  /* 모달 콘텐츠 */
-  .modal-content {
+  }   
+.modal-content {
     color: #000000;
     border-radius: 20px; /* 원하는 정도로 조절 */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 700px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 700px; 
+    height: 500px;
     position: relative;
-  }
   
-  /* 닫기 버튼 */
-  .close-button {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    max-height: 90vh; /* 화면 높이의 90%까지만 사용 */
+  }  
+  .modal-overflow{
+    overflow-y: scroll; /* 모달 내부에서만 스크롤 가능 */ 
+  }
+  .modal-overflow::-webkit-scrollbar {
+    background: white; 
+    width: 10px;
+}
+.close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -74,11 +75,52 @@ body {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-  }
-  
-  .error-message {
+  } 
+.error-message {
     color: red;
     font-size: 0.9rem;
     margin-top: 10px;
+  } 
+.dibs-container12 {
+    position: relative;
+    display: inline-block;
+    border-radius: 5px; /* 원하는 둥글기 정도로 조정 */
+    overflow: hidden; /* 이미지가 둥근 테두리 밖으로 넘치지 않도록 */ 
+    padding: 10px 10px 0px;
+  } 
+.dibs-container {
+    position: relative;
+    display: inline-block;
+    border-radius: 5px; /* 원하는 둥글기 정도로 조정 */
+    overflow: hidden; /* 이미지가 둥근 테두리 밖으로 넘치지 않도록 */ 
+  } 
+.dibs-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 30px; /* 원하는 둥글기 정도로 조정 */
+  } 
+.dibs-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 36px; 
+  } 
+.dids-1 button {
+    margin-right: 10px; /* 버튼과 오른쪽 사이 여백 추가 */
   }
- 
+.table1 {
+    width: 100%;    
+    margin-bottom: 10px; 
+  } 
+  tr{
+    height: 50px;
+  }
+td{  
+  border-color: 1px black;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle; 
+}
