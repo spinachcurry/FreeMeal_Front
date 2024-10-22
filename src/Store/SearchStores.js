@@ -20,6 +20,7 @@ const SearchStores = () => {
       alert("검색어를 입력해주세요");
     }else {
       navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
+      window.location.reload();
     }
   } 
   // 엔터키 눌렀을 때!
