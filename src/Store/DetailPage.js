@@ -7,7 +7,6 @@ import KakaoMap from '../components/KakaoMap';
 import ReviewSection from '../MyPage/ReviewSection'; 
 import Signup from '../MyPage/Signup';
 import Shares from '../MyPage/Shares';
-import { Airplane } from 'react-bootstrap-icons';
 
 const DetailPage = () => {
     const { area, storeId } = useParams();
@@ -71,7 +70,7 @@ const DetailPage = () => {
     // 찜 카운트를 가져오는 함수
     const fetchDibsCount = async (address) => {
         try { 
-            const response = await axios.post('http://localhost:8080/handleDibs', { 
+            const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
                 action: "count",
                 address: address
         });
@@ -86,7 +85,7 @@ const checkUserDibs = async (address) => {
     if (!user) return;
 
     try {
-        const response = await axios.post('http://localhost:8080/handleDibs', { 
+        const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
                 action: "check",
                 userId: user.userId,
                 address: address 
@@ -118,7 +117,7 @@ const toggleDibs = async () => {
         const didStatus = isDibbed ? 0 : 1;
 
         // 서버로 찜 상태를 전송
-        const response = await axios.post('http://localhost:8080/handleDibs', { 
+        const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
                 action: "toggle",
                 userId: user.userId,
                 address: store.address,
@@ -345,5 +344,6 @@ useEffect(() => {
             </footer>
         </div>
     );
-}; 
+};
+
 export default DetailPage;   

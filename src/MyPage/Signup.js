@@ -11,41 +11,61 @@ const Signup = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [duplicateError, setDuplicateError] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const navigate = useNavigate();   
-
-  const handleSignup = async (e) => {
+  const navigate = useNavigate(); 
+  
+  const handleSignup = (e) => {
     e.preventDefault();
-  
-    try {
-      // 'action' 파라미터를 추가하여 서버에 어떤 요청인지 전달 (여기서는 'signup')
-      const response = await fetch('http://localhost:8080/userAction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'signup',  // 회원가입 액션 명시
-          userId,            // 사용자 ID
-          password,          // 비밀번호
-          name,              // 이름
-          user_Nnm,          // 닉네임
-          phone,             // 전화번호
-          email              // 이메일
-        }),
-      });
-  
-      if (response.ok) {
-        const data = await response.text(); // 응답을 텍스트로 처리
+
+    // 회원가입 API 요청
+    fetch('http://localhost:8080/mypage/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, password, name, user_Nnm, phone, email }),
+    })
+      .then((response) => response.text()) // 응답을 JSON이 아닌 텍스트로 처리
+      .then((data) => {
         alert('회원가입이 완료되었습니다.');
         onClose(); // 모달 닫기
         navigate('/'); // 홈 페이지로 이동
-      } else {
-        const errorMessage = await response.text();
-        alert(`회원가입에 실패했습니다: ${errorMessage}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('서버 오류가 발생했습니다.');
-    }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }; 
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     // 'action' 파라미터를 추가하여 서버에 어떤 요청인지 전달 (여기서는 'signup')
+  //     const response = await fetch('http://localhost:8080/userAction', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         action: 'signup',  // 회원가입 액션 명시
+  //         userId,            // 사용자 ID
+  //         password,          // 비밀번호
+  //         name,              // 이름
+  //         user_Nnm,          // 닉네임
+  //         phone,             // 전화번호
+  //         email              // 이메일
+  //       }),
+  //     });
+  
+  //     if (response.ok) {
+  //       const data = await response.text(); // 응답을 텍스트로 처리
+  //       alert('회원가입이 완료되었습니다.');
+  //       onClose(); // 모달 닫기
+  //       navigate('/'); // 홈 페이지로 이동
+  //     } else {
+  //       const errorMessage = await response.text();
+  //       alert(`회원가입에 실패했습니다: ${errorMessage}`);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('서버 오류가 발생했습니다.');
+  //   }
+  // };
+  
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -151,6 +171,6 @@ const Signup = ({ onClose }) => {
       </div>
     </div>
   );
-}; 
- 
+};
+
 export default Signup;

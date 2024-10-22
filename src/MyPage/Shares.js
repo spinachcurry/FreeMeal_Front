@@ -1,7 +1,5 @@
-
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'; 
 
 const Shares = ({ title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,4 +30,4 @@ const Shares = ({ title }) => {
     );
 };
 
-export default Shares; 
+export default Shares;

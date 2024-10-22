@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import { Navigation, Pagination } from 'swiper/modules';
 import axios from 'axios';
-import 'swiper/swiper-bundle.css';
+import 'swiper/swiper-bundle.css'; 
 import  { Link , useNavigate } from 'react-router-dom';
 import Signup from '../MyPage/Signup';
 import SwiperCore from "swiper";
@@ -42,6 +42,7 @@ const MainPage = () => {
       localStorage.removeItem('user');
       localStorage.removeItem('jwtToken');
     };
+
       const [keyword, setKeyword] = useState('');
       const [areaNm, setAreaNm] = useState('전체');
       const handleSearch = () => {
@@ -51,6 +52,7 @@ const MainPage = () => {
           navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
         };
       }    
+
   //  메인 화면 가게 목록 가져오기
     const fetchStores = async (coords) => {
         try {
@@ -113,6 +115,7 @@ const MainPage = () => {
     const handleMouseLeave = () => setDropdownOpen(false);
   
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
         <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
@@ -164,7 +167,6 @@ const MainPage = () => {
           <h1 className="gff">꽁밥</h1>
           <p className="secTitle">우리동네 믿고 먹는 맛집 대장!</p>
               <div className="container-fluid input-group mt-3" style={{width: '48vw'}}>
-
                   <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
                     <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
                     <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>

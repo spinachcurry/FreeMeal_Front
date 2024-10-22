@@ -28,6 +28,8 @@ const SearchStores = () => {
         handleSearch();
       }
     };
+    
+
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // 로그인 관련 코드
@@ -77,7 +79,7 @@ const SearchStores = () => {
     if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
       const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
       
-      ShowstoreList(keykeyword);   
+      ShowstoreList(keykeyword);     
     }else {
       alert("검색어가 없습니다.");
     }
@@ -186,7 +188,7 @@ const SearchStores = () => {
                             </div>
                           </li>
                         ))}
-                  </ul> 
+                  </ul>
                     
                   </div>
                 </section>

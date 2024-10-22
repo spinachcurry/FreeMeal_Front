@@ -10,11 +10,12 @@ body {
 /* 전체 배경 검정색 설정 */
 .container {
     position: relative;
-    padding: 2rem; 
+    padding: 2rem;
     /* color: #000000; */
-    border-radius: 10px; 
-  } 
- 
+    border-radius: 10px;
+    
+  }
+
     /* 기본 텍스트 흰색 설정 */
     .container p, 
     .container h1 {
@@ -78,7 +79,8 @@ body {
     color: red;
     font-size: 0.9rem;
     margin-top: 10px;
-  } 
+  }
+
   .dibs-container12 {
     position: relative;
     display: inline-block;

@@ -8,7 +8,7 @@ import MyFavoriteStores from './MyFavoriteStores';
 const MyPage = () => {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('MyReviews'); 
-  const host = "http://localhost:8080/view?url=";
+  const host = "http://localhost:8080/mypage/view?url=";
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -40,17 +40,16 @@ const MyPage = () => {
         <div>
           <Link to="/updateUserInfo" className="btn btn-primary my-2">회원정보 수정</Link>  
           <button onClick={() => setActiveTab('MyReviews')} className="btn btn-primary my-2">내가 쓴 리뷰</button>
- 
           <button onClick={() => setActiveTab('MyFavoriteStores')} className="btn btn-primary my-2">내가 찜한 가게</button>
-
         </div>
-      </div>  
+      </div> 
+
 
       {/* 조건부 렌더링 */}
       <div className="container mt-5">
-        {activeTab === 'MyReviews' && <MyReviews />} 
+        {activeTab === 'MyReviews' && <MyReviews />}
         {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
- 
+
       </div>
     </>
   );

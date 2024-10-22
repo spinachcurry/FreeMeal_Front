@@ -10,7 +10,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
 
   const handleRequest = async (action, data = {}) => {
     try {
-      const response = await axios.post('http://localhost:8080/reviewAction', { action, ...data });
+      const response = await axios.post('http://localhost:8080/mypage/reviewAction', { action, ...data });
       return response.data;
     } catch (err) {
       setError('오류가 발생했습니다.');
@@ -113,6 +113,6 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
       </table>
     </div>
   );
-}); 
+});
+
 export default ReviewSection;
- 

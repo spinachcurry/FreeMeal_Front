@@ -44,7 +44,7 @@ const MyReviews = () => {
         };
       }
 
-      const response = await axios.post('http://localhost:8080/reviewAction', requestBody, {
+      const response = await axios.post('http://localhost:8080/mypage/reviewAction', requestBody, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -161,6 +161,5 @@ const MyReviews = () => {
     </div>
   );
 };
- 
+
 export default MyReviews;
- 
