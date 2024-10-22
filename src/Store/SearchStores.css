@@ -1,8 +1,9 @@
-
 .container {
-  margin-right: 0;
-  margin-left: auto;
-  max-width: 0;
+  /* margin-right: 0; /
+  / margin-left: auto;
+  max-width: auto; */
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -11,6 +12,8 @@
   display:flex;
   flex-Wrap:wrap;
   width: 70%;
+  padding-left: 0rem;
+  list-style: none;
 }
 
 
@@ -33,15 +36,10 @@
  align-items: end;
 }
 
-.localFood_list {
-  /* width: calc(50%-50px); */
-  list-style: none;
-}
-
 .data {
   width: 50%;
   box-Sizing: border-box; 
-  padding: 10px;  
+  padding: 10px;
 }
 
 .img {
@@ -52,3 +50,4 @@
 .textBox {
   color: #ffffff;
   text-decoration:none;
+}
