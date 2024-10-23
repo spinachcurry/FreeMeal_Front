@@ -152,8 +152,8 @@ const MainPage = () => {
             {user ? (
               <>
                 <li className="nav-item">
-                  <p className="nav-link" style={{ color: 'white' }}>
-                    환영합니다, <Link to="/myPage"style={{ color: 'white' }} >{user.userId}</Link>님 
+                  <p className="nav-link">
+                    환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님 
                   </p> 
                 </li>
                 <li className="nav-item">

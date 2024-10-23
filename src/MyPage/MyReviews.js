@@ -165,15 +165,18 @@ const MyReviews = () => {
       {/* 모달 창 */}
       {isModalOpen && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content1">
             <h3>리뷰 수정</h3>
             <textarea
+              style={{width:'460px'}}
               rows="5"
               value={updatedContent}
               onChange={(e) => setUpdatedContent(e.target.value)}
-            />
-            <button onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
-            <button onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+            /><br/>
+            <div style={{ display: 'flex', justifyContent: 'center'}}>
+              <button style={{marginRight:'10px',width:'250px'}} onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
+              <button style={{width:'250px'}}onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+            </div>
           </div>
         </div>
       )}

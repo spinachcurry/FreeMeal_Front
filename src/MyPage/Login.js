@@ -42,7 +42,7 @@ const LoginModal = () => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content1">
         <button className="close-button" onClick={handleLoginClose} style={{top: '10px'}}>X</button>
         <h2>로그인</h2>
         <form onSubmit={handleSubmit}> 

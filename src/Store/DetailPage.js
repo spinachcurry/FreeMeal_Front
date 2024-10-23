@@ -2,11 +2,11 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
-import './DetailPage.css'; 
-import KakaoMap from '../components/KakaoMap';
+import './DetailPage.css';  
 import ReviewSection from '../MyPage/ReviewSection'; 
 import Signup from '../MyPage/Signup';
 import Shares from '../MyPage/Shares';
+import Menu from '../MyPage/Menu';
 
 const DetailPage = () => {
     const { area, storeId } = useParams();
@@ -274,93 +274,16 @@ useEffect(() => {
             </div>
 
             {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
-            <div className="dibs-container" style={{ display: 'flex', alignItems: 'center', padding: '10px 10px' }} >
+            <div className="dibs-container" style={{ display: 'flex', alignItems: 'center', padding: '0px 35px' }} >
                 <button className='btn btn-light' onClick={toggleDibs}>
                     {isDibbed ? "찜하기" : "찜하기"} 
                 </button>
                 <button className='btn btn-light' onClick={scrollToReview}>리뷰보기</button>  
                 <Shares className='btn btn-light' areaNm={store.areaNm} title={store.title} />
-            </div>  
-            {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
-
-        <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-7'>
-                    <div className='box'>
-                        <div className='info_text'>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                    <th><h4>영업시간</h4></th>
-                                    <td></td>
-                                        <div>
-                                           <div className='inline-div'>
-                                             <div className='inline-div'>일 11:30 ~ 22:30
-                                            </div>
-                                             <div className='inline-div'>
-                                                <label>월,화,수,목,금,토 11:30 ~ 22:00</label>
-                                             </div>
-                                            </div> 
-                                        </div>
-                                    </tr>
-                                    <tr>
-                                    <th><h4>주차</h4></th>
-                                    <td></td>
-                                        <div>
-                                           <div className='inline-div'>
-                                             <div className='inline-div'>주차, 발렛</div>
-                                            </div> 
-                                        </div>
-                                    </tr>
-                                    <tr>
-                                    <th><h4>메뉴</h4></th>
-                                    <td></td>
-                                        <div>
-                                           <div className='inline-div'>
-                                             <div className='inline-div'>(1인)코스(※설명 확인必)
-                                            </div>
-                                             <div className='inline-div'>
-                                                <label>180,000원</label>
-                                             </div>
-                                            </div> 
-                                        </div>
-                                    </tr>
-                                    <tr>
-                                    <th><h4>주소</h4></th>
-                                    <td></td>
-                                        <div>
-                                           <div className='inline-div'>
-                                             <div className='inline-div'>서울특별시 강남구 영동대로 142길 13-3</div>
-                                                <span>지번</span>
-                                             <div className='inline-div'>
-                                                <label>서울특별시 강남구 청담동 130-13</label>
-                                             </div>
-                                            </div> 
-                                        </div>
-                                    </tr>
-                                    <tr>
-                                    <th><h4>전화번호</h4></th>
-                                    <td></td>
-                                        <div>
-                                           <div className='inline-div'>
-                                             <div className='inline-div'>02-543-2987</div>
-                                                <span>지번</span>
-                                            </div> 
-                                        </div>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-5" >
-                  <div className='box' style={{overflow:'hidden'}}>                    
-                    <KakaoMap  location={{ latitude: store.lat, longitude: store.lng }}/>
-                  </div>                                       
-                </div>
-            </div>
-        </div>  
-              
+            </div>   
+         {/* 디테일 상세(메뉴판/지도) */}
+        <Menu address={store.address} location={{ latitude: store.lat, longitude: store.lng }} /> 
+         {/* 리뷰 */}
         <ReviewSection ref={reviewSectionRef}  address={store.address} title={store.title} category={store.category}/>
 
             <footer className="footer">
