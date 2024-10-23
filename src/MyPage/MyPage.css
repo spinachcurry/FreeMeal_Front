@@ -6,16 +6,24 @@ body {
   padding: 0;
   font-family: Arial, sans-serif; /* 기본 글꼴 */
 } 
-.container {
+.container1 {
+
+  color:black;
+  position: relative;
+  padding: 1rem;
+  border-radius: 10px; 
+} 
+.container2 {
+
   color:black;
   position: relative;
   padding: 1rem;
   border-radius: 10px;
   
 } 
-.container p, .container h1 {
+.container1 p, .container1 h1 {
     color: #fff;
-  }   
+  }    
 .back-to-home {
   position: absolute;
   top: 1rem;
@@ -54,12 +62,25 @@ body {
   border-radius: 8px;
   width: 700px; 
   height: 500px;
+  position: relative; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  max-height: 90vh; /* 화면 높이의 90%까지만 사용 */
+}  
+.modal-content1 {
+  color: #000000;
+  border-radius: 20px; /* 원하는 정도로 조절 */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 700px; 
+  height: 500px;
   position: relative;
-
+  /* border: solid red; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 500px;
   max-height: 40vh; /* 화면 높이의 90%까지만 사용 */
-}  
+}   
 .modal-overflow{
   overflow-y: scroll; /* 모달 내부에서만 스크롤 가능 */ 
 }
@@ -108,3 +129,21 @@ border-color: 1px black;
   padding: '10px 10px'
 
 }
+/* menu 관련 css */ 
+.info_table1 {
+  margin-left:20px;
+  width: 90%;
+  height: 400px;
+  /* border: white 2px; */ 
+}
+.info_table1 td{
+  text-align: left;
+}
+.divmenu {
+  width: 200px;
+  height: 150px;
+  border-Radius: 10px;
+  overflow: hidden;
+  margin-Left:100px;
+  }
+/* menu 관련 css */ 

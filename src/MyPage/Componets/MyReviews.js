@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './MyPage.css';
+import '../MyPage.css';
 import { Link } from 'react-router-dom';
 
 const MyReviews = () => {
@@ -115,7 +115,7 @@ const MyReviews = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container1">
       <h2 style={{color:'white'}}>내 리뷰 목록</h2>
 
       <table className="table table-dark table-hover">
@@ -165,15 +165,18 @@ const MyReviews = () => {
       {/* 모달 창 */}
       {isModalOpen && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content1">
             <h3>리뷰 수정</h3>
             <textarea
+              style={{width:'460px'}}
               rows="5"
               value={updatedContent}
               onChange={(e) => setUpdatedContent(e.target.value)}
-            />
-            <button onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
-            <button onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+            /><br/>
+            <div style={{ display: 'flex', justifyContent: 'center'}}>
+              <button style={{marginRight:'10px',width:'250px'}} onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
+              <button style={{width:'250px'}}onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+            </div>
           </div>
         </div>
       )}

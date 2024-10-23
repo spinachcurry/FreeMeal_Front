@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './MyPage.css';
+import '../MyPage.css';
 
 const Signup = ({ onClose }) => {
   const [userId, setUserId] = useState('');
@@ -32,11 +32,13 @@ const Signup = ({ onClose }) => {
         console.error('Error:', error);
       });
   };  
+
+  
   return (
     <div className="modal-overlay">
       <div className="modal-content" > 
         <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
-        <div className="container">
+        <div className="container2">
           <h2 >회원가입</h2>
         </div >
         {duplicateError && <div className="alert alert-danger">{duplicateError}</div>}

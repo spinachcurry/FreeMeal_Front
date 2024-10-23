@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './MyPage.css';
+import '../MyPage.css';
 
 const LoginModal = () => {
   const [user, setUser] = useState(null);
@@ -24,7 +24,7 @@ const LoginModal = () => {
     try {
       const response = await axios.post('http://localhost:8080/mypage/login', { userId, password });
 
-      if (response.data.status) {
+      if (response.data.status) { 
         const { user, jwtToken } = response.data;
         localStorage.setItem('jwtToken', jwtToken);
         localStorage.setItem('user', JSON.stringify(user));
@@ -42,7 +42,7 @@ const LoginModal = () => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content1">
         <button className="close-button" onClick={handleLoginClose} style={{top: '10px'}}>X</button>
         <h2>로그인</h2>
         <form onSubmit={handleSubmit}> 
