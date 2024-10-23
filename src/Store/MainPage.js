@@ -75,6 +75,10 @@ const MainPage = () => {
         handleSearch();
       }
     };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> f5cd21cf18f73036a6becdf28b25fdf756286549
 
     const fetchStores = async (coords) => {
         try {
@@ -179,6 +183,7 @@ const MainPage = () => {
           <h1 className="headerfont">꽁밥</h1>
           <p className="font">우리동네 믿고 먹는 맛집 대장!</p>
 
+<<<<<<< HEAD
       <div className='nemoBox'>
         <select className='selects' onChange={e => setAreaNm(e.target.value)}>
           <option value="전체">지역</option>
@@ -194,6 +199,24 @@ const MainPage = () => {
       </div>
 
       <div style={{marginTop:'200px'}}>
+=======
+              <div className="container-fluid input-group mt-3" style={{width: '48vw'}}>
+                  <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
+                    <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
+                    <option value="강남구" style={{backgroundColor:'white', color:'black'}}>강남구</option>
+                    <option value="강동구" style={{backgroundColor:'white', color:'black'}}>강동구</option>
+                    <option value="강서구" style={{backgroundColor:'white', color:'black'}}>강서구</option>
+                    <option value="양천구" style={{backgroundColor:'white', color:'black'}}>양천구</option>
+                    <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
+                    <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
+                  </select>
+                  <input type="text" className="form-control s9-3" placeholder="음식, 매장" value={keyword}
+                              onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e)=> { if(e.key === 'Enter') {handleSearch(); } }} style={{ width:'10vw' }} />
+                  <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red'}}>검색</button>
+              </div>
+        </div>
+  
+>>>>>>> f5cd21cf18f73036a6becdf28b25fdf756286549
         <div className='main-list'> 
           <h2 className='subfont' style={{ textAlign: 'left'}}>나와 가까운 맛집 추천</h2>
           <Swiper modules={[Autoplay, Navigation, Pagination]}
