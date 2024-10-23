@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './MyPage.css';
+import '../MyPage.css';
 import { Link } from 'react-router-dom';
 
 const MyReviews = () => {

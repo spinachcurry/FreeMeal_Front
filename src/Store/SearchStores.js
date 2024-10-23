@@ -2,7 +2,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import Signup from '../MyPage/Signup';
+import Signup from '../MyPage/Modal/Signup';
 import './SearchStores.css';
 
 const SearchStores = () => {  
@@ -80,7 +80,7 @@ const SearchStores = () => {
           const res = await axios.post(url, keykeyword);
           console.log(res.data);
         setStores(res.data.map((item, i) => ({ 
-        address: item.address, 
+        address: item.address,  
         category: item.category,
         id: 1,
         title: item.title,
@@ -191,37 +191,35 @@ const SearchStores = () => {
           </div>
         </header>  
         
-            <div className='container' >
-              {/* <div className='contents'> */}
-                {/* <section className='center'> */}
-                  {/* <div className='search_menu'> */}
-                  <ul className='localFood_list' >
-{/* li 태그 반복! >> 마우스 클릭 시 문전성시 탭으로 가야함 */}
-                      {stores.map((store) => (
-                        <li className='data' key={store.id}>
-                          <div style={{margin:'10px', border:'1px solid grey', height:'100%', overflow:'hidden'}}>
-                              <figure>
-                                <a target='_blank'>
-                                  <img className='img' src={store.imgSrc[0]} alt={store.title}></img>
-                                </a>
-                              </figure>
-                              <figcaption>
-                                <a className='textBox' target='_blank'>
-                                  <h2>{store.title}</h2>
-                                  <Link to={`/detail/${store.areaNm}/${store.title}`}></Link>
-                                  <span className='score' style={{color:'white'}}>{store.rating}</span>
-                                </a>
-                                  <span><a>{store.address}</a></span>
-                               
-                              </figcaption>
+            <div className='container' > 
+                  <ul className='localFood_list'>
+                    {stores.map((store, index) => (
+                      <li className='data' key={index}>
+                        <div style={{ margin: '10px', border: '1px solid grey', height: '100%', overflow: 'hidden' }}>
+                          <figure>
+                            <a target='_blank' rel="noopener noreferrer" href={store.link}>
+                              <img className='img' src={store.imgSrc[0]} alt={store.title} />
+                            </a>
+                          </figure>
+                          <figcaption>
+                            <div className='textBox'>
+                              <h2>{store.title}</h2>
+                              {/* 중첩된 <a> 태그 대신 <Link> 또는 <div> 등으로 변경 */}
+                              <Link to={`/detail/${store.areaNm}/${store.title}`}>상세보기</Link>
+                              <span className='score' style={{ color: 'white' }}>{store.rating}</span>
                             </div>
-                          </li>
-                        ))}
-                    </ul>
+                            <span>{store.address}</span>
+                          </figcaption>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+
+
                   {/* </div> */}
                 {/* </section> */}
               {/* </div> */}
-            </div>
+            </div> 
       <footer className="footer">
           <div className="footer-info">
             <h2>꽁밥</h2>

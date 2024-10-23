@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../Store/MainPage.css';
+// import '../Store/MainPage.css';
 
 const MyFavoriteStores = () => {
   const [user, setUser] = useState(null);
@@ -56,7 +56,24 @@ const MyFavoriteStores = () => {
   if (!user) {
     return <p>로그인이 필요합니다.</p>;
   }
+//  메인 화면 가게 목록 가져오기
+const jointImageList = (menuItems, imgURLs) => {
+  let imageList = [];
 
+  menuItems.forEach(item => {
+    if(item.image != null){
+      imageList = [...imageList, item.image];
+    }
+  });
+  imgURLs.forEach(item => {
+    imageList = [...imageList, item];
+  })
+
+  if(imageList.length === 0) {
+    imageList = ["/img/noimage.png"]; 
+  }
+  return imageList;
+}
   return (
     <div className="container1">
       <h2 style={{color:'white'}}>나의 찜 목록</h2>
@@ -78,7 +95,7 @@ const MyFavoriteStores = () => {
                   <td> 
                     <div className='divmenu'> 
                       <Link to={`/detail/${store.areaNm}/${store.title}`} style={{ color: 'white', textDecoration: 'none' }}>
-                        <img src={store.imgURL} style={{ width: '100%', height: '100%' }} alt={store.title}/>
+                        <img src={store.imgURL ? store.imgURL : '/img/noimage.png'} style={{ width: '100%', height: '100%' }} alt={store.title}/>
                       </Link> 
                     </div>
                   </td> 

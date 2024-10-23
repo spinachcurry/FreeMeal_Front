@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import './MyPage.css';
-import MyReviews from './MyReviews'; 
-import MyFavoriteStores from './MyFavoriteStores'; 
+import MyReviews from './Componets/MyReviews'; 
+import MyFavoriteStores from './Componets/MyFavoriteStores'; 
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 const MyPage = () => {
@@ -53,7 +53,7 @@ const MyPage = () => {
  
         <footer className="footer">
           <div className="footer-info" > 
-            <h2>꽁밥</h2>
+          <h1 className="headerfont">꽁밥</h1>
             <p>주소: 서울특별시 종로구 평창로 123</p>
             <p>전화: 02-1234-5678</p>
             <p>이메일: info@ggongbob.com</p>

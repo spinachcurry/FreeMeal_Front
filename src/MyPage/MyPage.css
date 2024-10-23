@@ -11,12 +11,19 @@ body {
   color:black;
   position: relative;
   padding: 1rem;
+  border-radius: 10px; 
+} 
+.container2 {
+
+  color:black;
+  position: relative;
+  padding: 1rem;
   border-radius: 10px;
   
 } 
 .container1 p, .container1 h1 {
     color: #fff;
-  }   
+  }    
 .back-to-home {
   position: absolute;
   top: 1rem;
@@ -72,8 +79,8 @@ body {
   /* border: solid red; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 500px;
-  max-height: 30vh; /* 화면 높이의 90%까지만 사용 */
-}  
+  max-height: 40vh; /* 화면 높이의 90%까지만 사용 */
+}   
 .modal-overflow{
   overflow-y: scroll; /* 모달 내부에서만 스크롤 가능 */ 
 }
