@@ -1,11 +1,4 @@
 
-.footerfont {
-  font-family: "Yeon Sung", system-ui;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 48px;
-}
-
 .headerfont {
   font-family: "Yeon Sung", system-ui;
   font-weight: 400;
@@ -26,6 +19,35 @@
   font-size: 28px;
 }
 
+.nemoBox select, 
+.nemoBox input{
+  height: 40px; 
+  padding: 0 10px; 
+  border: 1px solid #ccc;
+  border-radius: 4px; /* 둥근 모서리 */
+}
+
+.nemoBox input {
+  flex-grow: 1; /* 입력 필드가 남은 공간을 차지하게 함 */
+  margin-right: 10px; /* 간격 */  
+}
+
+.nemoBox button{
+  background-color: red; /* 버튼 배경색 */
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 40px; 
+  padding: 0 10px; 
+  margin-left: -9.5px;
+  width: 100px;
+  border-radius: 4px; /* 둥근 모서리 */
+}
+
+.nemoBox button:hover {
+  background-color: darkred; /* 버튼 호버 색상 */
+}
+
 .main-list {
   margin: 10px 10px;
 }
@@ -38,9 +60,15 @@
 .footer {
   background-color:none;
   padding: 50px;
-  text-align: justify;
+  text-align: center;
 }
 
+.footerfont {
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 48px;
+}
 .footer-info {
   font-size: 14px;
   color: #ffffff;
@@ -91,8 +119,14 @@
   cursor: pointer;
   color: white; /* 따옴표 없이 사용 */
   font-weight: 1000; /* 카멜케이스가 아닌 일반 CSS 표기법 사용 */
-  z-index: 9999; /* z-index 값 적용 */
   position: relative; /* z-index가 적용되도록 설정 */
+}
+
+.selects {
+  height: 40px; 
+  padding: 0 10px; 
+  border: 1px solid #ccc;
+  border-radius: 4px; /* 둥근 모서리 */
 }
 
 .btn-primary {

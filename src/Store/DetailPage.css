@@ -21,23 +21,6 @@
   min-width: 100px;
 }
 
-/* .imgBox {}
-
-.input {
-  display: flex;
-  align-items: center; 
-} */
-
-
-.image-section {
-    width:auto;
-    height:100px;
-    overflow:hidden;
-    margin-top:10vw;
-    border-color:1px solid white;
-    display:flex;
-} 
-
 .btn-primary {
     margin-left: 10px;
     background-color: transparent; /* 배경색 제거 */

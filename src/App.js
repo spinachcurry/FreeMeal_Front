@@ -10,6 +10,7 @@ import Login from './MyPage/Login';
 import UpdateUserInfo from './MyPage/UpdateUserInfo';
 import Signup from './MyPage/Signup';  
 import MyReview from './MyPage/MyReviews';
+import HeaderSection from './Store/components/HeaderSection';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/search" element={<SearchStores/>} />
           <Route path="/updateUserInfo" element={<UpdateUserInfo />} />
           <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/HeaderSection" element={<HeaderSection/>} /> */}
         </Routes>
       </Router>
     </UserProvider>

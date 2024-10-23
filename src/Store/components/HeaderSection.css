@@ -1,0 +1,88 @@
+.header {
+    background-color: #282828; /* 헤더 배경색 */
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}
+
+.header-container {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+    justify-content: space-between; /* 양 끝 요소를 양쪽에 배치 */
+  }
+
+.logo {
+    padding: 3px 5px;
+}
+
+.bossBox {
+    flex: 1; /* 중앙 정렬을 위한 유연한 공간 할당 */
+  }
+
+.searchBox {
+    display: flex;
+    align-items: center;
+}
+
+.searchBox select, 
+.searchBox input{
+    height: 40px; 
+    padding: 0 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 둥근 모서리 */
+}
+
+.searchBox input {
+    margin-right: 10px;
+}
+
+.searchBox button {
+    background-color: red; /* 버튼 배경색 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 40px; 
+    padding: 0 10px; 
+    margin-left: -9.5px;
+    width: 100px;
+    border-radius: 4px; /* 둥근 모서리 */
+}
+
+.searchBox button:hover {
+    background-color: darkred; /* 버튼 호버 색상 */
+}
+
+.nav-hidden {
+    visibility: hidden;
+  }
+  
+.navBox {
+    width: 200px; 
+  }
+
+.nav-item {
+    font-size: x-large;
+    color: #fff; 
+    text-decoration: none; 
+}
+
+.nav-item:hover {
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px; /* 사용자 작업 버튼 사이의 간격 */
+  }
+
+.user-actions button {
+    background-color: transparent; /* 배경색 투명 */
+    border: none;
+    color: #fff; 
+    cursor: pointer;
+}
+
+.user-actions button:hover {
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
