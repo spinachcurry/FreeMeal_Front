@@ -7,7 +7,7 @@ import axios from 'axios';
 import 'swiper/swiper-bundle.css'; 
 import { Link, useNavigate } from 'react-router-dom';
 import SwiperCore from "swiper";
-import MyTap from '../MyPage/Componets/MyTap'; 
+import MyTap from '../MyPage/Components/MyTap'; 
 const MainPage = () => {
     const navigate = useNavigate();
 
@@ -104,9 +104,9 @@ const MainPage = () => {
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return (
-        <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
+        <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }} >
             <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" /> 
-            <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 }}> 
+            <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 ,}}> 
                 <nav className="navbar navbar-expand-sm navbar-dark fixed-top" >
                     <div className='container-fluid'>
                         <h1 className='header'>
@@ -117,7 +117,7 @@ const MainPage = () => {
                     </div>
                 </nav>
                 {/* 로그인/회원가입 컴포넌트 추가 */}
-            <MyTap />
+            <MyTap style={{ position: 'relative', zindex: 999}}/>
               <div style={{paddingTop:'10%'}}>
                 <h1 className="headerfont">꽁밥</h1>
                 <p className="font">우리동네 믿고 먹는 맛집 대장!</p>

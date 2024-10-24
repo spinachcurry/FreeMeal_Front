@@ -26,18 +26,18 @@ const MyTap = () => {
     }, []);
 
     return (
-        <div style={{width:310, position: 'absolute', paddingTop:'16px' , top: 8, right: 0 }}>
+        <div style={{width:310, position: 'absolute', top: 8, right: 0 }}>
             <ul className='nav justify-content-end' style={{ color: 'white', fontWeight: '1000'}}>
                 {user ? (
                     <>
                         <li className="nav-item">
-                            <p className="nav-link" style={{ color: 'white' }}>
+                            <p className="nav-link" style={{ color: 'white', fontSize:15 }}>
                                 환영합니다, <Link to="/myPage" style={{ color: 'white' }}>{user.userId}</Link>님
                             </p>
                         </li>
                         <li className="nav-item">
                             <p>
-                                <a onClick={handleLogout} className="nav-link" style={{ cursor: 'pointer' }}> 로그아웃</a>
+                                <a onClick={handleLogout} className="nav-link" style={{ cursor: 'pointer', fontSize:15 }}> 로그아웃</a>
                             </p>
                         </li>
                     </>
@@ -45,12 +45,12 @@ const MyTap = () => {
                     <>
                         <li className="nav-item">
                             <p>
-                                <a onClick={handleLoginOpen} className="nav-link" style={{ cursor: 'pointer' }}>로그인</a>
+                                <a onClick={handleLoginOpen} className="nav-link" style={{ cursor: 'pointer', fontSize:15 }}>로그인</a>
                             </p>
                         </li>
                         <li className="nav-item">
                             <p>
-                                <a onClick={handleSignupOpen} className="nav-link" style={{ cursor: 'pointer' }}>회원가입</a>
+                                <a onClick={handleSignupOpen} className="nav-link" style={{ cursor: 'pointer', fontSize:15 }}>회원가입</a>
                             </p>
                         </li>
                     </>

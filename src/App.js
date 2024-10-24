@@ -7,10 +7,7 @@ import SearchStores     from './Store/SearchStores';
 import { UserProvider } from './MyPage/UserContext'; 
 import MyPage           from './MyPage/MyPage';
 import Login            from './MyPage/Modal/Login';
-import UpdateUserInfo   from './MyPage/Modal/UpdateUserInfo';
-import Signup           from './MyPage/Modal/Signup';  
-import MyReview         from './MyPage/Componets/MyReviews';
-import MyTap            from './MyPage/Componets/MyTap'; 
+import UpdateUserInfo   from './MyPage/Modal/UpdateUserInfo'; 
 
 
 const App = () => {
@@ -21,13 +18,10 @@ const App = () => {
           <Route path="/" element={<MainPage/>} /> 
           <Route path="/detail/:area/:storeId" element={<DetailPage />} />
           <Route path="/login" element={<Login />} /> 
-          <Route path="/myPage" element={<MyPage />} /> 
-          <Route path="/MyTap" element={<MyTap />} /> 
-          <Route path="/myReview" element={<MyReview />} /> 
+          <Route path="/myPage" element={<MyPage />} />  
           <Route path="/detail/:area/:storeId" element={<DetailPage/>} />
           <Route path="/search" element={<SearchStores/>} />
-          <Route path="/updateUserInfo" element={<UpdateUserInfo />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/updateUserInfo" element={<UpdateUserInfo />} /> 
         </Routes>
       </Router>
     </UserProvider>
