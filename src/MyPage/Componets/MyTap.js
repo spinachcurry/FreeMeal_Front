@@ -26,7 +26,7 @@ const MyTap = () => {
     }, []);
 
     return (
-        <div style={{width:310, position: 'absolute', paddingTop:'16px' , top: 8, right: 0 }}>
+        <div style={{width:310, position: 'absolute', paddingTop:'0px' , top: 8, right: 0 }}>
             <ul className='nav justify-content-end' style={{ color: 'white', fontWeight: '1000'}}>
                 {user ? (
                     <>

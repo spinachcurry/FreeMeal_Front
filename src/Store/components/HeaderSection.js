@@ -2,7 +2,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import Signup from '../../MyPage/Signup';
+import Signup from '../../MyPage/Modal/Signup';
 import '../components/HeaderSection.css';
 
 const HeaderSection = ({ showTags = true }) => { 

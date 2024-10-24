@@ -4,9 +4,9 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './DetailPage.css'; 
 import KakaoMap from './components/KakaoMap';
-import ReviewSection from '../MyPage/ReviewSection'; 
-import Signup from '../MyPage/Signup';
-import Shares from '../MyPage/Shares';
+import ReviewSection from '../MyPage/Componets/ReviewSection'; 
+import Signup from '../MyPage/Modal/Signup';
+import Shares from '../MyPage/Componets/Shares';
 import HeaderSection from './components/HeaderSection'; 
 
 const DetailPage = () => {
@@ -48,15 +48,18 @@ const DetailPage = () => {
 
     // 스토어 상세 정보 및 찜 상태 확인
     useEffect(() => {
-        const decodedStoreId = decodeURIComponent(storeId); 
-        fetchStoreDetail(decodedStoreId);
-    }, [storeId]);
+        const decodedStoreId = decodeURIComponent(storeId);
+        const decodedArea = decodeURIComponent(area);
+        fetchStoreDetail(decodedArea, decodedStoreId);
+    }, [area, storeId]);
 
-    const fetchStoreDetail = async (decodedStoreId) => {
+    const fetchStoreDetail = async (decodedArea, decodedStoreId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/storeDetail`, {
-                params: { store: decodedStoreId },
+            console.info("어디 보자: ", decodedArea, decodedStoreId);
+            const response = await axios.post(`http://localhost:8080/storeDetail`, {
+                params: { title: decodedStoreId, areaNm: decodedArea},
             });
+            console.info(response.data);
             setStore(response.data);
             setImages(response.data.images || []);
             
@@ -175,23 +178,6 @@ useEffect(() => {
     if (loading || !store) {
         return <div>로딩 중...</div>;
     }
-
-
-      //검색 버튼 눌렀을 때!
-  const handleSearch = () => {
-    if(keyword === ""){
-      alert("검색어를 입력해주세요");
-    }else {
-      navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
-    };
-  } 
-  // 엔터키 눌렀을 때!
-    const onSubmitSearch = (e) => {
-      if (e.key === "Enter") {
-        handleSearch();
-      }
-    };
-
 
     return (
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
