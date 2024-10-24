@@ -2,7 +2,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import Signup from '../MyPage/Signup';
+import Signup from '../MyPage/Modal/Signup';
 import './SearchStores.css';
 import HeaderSection from './components/HeaderSection'; 
 
