@@ -2,17 +2,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import Signup from '../../MyPage/Signup';
+import Signup from '../../MyPage/Modal/Signup';
 import '../components/HeaderSection.css';
 
 const HeaderSection = ({ showTags = true }) => { 
-  const [searchParams, setSearchParams] = useSearchParams();
+  
   const [areaNm, setAreaNm] = useState('전체');
   const [keyword, setKeyword] = useState('');
-  const [criteria, setCriteria] = useState('party');
-  const [stores, setStores] = useState([]);
-  const localNm = searchParams.get("areaNm");
-  const searching = searchParams.get("keyword");
+  
 
   //검색 버튼 눌렀을 때!
   const handleSearch = () => {  
@@ -53,56 +50,6 @@ const HeaderSection = ({ showTags = true }) => {
         }
     }, []);
     
-    // 검색 후 가게 목록 반복할 코드
-    const jointImageList = (menuItems, imgURLs) => {
-    let imageList = [];
-
-    menuItems.forEach(item => {
-    if(item.image != null){
-        imageList = [...imageList, item.image];
-    }
-    });
-
-    imgURLs.forEach(item => {
-    imageList = [...imageList, item];
-    })
-
-    if(imageList.length === 0) {
-    imageList = ["/img/noimage.png"]; 
-    }
-    return imageList;
-    }
-
-    const ShowstoreList = async(keykeyword) =>  {
-        try {
-             const url = "http://localhost:8080/searchStore";
-             const res = await axios.post(url, keykeyword);
-             console.log(res.data);
-           setStores(res.data.map((item, i) => ({ 
-           address: item.address, 
-           category: item.category,
-           id: i,
-           title: item.title,
-           imgSrc: jointImageList(item.menuItems, item.imgURLs),
-           rating: "⭐️⭐️⭐️⭐️",
-           areaNm: item.areaNm,
-         })));
-   
-          } catch(error) {
-           console.log("오류났다잉~:", error);
-         }
-       };
-   
-     useEffect(()=> {
-       if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
-         const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
-         
-         ShowstoreList(keykeyword);     
-       }else {
-         alert("검색어가 없습니다.");
-       }
-     }, [criteria]);
-
     return (
         <header className='header'>
             <div className='header-container'>

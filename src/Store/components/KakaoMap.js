@@ -14,7 +14,6 @@ const KakaoMap = () => {
     const list = [
         {
             location : { 
-
                 lat: 37.5280,
                 lng: 127.1236
             },
