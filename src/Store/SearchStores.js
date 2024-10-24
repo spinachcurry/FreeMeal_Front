@@ -7,7 +7,11 @@ import './SearchStores.css';
 import HeaderSection from './components/HeaderSection'; 
 
 const SearchStores = () => {  
+  const [searchParams, setSearchParams] = useSearchParams();
   const [stores, setStores] = useState([]); 
+  const [criteria, setCriteria] = useState('party');
+  const localNm = searchParams.get("areaNm");
+  const searching = searchParams.get("keyword");
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -26,6 +30,59 @@ const SearchStores = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('jwtToken');
   };
+
+  
+  // 검색 후 가게 목록 반복할 코드
+  const jointImageList = (menuItems, imgURLs) => {
+    let imageList = [];
+
+    menuItems.forEach(item => {
+    if(item.image != null){
+        imageList = [...imageList, item.image];
+    }
+    });
+
+    imgURLs.forEach(item => {
+    imageList = [...imageList, item];
+    })
+
+    if(imageList.length === 0) {
+    imageList = ["/img/noimage.png"]; 
+    }
+    return imageList;
+    }
+
+
+  //가게 목록 와꾸
+  const ShowstoreList = async(keykeyword) =>  {
+    try {
+         const url = "http://localhost:8080/searchStore";
+         const res = await axios.post(url, keykeyword);
+         console.log(res.data);
+       setStores(res.data.map((item, i) => ({ 
+       address: item.address, 
+       category: item.category,
+       id: i,
+       title: item.title,
+       imgSrc: jointImageList(item.menuItems, item.imgURLs),
+       rating: "⭐️⭐️⭐️⭐️",
+       areaNm: item.areaNm,
+     })));
+
+      } catch(error) {
+       console.log("오류났다잉~:", error);
+     }
+   };
+
+ useEffect(()=> {
+   if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
+     const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
+     
+     ShowstoreList(keykeyword);     
+   }else {
+     alert("검색어가 없습니다.");
+   }
+ }, [criteria]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');

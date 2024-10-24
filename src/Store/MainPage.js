@@ -7,7 +7,7 @@ import axios from 'axios';
 import 'swiper/swiper-bundle.css'; 
 import { Link, useNavigate } from 'react-router-dom';
 import SwiperCore from "swiper";
-import MyTap from '../MyPage/Componets/MyTap'; 
+import MyTap from '../MyPage/Components/MyTap'; 
 const MainPage = () => {
     const navigate = useNavigate();
 

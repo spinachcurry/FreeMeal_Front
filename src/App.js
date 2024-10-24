@@ -9,8 +9,8 @@ import MyPage           from './MyPage/MyPage';
 import Login            from './MyPage/Modal/Login';
 import UpdateUserInfo   from './MyPage/Modal/UpdateUserInfo';
 import Signup           from './MyPage/Modal/Signup';  
-import MyReview         from './MyPage/Componets/MyReviews';
-import MyTap            from './MyPage/Componets/MyTap'; 
+import MyReview         from './MyPage/Components/MyReviews';
+import MyTap            from './MyPage/Components/MyTap'; 
 
 
 const App = () => {

@@ -4,9 +4,9 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './DetailPage.css'; 
 import KakaoMap from './components/KakaoMap';
-import ReviewSection from '../MyPage/Componets/ReviewSection'; 
-import Signup from '../MyPage/Modal/Signup';
-import Shares from '../MyPage/Componets/Shares';
+import ReviewSection from '../MyPage/Components/ReviewSection'; 
+// import Signup from '../MyPage/Modal/Signup';
+import Shares from '../MyPage/Components/Shares';
 import HeaderSection from './components/HeaderSection'; 
 
 const DetailPage = () => {
@@ -183,12 +183,12 @@ useEffect(() => {
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
              <HeaderSection showTags={false}/>
             {/* 가게 음식 이미지 들어갈 자리 */}
-            <main style={{paddingTop:'100px'}}>
-            <div className='foodimglist'>
-                {images.map((image, index) => (
-                    <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
-                ))}
-            </div>
+            <main style={{paddingTop:'60px'}}>
+                <div className='foodimglist'>
+                    {images.map((image, index) => (
+                        <img key={index} src={image} alt={`식당 이미지 ${index + 1}`}/>
+                    ))}
+                </div>
 
             {/* 가게 정보 */}
             <div className='info' style={{textAlign:'center'}}>
@@ -218,7 +218,7 @@ useEffect(() => {
                 </div>
                 <div className="col-5" >
                   <div className='box' style={{overflow:'hidden'}}>                    
-                    <KakaoMap  location={{ latitude: store.lat, longitude: store.lng }}/>
+                    <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>
                   </div>                                       
                 </div>
             </div>
