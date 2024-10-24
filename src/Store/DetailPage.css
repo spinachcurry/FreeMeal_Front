@@ -21,25 +21,6 @@
   min-width: 100px;
 }
 
-.imgBox {
-
-/* .input {
-  display: flex;
-  /* align-items: center;  */
-  /* margin: 0 30vw; */
-}
-
-
-.image-section {
-    width:auto;
-    height:100px; */
-
-    overflow:hidden;
-    margin-top:10vw;
-    border-color:1px solid white;
-    display:flex;
-} 
-
 .btn-primary {
     margin-left: 10px;
     background-color: transparent; /* 배경색 제거 */
@@ -95,6 +76,7 @@
   z-index: 10000; /* 모달 오버레이보다 위에 위치하도록 설정 */
 }
 /* 닫기 버튼 */
+
 .close-button {
   position: absolute; 
   top: 8px;
@@ -105,4 +87,3 @@
   cursor: pointer;
   z-index: 10001; /* 닫기 버튼이 가장 위에 오도록 설정 */
 }
-

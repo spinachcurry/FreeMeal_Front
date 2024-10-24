@@ -3,11 +3,9 @@ import './MainPage.css';
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-// import 'swiper/swiper-bundle.css'; 
 import axios from 'axios';
 import  { Link , useNavigate } from 'react-router-dom';
 import Signup from '../MyPage/Signup';
-import SwiperCore from "swiper";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -53,7 +51,6 @@ const MainPage = () => {
       }    
 
   //  메인 화면 가게 목록 가져오기
-
       const jointImageList = (menuItems, imgURLs) => {
         let imageList = [];
 
@@ -71,6 +68,17 @@ const MainPage = () => {
         }
         return imageList;
       }
+
+    // 엔터키 눌렀을 때!
+    const onSubmitSearch = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> f5cd21cf18f73036a6becdf28b25fdf756286549
 
     const fetchStores = async (coords) => {
         try {
@@ -136,18 +144,11 @@ const MainPage = () => {
     
     return (
       <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>
-        <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '60vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
-  
+          <div style={{border:'10px solid #fff', display:'flex', position:'fixed'}} >
+            <a img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고' href='/'/>
+          </div>
+        <img src={`${process.env.PUBLIC_URL}/img/back.jpg`} className="img-fluid p-0" style={{ width: '100%', maxHeight: '50vh', opacity: 0.4, objectFit: 'cover' }} alt="배경 이미지" />
         <div style={{ position: 'absolute', top: '0vh', width: '100%', left: 0 }}>
-            <nav className="navbar navbar-expand-sm navbar-dark fixed-top" >
-            <div className='container-fluid'>
-              <h1 className='header'>
-                <a className='logo' href='/'>
-                  <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고' />
-                </a>
-              </h1>
-              </div>
-            </nav>
           <ul className='nav justify-content-end' style={{ color: 'white', fontWeight: '1000' }}>
             {user ? (
               <>
@@ -178,11 +179,27 @@ const MainPage = () => {
             )}
             {isSignupOpen && <Signup onClose={handleSignupClose} />}
           </ul>   
-  
 
           <h1 className="headerfont">꽁밥</h1>
           <p className="font">우리동네 믿고 먹는 맛집 대장!</p>
 
+<<<<<<< HEAD
+      <div className='nemoBox'>
+        <select className='selects' onChange={e => setAreaNm(e.target.value)}>
+          <option value="전체">지역</option>
+          <option value="강남구">강남구</option>
+          <option value="강동구">강동구</option>
+          <option value="강서구">강서구</option>
+        </select>
+        <input type='text' placeholder='메뉴, 매장, 음식' onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)}/>
+          <button onClick={onSubmitSearch}>
+            <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{ width: '20px' }} alt="search"/>
+              <span>검색</span>
+        </button>
+      </div>
+
+      <div style={{marginTop:'200px'}}>
+=======
               <div className="container-fluid input-group mt-3" style={{width: '48vw'}}>
                   <select className="form-select" onChange={e => setAreaNm(e.target.value)} aria-label="지역 선택" style={{ textAlign:'center', backgroundColor: 'red', color: 'white', border:'none' }}>
                     <option value="전체" style={{ backgroundColor:'white', color:'black' }}>지역 선택</option>
@@ -193,12 +210,13 @@ const MainPage = () => {
                     <option value="마포구" style={{backgroundColor:'white', color:'black'}}>마포구</option>
                     <option value="종로구" style={{backgroundColor:'white', color:'black'}}>종로구</option>
                   </select>
-                  <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ width:'15vw' }} />
-                    {/* 가게 검색 결과 */}
+                  <input type="text" className="form-control s9-3" placeholder="음식, 매장" value={keyword}
+                              onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e)=> { if(e.key === 'Enter') {handleSearch(); } }} style={{ width:'10vw' }} />
                   <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red'}}>검색</button>
               </div>
         </div>
   
+>>>>>>> f5cd21cf18f73036a6becdf28b25fdf756286549
         <div className='main-list'> 
           <h2 className='subfont' style={{ textAlign: 'left'}}>나와 가까운 맛집 추천</h2>
           <Swiper modules={[Autoplay, Navigation, Pagination]}
@@ -213,7 +231,6 @@ const MainPage = () => {
                   <span>{store.rating}</span>
                   <p className='p'>{store.address}</p>
               </div>
-
               </SwiperSlide>
             ))}
           </Swiper>
@@ -260,6 +277,7 @@ const MainPage = () => {
             ))}
           </Swiper>
         </div>
+      </div>
   
         <footer className="footer">
           <div className="footer-info" >
@@ -271,9 +289,10 @@ const MainPage = () => {
             <p>개인정보처리방침 | 이용약관</p>
             <p>&copy; 2024 꽁밥. All rights reserved.</p>
           </div>
-        </footer>
             <button className="scroll-to-top" onClick={scrollToTop}>맨 위로 가기</button>
+        </footer>
       </div>
+    </div>
     );
   };
   

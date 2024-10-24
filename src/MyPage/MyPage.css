@@ -6,15 +6,12 @@ body {
   padding: 0;
   font-family: Arial, sans-serif; /* 기본 글꼴 */
 } 
-.container {
-
+.container1 {
   color:black;
   position: relative;
-  padding: 1rem;
   border-radius: 10px;
-  
 } 
-.container p, .container h1 {
+.container1 p, .container1 h1 {
     color: #fff;
   }   
 .back-to-home {
@@ -102,7 +99,7 @@ border-color: 1px black;
 .mb-3{
   color: #b8b8b8;
 }
-.dibs-container{
+.dibs-container1{
   display: 'flex';
   align-items: 'center';
   gap: '10px';
