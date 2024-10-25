@@ -5,7 +5,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Signup from '../../MyPage/Modal/Signup';
 import '../components/HeaderSection.css';
 
-const HeaderSection = ({ showTags = true }) => { 
+const HeaderSection = ({ showTags = true, localNm, searching, criteria }) => { 
   
   const [areaNm, setAreaNm] = useState('전체');
   const [keyword, setKeyword] = useState('');
@@ -16,10 +16,15 @@ const HeaderSection = ({ showTags = true }) => {
     if(keyword === ""){
       alert("검색어를 입력해주세요");
     }else {
-      navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
+      navigate(`/search?areaNm=${areaNm}&keyword=${keyword}&criteria=${criteria}`);
       window.location.reload();
     }
   } 
+  // 네비 버튼 클릭 이벤트!!
+  const buttonEvent = (value) => {
+    navigate(`/search?areaNm=${localNm}&keyword=${searching}&criteria=${value}`);
+    window.location.reload();
+  }
   // 엔터키 눌렀을 때!
     const onSubmitSearch = (e) => {
       if (e.key === "Enter") {
@@ -43,6 +48,12 @@ const HeaderSection = ({ showTags = true }) => {
         localStorage.removeItem('jwtToken');
     };
 
+    const cssEvent = value => {
+        return (value === 'party') ? 
+          (criteria === value ? 'btn-left-active' : '')
+        : (criteria === value ? 'btn-right-active' : '');
+    }
+
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
@@ -53,31 +64,34 @@ const HeaderSection = ({ showTags = true }) => {
     return (
         <header className='header'>
             <div className='header-container'>
-                <a className='logo' href='/'>
-                    <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고' />
-                </a>
-                <div className='bossBox' >
-                    <div className='searchBox'>
-                        <select onChange={e => setAreaNm(e.target.value)}>
-                            <option value="전체">지역</option>
-                            <option value="강남구">강남구</option>
-                            <option value="강동구">강동구</option>
-                            <option value="강서구">강서구</option>
-                            <option value="강서구">양천구</option>
-                            <option value="강서구">강북구</option>
-                        </select>
-                        <input type='text' placeholder='메뉴, 매장, 음식' onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)} />
-                        <button onClick={onSubmitSearch}>
-                          <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{ width: '20px' }} alt="search"/>
-                            <span>검색</span>
-                        </button>
+                {/* <div> */}
+                    <a className='logo' href='/'>
+                        <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고' />
+                    </a>
+                    <div className='bossBox' >
+                        <div className='searchBox'>
+                            <select onChange={e => setAreaNm(e.target.value)}>
+                                <option value="전체">지역</option>
+                                <option value="강남구">강남구</option>
+                                <option value="강동구">강동구</option>
+                                <option value="강서구">강서구</option>
+                                <option value="강서구">양천구</option>
+                                <option value="강서구">강북구</option>
+                            </select>
+                            <input type='text' placeholder='메뉴, 매장, 음식' onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)} />
+                            <button onClick={onSubmitSearch}>
+                            <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{ width: '20px' }} alt="search"/>
+                                <span>검색</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                {/* </div> */}
                 {showTags ? (
                     <div className='navBox'>
-                        <nav>
-                            <Link to='#' className='nav-item' >문전성시</Link>
-                            <Link to='#' className='nav-item' >네돈내산</Link>
+                        <nav style={{display:'flex', gap: '10px'}}>
+                            <button type='button' className={cssEvent('party')} onClick={()=>buttonEvent('party')} >문전성시</button>
+                            <button type='button' className={cssEvent('price')} onClick={()=>buttonEvent('price')} >네돈내산</button>
+                            {/* <Link to='#' className='nav-item' >네돈내산</Link> */}
                         </nav>
                     </div>
                 ) : (

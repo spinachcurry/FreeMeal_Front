@@ -94,7 +94,7 @@
 }
 
 /* 새롭게 단장할 메인 화면 */
-.swiper-container {
+.swiper-wrap {
   width: 100%;
   margin: 0 auto; /* 중앙 정렬 */
 }

@@ -1,15 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.css';
 import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react'; 
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 import axios from 'axios';
-import 'swiper/swiper-bundle.css'; 
 import { Link, useNavigate } from 'react-router-dom';
-import SwiperCore from "swiper";
+// import SwiperCore from "swiper";
 import MyTap from '../MyPage/Components/MyTap'; 
 const MainPage = () => {
     const navigate = useNavigate();
+
+    //검색 버튼 눌렀을 때!
+  const handleSearch = () => {  
+    if(keyword === ""){
+      alert("검색어를 입력해주세요");
+    }else {
+        navigate(`/search?areaNm=${areaNm}&keyword=${keyword}&criteria=party`);
+      window.location.reload();
+    }
+  } 
+  // 엔터키 눌렀을 때!
+    const onSubmitSearch = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    };
 
     // 내 주변, 가격순, 방문순 가게 목록
     const [stores, setStores] = useState([]);
@@ -91,13 +107,6 @@ const MainPage = () => {
         }
     }, []);
 
-    const handleSearch = () => {
-        if (keyword === "") {
-            alert("검색어를 입력해주세요");
-        } else {
-            navigate("/search?areaNm=" + areaNm + "&keyword=" + keyword);
-        }
-    };
 
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -129,7 +138,7 @@ const MainPage = () => {
                         <option value="마포구" style={{ backgroundColor: 'white', color: 'black' }}>마포구</option>
                         <option value="종로구" style={{ backgroundColor: 'white', color: 'black' }}>종로구</option>
                     </select>
-                    <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ width: '15vw' }} />
+                    <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)} style={{ width: '15vw' }} />
                     <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red' }}>검색</button>
                 </div>
               </div>  
@@ -138,10 +147,22 @@ const MainPage = () => {
             {/* 나와 가장 가까운 맛집 추천 */}
             <div className='main-list'> 
               <h2 className='subfont' style={{ textAlign: 'left'}}>나와 가까운 맛집 추천</h2>
-              <Swiper modules={[Autoplay, Navigation, Pagination]}
-                  navigation className="swiper-container"
-                  spaceBetween={30} slidesPerView={5} loop={true} 
-                  autoplay={{delay: 2500, disableOnInteraction: true, speed:3000}}>
+                <div className='siwper-container mainsc'>
+              <Swiper className='swiper-wrap'
+                    modules={[Autoplay, Navigation, Pagination]}
+                    navigation = {{
+                        nextEl: '.swiper-button-next msc',
+                        prevEl: '.swiper-button-prev msc',
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                        slidesPerView={5}
+                        loop={true}
+                        autoHeight={true}
+                        spaceBetween={30}   
+                        autoplay={{delay: 2500, disableOnInteraction: true, speed:3000}}>
+                   {'>'}
                 {stores.map(store => (
                   <SwiperSlide key={store.id} className="swiper-slide">
                     <div className="restaurant-item">
@@ -152,7 +173,10 @@ const MainPage = () => {
                     </div> 
                   </SwiperSlide>
             ))}
+              <div className="swiper-button-next msc" ></div>
+              <div className="swiper-button-prev msc" ></div>
           </Swiper>
+          </div>
         </div>
 
             {/* 구매 금액 가장 높은 맛집 추천 */}

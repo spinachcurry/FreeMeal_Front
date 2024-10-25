@@ -59,16 +59,36 @@
   
 .navBox {
     width: 200px; 
-  }
-
-.nav-item {
-    font-size: x-large;
-    color: #fff; 
-    text-decoration: none; 
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navBox button {
+    border-radius: 0;
+    background-color: #282828;
+    border: 0;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    white-space: nowrap;
 }
 
-.nav-item:hover {
-    text-decoration: underline; /* 호버 시 밑줄 추가 */
+.navBox button::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    width: calc(50% - 5px);
+    height: 5px;
+}
+.navBox button.btn-left-active::before {
+    left: 0;
+    background-color: red;
+}
+.navBox button.btn-right-active::before {
+    right: -4px;
+    background-color: red;
 }
 
 .user-actions {

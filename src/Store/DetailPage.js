@@ -3,23 +3,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import './DetailPage.css'; 
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/Components/ReviewSection'; 
-// import Signup from '../MyPage/Modal/Signup';
 import Shares from '../MyPage/Components/Shares';
 import HeaderSection from './components/HeaderSection'; 
+// import 'swiper/swiper-bundle.min.css';
+
 
 const DetailPage = () => {
     const { area, storeId } = useParams();
     const navigate = useNavigate();
+   
 
     // 상태 관리
     const [user, setUser] = useState(null);
     const [store, setStore] = useState(null);
     const [images, setImages] = useState([]);
 
-    const [keyword, setKeyword] = useState('');
-    const [areaNm, setAreaNm] = useState('전체');
+    // const [keyword, setKeyword] = useState('');
+    // const [areaNm, setAreaNm] = useState('전체');
 
     const [loading, setLoading] = useState(true);
     const [isSignupOpen, setSignupModalOpen] = useState(false);
@@ -61,8 +65,11 @@ const DetailPage = () => {
             });
             console.info(response.data);
             setStore(response.data);
-            setImages(response.data.images || []);
-            
+            setImages(jointImageList(response.data.menuItems, response.data.imgURLs));
+            //6개 이하일 때 (length) for 문으로 이미지 복제 로직
+            //만들기!!
+
+
             // 가게 정보를 가져온 후 찜 상태와 찜 카운트를 가져옴
             if (response.data && response.data.address) {
                 fetchDibsCount(response.data.address);
@@ -74,7 +81,28 @@ const DetailPage = () => {
         } finally {
             setLoading(false);
         }
-    }; 
+    };
+
+     // 검색 후 가게 목록 반복할 코드
+  const jointImageList = (menuItems, imgURLs) => {
+    let imageList = [];
+
+    menuItems.forEach(item => {
+    if(item.image != null){
+        imageList = [...imageList, item.image];
+    }
+    });
+
+    imgURLs.forEach(item => {
+    imageList = [...imageList, item];
+    })
+
+    if(imageList.length === 0) {
+    imageList = ["/img/noimage.png"]; 
+    }
+    return imageList;
+    }
+
     // 찜 카운트를 가져오는 함수
     const fetchDibsCount = async (address) => {
         try { 
@@ -174,7 +202,6 @@ useEffect(() => {
             console.error("reviewSectionRef가 초기화되지 않았습니다.");
         }
     };
-
     if (loading || !store) {
         return <div>로딩 중...</div>;
     }
@@ -182,14 +209,38 @@ useEffect(() => {
     return (
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
              <HeaderSection showTags={false}/>
-            {/* 가게 음식 이미지 들어갈 자리 */}
-            <main style={{paddingTop:'60px'}}>
-                <div className='foodimglist'>
-                    {images.map((image, index) => (
-                        <img key={index} src={image} alt={`식당 이미지 ${index + 1}`}/>
-                    ))}
-                </div>
+            <main style={{paddingTop:'75px'}}>
 
+            {/* 가게 음식 이미지 들어갈 자리 */}
+            <div className='kingdiv' >
+                <div className='swiper-container' id='dtail-sc'>
+                    <Swiper
+                        modules={[Navigation, Pagination]}
+                        navigation={{
+                            nextEl: '.swiper-button-next detail',
+                            prevEl: '.swiper-button-prev detail',
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        slidesPerView={6} 
+                        loop={true} // 화면 크기에 맞게 조절하세요
+                        loopedSlides={images.length}
+                        centeredSlides={true}
+                        slidesOffsetBefore={3}
+                        
+                        >
+                        {images.map((image, index) => (
+                            <SwiperSlide key={index} >
+                                <img src={image} alt={`식당 이미지 ${index + 1}`} style={{width:'100%', height:'30vh'}}/>
+                            </SwiperSlide>
+                        ))}
+                        <div className="swiper-button-next" id='detail-right-btn' ></div>
+                        <div className="swiper-button-prev" id='detail-left-btn' ></div>
+                    </Swiper>
+                </div>
+            </div>
+              <br></br>
             {/* 가게 정보 */}
             <div className='info' style={{textAlign:'center'}}>
                 <h2>{store.title}</h2>

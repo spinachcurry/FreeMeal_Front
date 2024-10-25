@@ -9,7 +9,7 @@ import HeaderSection from './components/HeaderSection';
 const SearchStores = () => {  
   const [searchParams, setSearchParams] = useSearchParams();
   const [stores, setStores] = useState([]); 
-  const [criteria, setCriteria] = useState('party');
+  const [criteria, setCriteria] = useState(searchParams.get("criteria") == null ? 'party' : searchParams.get("criteria"));
   const localNm = searchParams.get("areaNm");
   const searching = searchParams.get("keyword");
 
@@ -75,6 +75,7 @@ const SearchStores = () => {
    };
 
  useEffect(()=> {
+  // console.log(criteria);
    if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
      const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
      
@@ -82,7 +83,8 @@ const SearchStores = () => {
    }else {
      alert("검색어가 없습니다.");
    }
- }, [criteria]);
+//  }, [criteria]);
+ }, []);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -95,7 +97,7 @@ const SearchStores = () => {
   // 화면에 렌더링할 JSX
   return (
     <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
-        <HeaderSection/>
+        <HeaderSection localNm={localNm} searching={searching} criteria={criteria}/>
         <main style={{display:'flex', justifyContent:'center', paddingTop:'100px'}}>
             <div className='container'>
                 <ul className='ulul'>
