@@ -24,7 +24,7 @@ const Shares = ({ areaNm, title }) => {
     return (
         <div>
             {/* 모달 열기 버튼 */}
-            <button className='btn btn-light' onClick={openShareModal}>공유하기</button>
+            <button className='btn 'style={{color:'white'}} onClick={openShareModal}>공유하기</button>
 
             {/* 모달 오버레이 */}
             {isModalOpen && (
