@@ -66,7 +66,6 @@ const UpdateUserInfo = () => {
     formData.append('review', review || '한마디가 없습니다.'); // 기본 한마디 설정 
     formData.append('status', status ); // 기본 한마디 설정
     
-    
     // 비밀번호가 입력되었을 때만 추가
     if (password) {
       formData.append('password', password);
@@ -102,10 +101,17 @@ const UpdateUserInfo = () => {
     navigate('/myPage'); // 닫기 시 마이 페이지로 이동
   };
 
+  // 모달 외부 클릭 시 닫기
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   return (
     isModalOpen && (
-      <div className="modal-overlay">
-        <div className="modal-content">
+      <div className="modal-overlay" onClick={handleOverlayClick}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <button className="close-button" onClick={closeModal}>&times;</button> 
             <h1>프로필 수정</h1> 
           <div className="modal-overflow">
