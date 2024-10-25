@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import './MyPage.css';
-import MyReviews from './Componets/MyReviews'; 
-import MyFavoriteStores from './Componets/MyFavoriteStores'; 
+import MyReviews from './Components/MyReviews'; 
+import MyFavoriteStores from './Components/MyFavoriteStores'; 
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 const MyPage = () => {
