@@ -40,9 +40,16 @@ const LoginModal = () => {
     }
   };
 
+  // 오버레이 클릭 시 모달 닫기
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleLoginClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
-      <div className="modal-content1">
+    <div className="modal-overlay" onClick={handleOverlayClick}>
+      <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
         <button className="close-button" onClick={handleLoginClose} style={{top: '10px'}}>X</button>
         <h2>로그인</h2>
         <form onSubmit={handleSubmit}> 
