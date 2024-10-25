@@ -4,9 +4,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './DetailPage.css'; 
 import KakaoMap from './components/KakaoMap';
-import ReviewSection from '../MyPage/Components/ReviewSection'; 
-// import Signup from '../MyPage/Modal/Signup';
+import ReviewSection from '../MyPage/Components/ReviewSection';  
 import Shares from '../MyPage/Components/Shares';
+import Menu from '../MyPage/Components/Menu';
+import MenuImg from '../MyPage/Components/MenuImg';
 import HeaderSection from './components/HeaderSection'; 
 
 const DetailPage = () => {
@@ -48,18 +49,15 @@ const DetailPage = () => {
 
     // 스토어 상세 정보 및 찜 상태 확인
     useEffect(() => {
-        const decodedStoreId = decodeURIComponent(storeId);
-        const decodedArea = decodeURIComponent(area);
-        fetchStoreDetail(decodedArea, decodedStoreId);
-    }, [area, storeId]);
+        const decodedStoreId = decodeURIComponent(storeId); 
+        fetchStoreDetail(decodedStoreId);
+    }, [storeId]);
 
-    const fetchStoreDetail = async (decodedArea, decodedStoreId) => {
+    const fetchStoreDetail = async (decodedStoreId) => {
         try {
-            console.info("어디 보자: ", decodedArea, decodedStoreId);
-            const response = await axios.post(`http://localhost:8080/storeDetail`, {
-                params: { title: decodedStoreId, areaNm: decodedArea},
+            const response = await axios.get(`http://localhost:8080/storeDetail`, {
+                params: { store: decodedStoreId },
             });
-            console.info(response.data);
             setStore(response.data);
             setImages(response.data.images || []);
             
@@ -177,18 +175,34 @@ useEffect(() => {
 
     if (loading || !store) {
         return <div>로딩 중...</div>;
-    }
+    } 
+
+      //검색 버튼 눌렀을 때!
+  const handleSearch = () => {
+    if(keyword === ""){
+      alert("검색어를 입력해주세요");
+    }else {
+      navigate("/search?areaNm=" + [areaNm] + "&" + "keyword=" + [keyword]);
+    };
+  } 
+  // 엔터키 눌렀을 때!
+    const onSubmitSearch = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    };
+
 
     return (
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
              <HeaderSection showTags={false}/>
             {/* 가게 음식 이미지 들어갈 자리 */}
-            <main style={{paddingTop:'60px'}}>
-                <div className='foodimglist'>
-                    {images.map((image, index) => (
-                        <img key={index} src={image} alt={`식당 이미지 ${index + 1}`}/>
-                    ))}
-                </div>
+            <main style={{paddingTop:'100px'}}>
+            <div className='foodimglist'>
+                {images.map((image, index) => (
+                    <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
+                ))}
+            </div>
 
             {/* 가게 정보 */}
             <div className='info' style={{textAlign:'center'}}>
@@ -198,32 +212,15 @@ useEffect(() => {
                 <img src='/img/bg_ico_s_like.png' alt=""/> {dibsCount}
             </div>
 
-            {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
-            <div className="dibs-container" style={{ display: 'flex', alignItems: 'center', padding: '10px 10px' }} >
-                <button className='btn btn-light' onClick={toggleDibs}>
+            {/* 찜하기, 리뷰 보기, 공유하기 버튼 */} 
+            <div className="dibs-container"style={{marginLeft:'5%',width:'90%', display: 'flex',justifyContent: 'flex-end', alignItems: 'center', padding: '0px 35px', backgroundColor: 'red', color: 'white' }}>
+                <button className='btn btn-light' onClick={toggleDibs}style={{color:'white'}}>
                     {isDibbed ? "찜하기" : "찜하기"} 
                 </button>
-                <button className='btn btn-light' onClick={scrollToReview}>리뷰보기</button>  
-                <Shares className='btn btn-light' areaNm={store.areaNm} title={store.title} />
+                <button className='btn ' onClick={scrollToReview}style={{color:'white'}}>리뷰보기</button>  
+                <Shares className='btn 'style={{color:'white'}} areaNm={store.areaNm} title={store.title} />
             </div>  
-            {/* 찜하기, 리뷰 보기, 공유하기 버튼 */}
-
-        <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-7'>
-                    <div className='box'>
-                        <div className='info_text'>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-5" >
-                  <div className='box' style={{overflow:'hidden'}}>                    
-                    <KakaoMap location={{ latitude: store.lat, longitude: store.lng }}/>
-                  </div>                                       
-                </div>
-            </div>
-        </div>  
-              
+            <Menu address={store.address} location={{ latitude: store.lat, longitude: store.lng }} /> 
         <ReviewSection ref={reviewSectionRef}  address={store.address} title={store.title} category={store.category}/>
     </main>
             <footer className="footer">
