@@ -31,11 +31,16 @@ const Signup = ({ onClose }) => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  };  
-
+  };   
+  // 오버레이 클릭 시 모달 닫기
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
   
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay"onClick={handleOverlayClick}>
       <div className="modal-content" > 
         <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
         <div className="container2">
