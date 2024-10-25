@@ -94,6 +94,13 @@ const MyReviews = () => {
     setUpdatedContent('');
   };
 
+  // 모달 외부 클릭 시 닫기
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
   // 리뷰 수정 저장
   const handleSaveChanges = () => {
     if (!selectedReview) return;
@@ -164,8 +171,8 @@ const MyReviews = () => {
 
       {/* 모달 창 */}
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content1">
+        <div className="modal-overlay" onClick={handleOverlayClick}>
+          <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
             <h3>리뷰 수정</h3>
             <textarea
               style={{width:'460px'}}
