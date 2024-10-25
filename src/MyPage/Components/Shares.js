@@ -24,12 +24,12 @@ const Shares = ({ areaNm, title }) => {
     return (
         <div>
             {/* 모달 열기 버튼 */}
-            <button className='btn 'style={{color:'white'}} onClick={openShareModal}>공유하기</button>
+            <button className='btn ' style={{ color: 'white' }} onClick={openShareModal}>공유하기</button>
 
             {/* 모달 오버레이 */}
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeShareModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}> 
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="close-button" onClick={closeShareModal} style={{ top: '10px' }}>X</button>
                         <h3>공유하기</h3>
                         <br/>
