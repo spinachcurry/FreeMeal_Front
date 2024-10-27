@@ -11,6 +11,8 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 // import SwiperCore from "swiper";
 import MyTap from '../MyPage/Components/MyTap'; 
+import PigRating from './components/PigRating';
+
 
 
 const MainPage = () => {
@@ -63,11 +65,12 @@ const MainPage = () => {
         try {
             const url = "http://localhost:8080/storeNearby";
             const res = await axios.post(url, coords);
+            console.log(res.data);
             setStores(res.data.nearbyStore.map((item, i) => ({
                 id: i,
                 title: item.title,
                 address: item.address,
-                rating: "⭐️⭐️⭐️⭐️",
+                rating: <PigRating popularity={item.bills}/>,
                 imgSrc: jointImageList(item.menuItems, item.imgURLs),
                 areaNm: item.areaNm
             })));
@@ -75,7 +78,7 @@ const MainPage = () => {
                 id: i,
                 title: item.title,
                 address: item.address,
-                rating: "⭐️⭐️⭐️⭐️",
+                rating: <PigRating popularity={item.bills}/>,
                 imgSrc: jointImageList(item.menuItems, item.imgURLs),
                 areaNm: item.areaNm
             })));
@@ -83,7 +86,7 @@ const MainPage = () => {
                 id: i,
                 title: item.title,
                 address: item.address,
-                rating: "⭐️⭐️⭐️⭐️",
+                rating: <PigRating popularity={item.bills}/>,
                 imgSrc: jointImageList(item.menuItems, item.imgURLs),
                 areaNm: item.areaNm
             })));

@@ -1,3 +1,7 @@
+.p {
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
 
 .headerfont {
   font-family: "Yeon Sung", system-ui;
@@ -55,6 +59,7 @@
 .h6 {
   text-align: center;
   margin-top: 5px;
+  font-size: 20px;
 }
 
 .footer {

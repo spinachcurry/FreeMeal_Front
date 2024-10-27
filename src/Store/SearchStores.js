@@ -6,7 +6,8 @@ import Signup from '../MyPage/Modal/Signup';
 import './SearchStores.css';
 import HeaderSection from './components/HeaderSection'; 
 import { PacmanLoader } from 'react-spinners';
-import Loading from '../components/Loading'; 
+import Loading from './components/Loading'; 
+import PigRating from './components/PigRating';
 
 const SearchStores = () => {
   const [loading, setLoading] = useState(true); 
@@ -64,13 +65,13 @@ const SearchStores = () => {
          const url = "http://localhost:8080/searchStore";
          const res = await axios.post(url, keykeyword);
          console.log(res.data);
-       setStores(res.data.map((item, i) => ({ 
+       setStores(res.data.storeData.map((item, i) => ({ 
        address: item.address, 
        category: item.category,
        id: i,
        title: item.title,
        imgSrc: jointImageList(item.menuItems, item.imgURLs),
-       rating: "⭐️⭐️⭐️⭐️",
+       rating: <PigRating popularity={item.bills}/>,
        areaNm: item.areaNm,
      })));
 
