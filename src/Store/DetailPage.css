@@ -1,4 +1,4 @@
-#dtail-sc {
+.kingdiv {
   position: relative;
 }
 
@@ -7,6 +7,7 @@
   width: 40px; /* 화살표 크기 조절 */
   height: 40px;
   color: red; /* 화살표 색상 변경 */
+  z-index: 2;
 }
 
 #detail-right-btn{
@@ -21,16 +22,18 @@
   transform: translateX(-50%); /* 중앙으로 화살표 정렬 */
 }
 
-.swiper-slide{
-  opacity: 0.3;
+.ggaeddong {
+  opacity: 0.2;
 }
 
-#detail-left-btn, .swiper-slide-active, #detail-right-btn {
-  opacity: 1;
+.swiper-slide-active {
+  opacity: 1 !important; /* 현재 활성 슬라이드 */
 }
-.kingdiv {
-  position: relative;
-} 
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 1 !important; /* 이전 및 다음 슬라이드 */
+}
 
 .box{
   border: 1px solid gray;

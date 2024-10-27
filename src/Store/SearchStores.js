@@ -5,8 +5,11 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Signup from '../MyPage/Modal/Signup';
 import './SearchStores.css';
 import HeaderSection from './components/HeaderSection'; 
+import { PacmanLoader } from 'react-spinners';
+import Loading from '../components/Loading'; 
 
-const SearchStores = () => {  
+const SearchStores = () => {
+  const [loading, setLoading] = useState(true); 
   const [searchParams, setSearchParams] = useSearchParams();
   const [stores, setStores] = useState([]); 
   const [criteria, setCriteria] = useState(searchParams.get("criteria") == null ? 'party' : searchParams.get("criteria"));
@@ -53,8 +56,10 @@ const SearchStores = () => {
     }
 
 
+
   //가게 목록 와꾸
   const ShowstoreList = async(keykeyword) =>  {
+    setLoading(true);
     try {
          const url = "http://localhost:8080/searchStore";
          const res = await axios.post(url, keykeyword);
@@ -71,6 +76,8 @@ const SearchStores = () => {
 
       } catch(error) {
        console.log("오류났다잉~:", error);
+     } finally {
+      setLoading(false);
      }
    };
 
@@ -92,6 +99,11 @@ const SearchStores = () => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  //로딩중일때! 렌더링
+  if(loading) {
+    return <Loading loading={loading}/>;
+  }
 
   
   // 화면에 렌더링할 JSX

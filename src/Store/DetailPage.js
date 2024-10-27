@@ -1,4 +1,5 @@
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { PacmanLoader, SyncLoader } from "react-spinners";
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
@@ -9,15 +10,15 @@ import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/Components/ReviewSection'; 
 import Shares from '../MyPage/Components/Shares';
 import Menu from '../MyPage/Components/Menu';
-import MenuImg from '../MyPage/Components/MenuImg';
+// import MenuImg from '../MyPage/Components/MenuImg';
 import HeaderSection from './components/HeaderSection'; 
-// import 'swiper/swiper-bundle.min.css';
-
 
 const DetailPage = () => {
     const { area, storeId } = useParams();
     const navigate = useNavigate();
    
+    const [keyword, setKeyword] = useState('');
+    const [areaNm, setAreaNm] = useState('전체');
 
     // 상태 관리
     const [user, setUser] = useState(null);
@@ -54,14 +55,15 @@ const DetailPage = () => {
 
     // 스토어 상세 정보 및 찜 상태 확인
     useEffect(() => {
-        const decodedStoreId = decodeURIComponent(storeId); 
-        fetchStoreDetail(decodedStoreId);
-    }, [storeId]);
+        const decodedStoreId = decodeURIComponent(storeId);
+        const decodedArea = decodeURIComponent(area);
+        fetchStoreDetail(decodedArea, decodedStoreId);
+    }, [area, storeId]);
 
-    const fetchStoreDetail = async (decodedStoreId) => {
+    const fetchStoreDetail = async (decodedArea, decodedStoreId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/storeDetail`, {
-                params: { store: decodedStoreId },
+            const response = await axios.post(`http://localhost:8080/storeDetail`, {
+                params: { title: decodedStoreId, areaNm: decodedArea},
             });
             setStore(response.data);
             setImages(jointImageList(response.data.menuItems, response.data.imgURLs));
@@ -93,13 +95,19 @@ const DetailPage = () => {
     });
 
     imgURLs.forEach(item => {
-    imageList = [...imageList, item];
+        imageList = [...imageList, item];
     })
 
+    const totalImges = 9;
     if(imageList.length === 0) {
-    imageList = ["/img/noimage.png"]; 
+        imageList = ["/img/noimage.png"]; 
+    }else {
+        while(imageList.length < totalImges){
+            imageList = [...imageList, ...imageList];
+        }
     }
-    return imageList;
+        console.log(imageList);
+        return imageList;
     }
 
     // 찜 카운트를 가져오는 함수
@@ -171,8 +179,8 @@ const toggleDibs = async () => {
             alert("서버로부터 예상치 못한 응답을 받았습니다.");
         }
     } catch (error) {
-        console.error("찜 상태 변경 중 오류가 발생했습니다:", error);
-        alert("찜 상태 변경 중 오류가 발생했습니다.");
+        // console.error("찜 상태 변경 중 오류가 발생했습니다:", error);
+        // alert("찜 상태 변경 중 오류가 발생했습니다.");
     }
 };
 
@@ -202,7 +210,7 @@ useEffect(() => {
         }
     };
     if (loading || !store) {
-        return <div>로딩 중...</div>;
+        return <div><PacmanLoader/></div>;
     } 
 
       //검색 버튼 눌렀을 때!
@@ -224,13 +232,7 @@ useEffect(() => {
     return (
         <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
              <HeaderSection showTags={false}/>
-            {/* 가게 음식 이미지 들어갈 자리 */}
-            <main style={{paddingTop:'100px'}}>
-            <div className='foodimglist'>
-                {images.map((image, index) => (
-                    <img key={index} src={image} alt={`식당 이미지 ${index + 1}`} style={{ width: 'calc(20% - 10px)', margin: '5px', objectFit: 'cover' }} />
-                ))}
-            </div>
+            <main style={{paddingTop:'80px'}}>
 
             {/* 가게 음식 이미지 들어갈 자리 */}
             <div className='kingdiv' >
@@ -238,21 +240,22 @@ useEffect(() => {
                     <Swiper
                         modules={[Navigation, Pagination]}
                         navigation={{
-                            nextEl: '.swiper-button-next detail',
-                            prevEl: '.swiper-button-prev detail',
+                            nextEl: '#detail-right-btn',
+                            prevEl: '#detail-left-btn',
                         }}
                         pagination={{
+                            el: '.swiper-pagination.detail',
                             clickable: true,
                         }}
                         slidesPerView={6} 
-                        loop={true} // 화면 크기에 맞게 조절하세요
+                        loop={true} 
                         loopedSlides={images.length}
                         centeredSlides={true}
                         slidesOffsetBefore={3}
                         
                         >
                         {images.map((image, index) => (
-                            <SwiperSlide key={index} >
+                            <SwiperSlide key={index} className='ggaeddong'>
                                 <img src={image} alt={`식당 이미지 ${index + 1}`} style={{width:'100%', height:'30vh'}}/>
                             </SwiperSlide>
                         ))}

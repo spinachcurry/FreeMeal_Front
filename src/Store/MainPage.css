@@ -1,3 +1,4 @@
+
 .headerfont {
   font-family: "Yeon Sung", system-ui;
   font-weight: 400;
@@ -94,16 +95,12 @@
 }
 
 /* 새롭게 단장할 메인 화면 */
-.swiper-wrap {
-  width: 100%;
-  margin: 0 auto; /* 중앙 정렬 */
-}
 
 .restaurant-item {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  text-align: center; /* 텍스트 중앙 정렬 */
+  text-align: center; 
   height: 360px;
 }
 

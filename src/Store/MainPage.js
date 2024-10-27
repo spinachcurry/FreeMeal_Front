@@ -1,4 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import './MainPage.css';
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +11,8 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 // import SwiperCore from "swiper";
 import MyTap from '../MyPage/Components/MyTap'; 
+
+
 const MainPage = () => {
     const navigate = useNavigate();
 
@@ -145,81 +150,114 @@ const MainPage = () => {
             </div>
 
             {/* 나와 가장 가까운 맛집 추천 */}
-            <div className='main-list'> 
-              <h2 className='subfont' style={{ textAlign: 'left'}}>나와 가까운 맛집 추천</h2>
-                <div className='siwper-container mainsc'>
-              <Swiper className='swiper-wrap'
-                    modules={[Autoplay, Navigation, Pagination]}
-                    navigation = {{
-                        nextEl: '.swiper-button-next msc',
-                        prevEl: '.swiper-button-prev msc',
-                    }}
-                    pagination={{
-                        clickable: true,
-                    }}
-                        slidesPerView={5}
-                        loop={true}
-                        autoHeight={true}
-                        spaceBetween={30}   
-                        autoplay={{delay: 2500, disableOnInteraction: true, speed:3000}}>
-                   {'>'}
-                {stores.map(store => (
-                  <SwiperSlide key={store.id} className="swiper-slide">
-                    <div className="restaurant-item">
-                      <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc[0]} alt={store.title} /></Link>
-                      <h6 className='h6'>{store.title}</h6>
-                        <span>{store.rating}</span>
-                      <p className='p'>{store.address}</p>
-                    </div> 
-                  </SwiperSlide>
-            ))}
-              <div className="swiper-button-next msc" ></div>
-              <div className="swiper-button-prev msc" ></div>
-          </Swiper>
-          </div>
-        </div>
+      <div className='main-list'>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>나와 가장 가까운 맛집 추천</h2>
+        <Swiper
+          modules={[Autoplay, Navigation, Pagination]}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }}
+          spaceBetween={30}
+          slidesPerView={5}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: true,
+            speed: 2000,
+          }}
+        >
+          {stores.map(store => (
+            <SwiperSlide key={store.id}>
+              <div className="restaurant-item">
+                <Link to={`/detail/${store.areaNm}/${store.title}`}>
+                  <img src={store.imgSrc[0]} alt={store.title} />
+                </Link>
+                <h6 className='h6'>{store.title}</h6>
+                <span>{store.rating}</span>
+                <p className='p'>{store.address}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+          {/* Navigation Buttons */}
+          <div className="swiper-button-prev" ></div>
+          <div className="swiper-button-next" ></div>
+        </Swiper>
+      </div>
 
-            {/* 구매 금액 가장 높은 맛집 추천 */}
-            <br></br>
-            <div className='main-list'> 
-          <h2 className='subfont' style={{ textAlign: 'left'}}>구매 금액 가장 높은 맛집 추천</h2>
-          <Swiper modules={[Autoplay, Navigation, Pagination]}
-              navigation className="swiper-container"
-              spaceBetween={30} slidesPerView={5} loop={true} 
-              autoplay={{delay: 2500, disableOnInteraction: true, speed:2000}} >
-            {fancyStores.map(store => (
-              <SwiperSlide key={store.id} className="swiper-slide">
-                <div className="restaurant-item">
-                  <Link to={`/detail/${store.areaNm}/${store.title}`}><img src={store.imgSrc[0]} alt={store.title} /></Link>
+      {/* 구매 금액 가장 높은 맛집 추천 */}
+      <br />
+      <div className='main-list'>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>구매 금액 가장 높은 맛집 추천</h2>
+        <Swiper
+          modules={[Autoplay, Navigation, Pagination]}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }}
+          spaceBetween={30}
+          slidesPerView={5}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: true,
+            speed: 2000,
+          }}
+        >
+          {fancyStores.map(store => (
+            <SwiperSlide key={store.id}>
+              <div className="restaurant-item">
+                <Link to={`/detail/${store.areaNm}/${store.title}`}>
+                  <img src={store.imgSrc[0]} alt={store.title} />
+                </Link>
+                <h6 className='h6'>{store.title}</h6>
+                <span>{store.rating}</span>
+                <p className='p'>{store.address}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+          {/* Navigation Buttons */}
+          <div className="swiper-button-prev" ></div>
+          <div className="swiper-button-next" ></div>
+        </Swiper>
+      </div>
 
-                  <h6 className='h6'>{store.title}</h6>
-                  <span>{store.rating}</span>
-                  <p className='p'>{store.address}</p>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-            {/* 방문이 가장 많은 맛집 추천 */}
-            <br></br>
-            <div className='main-list'>
-                <h2 className='subfont' style={{ textAlign: 'left' }}>방문이 가장 많은 맛집 추천</h2>
-                <Swiper modules={[Autoplay, Navigation, Pagination]} navigation className="swiper-container" spaceBetween={30} slidesPerView={5} loop={true} autoplay={{ delay: 2500, disableOnInteraction: true, speed: 2000 }}>
-                    {footStores.map(store => (
-                        <SwiperSlide key={store.id} className="swiper-slide">
-                            <div className="restaurant-item">
-                                <Link to={`/detail/${store.areaNm}/${store.title}`}>
-                                    <img src={store.imgSrc[0]} alt={store.title} />
-                                </Link>
-                                <h6 className='h6'>{store.title}</h6>
-                                <span>{store.rating}</span>
-                                <p className='p'>{store.address}</p>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
+      {/* 방문이 가장 많은 맛집 추천 */}
+      <br />
+      <div className='main-list'>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>방문이 가장 많은 맛집 추천</h2>
+        <Swiper
+          modules={[Autoplay, Navigation, Pagination]}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }}
+          spaceBetween={30}
+          slidesPerView={5}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: true,
+            speed: 2000,
+          }}
+        >
+          {footStores.map(store => (
+            <SwiperSlide key={store.id}>
+              <div className="restaurant-item">
+                <Link to={`/detail/${store.areaNm}/${store.title}`}>
+                  <img src={store.imgSrc[0]} alt={store.title} />
+                </Link>
+                <h6 className='h6'>{store.title}</h6>
+                <span>{store.rating}</span>
+                <p className='p'>{store.address}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+           {/* Navigation Buttons */}
+          <div className="swiper-button-prev" ></div>
+          <div className="swiper-button-next" ></div>
+        </Swiper>
+      </div>
 
             <footer className="footer">
                 <div className="footer-info">
