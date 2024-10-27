@@ -12,11 +12,13 @@ import { Link, useNavigate } from 'react-router-dom';
 // import SwiperCore from "swiper";
 import MyTap from '../MyPage/Components/MyTap'; 
 import PigRating from './components/PigRating';
+import Loading from './components/Loading'; 
 
 
 
 const MainPage = () => {
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
     //검색 버튼 눌렀을 때!
   const handleSearch = () => {  
@@ -59,7 +61,7 @@ const MainPage = () => {
             imageList = ["/img/noimage.png"]; 
         }
         return imageList;
-    }
+      }
 
     const fetchStores = async (coords) => {
         try {
@@ -90,10 +92,12 @@ const MainPage = () => {
                 imgSrc: jointImageList(item.menuItems, item.imgURLs),
                 areaNm: item.areaNm
             })));
-        } catch (error) {
+            setLoading(false);
+            } catch (error) {
             console.error("가게 목록 불러오기 오류:", error);
-        }
-    };
+          }
+      };
+    
 
     const handleLocationSuccess = (event) => {
         const coords = {
@@ -117,6 +121,11 @@ const MainPage = () => {
 
 
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if(loading) {
+      return <Loading loading={loading}/>;
+    }
+    
 
     return (
         <div className="container-fluid p-0 bg-dark text-white text-center" style={{ height: '2000px', background: '#f0f0f0' }}>

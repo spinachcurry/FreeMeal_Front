@@ -30,6 +30,8 @@
 
     "react-kakao-maps-sdk": "^1.1.27",
 
+    "react-query": "^3.39.3",
+
     "react-router-dom": "^6.26.2",
 
     "react-scripts": "^5.0.1",
