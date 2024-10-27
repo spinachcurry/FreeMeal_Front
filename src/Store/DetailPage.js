@@ -12,6 +12,7 @@ import Shares from '../MyPage/Components/Shares';
 import Menu from '../MyPage/Components/Menu';
 // import MenuImg from '../MyPage/Components/MenuImg';
 import HeaderSection from './components/HeaderSection'; 
+import Loading from './components/Loading'; 
 
 const DetailPage = () => {
     const { area, storeId } = useParams();
@@ -67,9 +68,6 @@ const DetailPage = () => {
             });
             setStore(response.data);
             setImages(jointImageList(response.data.menuItems, response.data.imgURLs));
-            //6개 이하일 때 (length) for 문으로 이미지 복제 로직
-            //만들기!!
-
 
             // 가게 정보를 가져온 후 찜 상태와 찜 카운트를 가져옴
             if (response.data && response.data.address) {
@@ -209,9 +207,17 @@ useEffect(() => {
             console.error("reviewSectionRef가 초기화되지 않았습니다.");
         }
     };
-    if (loading || !store) {
-        return <div><PacmanLoader/></div>;
-    } 
+    //로딩중일때! 렌더링
+//   if(loading) {
+//     return <Loading loading={loading}/>;
+//   }
+
+  //로딩중일때! 렌더링
+  if(loading) {
+    return <Loading loading={loading}/>;
+  }
+
+    
 
       //검색 버튼 눌렀을 때!
   const handleSearch = () => {
