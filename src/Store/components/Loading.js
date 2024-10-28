@@ -27,7 +27,7 @@ const Loading = ({loading }) =>{
               fontWeight : '800',
               textAlign: 'center'
           }}>
-          <h3> 앗! 가지마세요! </h3>
+          <h3> 잠시만 기다려주세요! </h3>
           </div>
       </div>
   )

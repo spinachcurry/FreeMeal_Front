@@ -61,7 +61,7 @@ const DetailPage = () => {
 
     const fetchStoreDetail = async (decodedArea, decodedStoreId) => {
         try {
-            const response = await axios.post(`http://localhost:8080/storeDetail`, {
+            const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + `/storeDetail`, {
                 params: { title: decodedStoreId, areaNm: decodedArea},
             });
             console.log(response.data);
@@ -110,7 +110,7 @@ const DetailPage = () => {
     // 찜 카운트를 가져오는 함수
     const fetchDibsCount = async (address) => {
         try { 
-            const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
+            const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/handleDibs', { 
                 action: "count",
                 address: address
         });
@@ -125,7 +125,7 @@ const checkUserDibs = async (address) => {
     if (!user) return;
 
     try {
-        const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
+        const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/handleDibs', { 
                 action: "check",
                 userId: user.userId,
                 address: address 
@@ -157,7 +157,7 @@ const toggleDibs = async () => {
         const didStatus = isDibbed ? 0 : 1;
 
         // 서버로 찜 상태를 전송
-        const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
+        const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/handleDibs', { 
                 action: "toggle",
                 userId: user.userId,
                 address: store.address,
@@ -216,7 +216,6 @@ useEffect(() => {
     return <Loading loading={loading}/>;
   }
 
-    
 
       //검색 버튼 눌렀을 때!
   const handleSearch = () => {
@@ -259,7 +258,7 @@ useEffect(() => {
                         slidesOffsetBefore={3}
                         
                         >
-                        {images.map((image, index) => (
+                        {images?.map((image, index) => (
                             <SwiperSlide key={index} className='ggaeddong'>
                                 <img src={image} alt={`식당 이미지 ${index + 1}`} style={{width:'100%', height:'30vh'}}/>
                             </SwiperSlide>

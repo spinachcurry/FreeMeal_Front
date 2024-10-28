@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import './MyPage.css';
 import MyReviews from './Components/MyReviews'; 
 import MyFavoriteStores from './Components/MyFavoriteStores'; 
+import HeaderSection from '../Store/components/HeaderSection'; 
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 const MyPage = () => {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('MyReviews'); 
-  const host = "http://localhost:8080/mypage/view?url=";
+  const host =  process.env.REACT_APP_PUBLIC_URL + "/mypage/view?url=";
+  // const host = "http://220.71.94.70:2040/mypage/view?url=";
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -22,16 +24,11 @@ const MyPage = () => {
     return <p>로그인이 필요합니다.</p>;
   }
 
-
   const profileImage = user.profileImageUrl ? host + user.profileImageUrl :'./img/user1.png';
   return (
     <>
+      <HeaderSection showTags={false}/> 
       <div className="container1 text-center py-5">
-      <h1 className='header'>
-            <a className='logo' href='/'>
-                <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
-            </a> 마이 페이지</h1>  
-        <br/> 
         <img 
           src={profileImage} 
           alt="프로필 이미지" 
