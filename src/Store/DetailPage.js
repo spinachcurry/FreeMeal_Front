@@ -287,7 +287,7 @@ useEffect(() => {
                 <Shares className='btn 'style={{color:'white'}} areaNm={store.areaNm} title={store.title} />
             </div>  
             <Menu store={store} /> 
-        <ReviewSection ref={reviewSectionRef}  address={store.address}/>
+        <ReviewSection ref={reviewSectionRef} title={store.title} category={store.category} address={store.address}/>
     </main>
             <footer className="footer">
                 <div className="footer-info">

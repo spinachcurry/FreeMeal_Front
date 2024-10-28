@@ -1,13 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect, forwardRef } from 'react'; 
 import axios from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 const ReviewSection = forwardRef(({ address, title, category }, ref) => {
   const [reviews, setReviews] = useState([]);
   const [newReviewContent, setNewReviewContent] = useState('');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
+ 
   const handleRequest = async (action, data = {}) => {
     try {
       const response = await axios.post('http://localhost:8080/mypage/reviewAction', { action, ...data });
@@ -35,13 +36,43 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
     }
   };
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const fetchedReviews = await handleRequest('getStoreReviews', { address });
-      if (fetchedReviews) setReviews(fetchedReviews.map(review => ({ ...review, hidden: false })));
+  //댓글 가져오기
+  const numOfreply = 5;
+  const fetchReviews = async ({pageParam}) => {
+    const fetchedReviews = await handleRequest('getStoreReviews', { address, offset:pageParam, size:numOfreply });
+    console.log(fetchedReviews);
+    return {
+      offset: fetchedReviews.offset,
+      reviews: fetchedReviews.reviews.map(review => ({ ...review, hidden: false }))
     };
-    if (address) fetchReviews();
-  }, [address]);
+  };
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage
+  } = useInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: fetchReviews,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      console.log(lastPage.offset);
+      return lastPage.reviews.length < numOfreply? undefined : lastPage.offset;
+    }
+  })
+
+  // useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     const fetchedReviews = await handleRequest('getStoreReviews', { address, offset:0, size:5 });
+  //     console.log(fetchedReviews);
+  //     if (fetchedReviews) setReviews(fetchedReviews.reviews.map(review => ({ ...review, hidden: false })));
+  //   };
+  //   if (address) fetchReviews();
+  // }, [address]);
+
+
 
   return (
     <div ref={ref} className="review-section" style={{ padding: '20px', margin: '20px 0' }}>
@@ -75,6 +106,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
         <p className="text-center text-danger">리뷰를 작성하려면 로그인이 필요합니다.</p>
       )}
 
+        <>
       <table className="table table-dark table-hover mt-4">
         <thead>
           <tr>
@@ -86,20 +118,22 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
             <th style={{width:'15%'}}> 작성자</th>
           </tr>
         </thead>
-        <tbody>
-          {reviews.length > 0 ? reviews.map((review, index) => (
-            !review.hidden && (
-              <tr key={index}>
-                <td style={{ wordBreak: 'break-word' }}>{review.content}</td>
-                <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
-                <td>
-                  {review.userId}
-                  <button onClick={() => handleReport(index, review.reviewNo)} className="btn btn-dark float-right">
-                    신고
-                  </button>
-                </td>
-              </tr>
-            )
+        <tbody>        
+          {data?.pages.length > 0 ? data.pages.map((page, i) => (
+            <React.Fragment key={i}>
+              {page.reviews.map((review, index) => (!review.hidden && (
+                <tr key={index}>
+                  <td style={{ wordBreak: 'break-word' }}>{review.content}</td>
+                  <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
+                  <td>
+                    {review.userId}
+                    <button onClick={() => handleReport(index, review.reviewNo)} className="btn btn-dark float-right">
+                      신고
+                    </button>
+                  </td>
+                </tr>
+              )))}
+            </React.Fragment>
           )) : (
             <tr>
               <td colSpan="6" className="text-center">리뷰가 없습니다.</td>
@@ -107,6 +141,21 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
           )}
         </tbody>
       </table>
+      <div style={{width:'100%', textAlign:'center'}}>
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? '댓글 더 가져오는 중…'
+            : hasNextPage
+              ? '댓글 더 보기'
+              : '더 가져올 댓글이 없습니다.'}
+        </button>
+      </div>
+      <div style={{width:'100%', textAlign:'center'}}>{isFetching && !isFetchingNextPage ? '댓글 가져오는 중…' : null}</div>
+          </>
+
     </div>
   );
 });
