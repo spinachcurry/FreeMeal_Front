@@ -6,11 +6,9 @@ import axios from 'axios';
 import './DetailPage.css'; 
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import KakaoMap from './components/KakaoMap';
 import ReviewSection from '../MyPage/Components/ReviewSection'; 
 import Shares from '../MyPage/Components/Shares';
 import Menu from '../MyPage/Components/Menu';
-// import MenuImg from '../MyPage/Components/MenuImg';
 import HeaderSection from './components/HeaderSection'; 
 import Loading from './components/Loading'; 
 
@@ -66,6 +64,7 @@ const DetailPage = () => {
             const response = await axios.post(`http://localhost:8080/storeDetail`, {
                 params: { title: decodedStoreId, areaNm: decodedArea},
             });
+            console.log(response.data);
             setStore(response.data);
             setImages(jointImageList(response.data.menuItems, response.data.imgURLs));
 
@@ -277,18 +276,18 @@ useEffect(() => {
                 <h3>{store.address}</h3> 
                 <p>{store.description}</p>
                 <img src='/img/bg_ico_s_like.png' alt=""/> {dibsCount}
-            </div>
+            </div><br/>
 
             {/* 찜하기, 리뷰 보기, 공유하기 버튼 */} 
-            <div className="dibs-container"style={{marginLeft:'5%',width:'90%', display: 'flex',justifyContent: 'flex-end', alignItems: 'center', padding: '0px 35px', backgroundColor: 'red', color: 'white' }}>
-                <button className='btn btn-light' onClick={toggleDibs}style={{color:'white'}}>
+            <div className="dibs-container"style={{borderRadius:'10px', marginLeft:'5%',width:'90%', display: 'flex',justifyContent: 'flex-end', alignItems: 'center', padding: '0px 35px', backgroundColor: 'red', color: 'white' }}>
+                <button className='btn ' onClick={toggleDibs}style={{color:'white'}}>
                     {isDibbed ? "찜하기" : "찜하기"} 
                 </button>
                 <button className='btn ' onClick={scrollToReview}style={{color:'white'}}>리뷰보기</button>  
                 <Shares className='btn 'style={{color:'white'}} areaNm={store.areaNm} title={store.title} />
             </div>  
-            <Menu address={store.address} location={{ latitude: store.lat, longitude: store.lng }} /> 
-        <ReviewSection ref={reviewSectionRef}  address={store.address} title={store.title} category={store.category}/>
+            <Menu store={store} /> 
+        <ReviewSection ref={reviewSectionRef}  address={store.address}/>
     </main>
             <footer className="footer">
                 <div className="footer-info">

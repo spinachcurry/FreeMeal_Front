@@ -50,7 +50,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
         <table className="table table-dark table-hover">
           <thead>
             <tr>
-              <th colSpan="5"><h2>리뷰 작성</h2></th>
+            <th colSpan="6"><h3>리뷰를 작성해보세요!</h3></th>
             </tr>
             <tr>
               <th colSpan="4">
@@ -78,22 +78,18 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
       <table className="table table-dark table-hover mt-4">
         <thead>
           <tr>
-            <th colSpan="6"><h2>리뷰</h2></th>
+           
           </tr>
           <tr>
-            <th>가게 명</th>
-            <th>카테고리</th>
-            <th>리뷰 내용</th>
-            <th>작성일</th>
-            <th>작성자</th>
+            <th style={{width:'70%'}}>리뷰 내용</th>
+            <th style={{width:'15%'}}>작성일</th>
+            <th style={{width:'15%'}}> 작성자</th>
           </tr>
         </thead>
         <tbody>
           {reviews.length > 0 ? reviews.map((review, index) => (
             !review.hidden && (
               <tr key={index}>
-                <td>{review.title}</td>
-                <td>{review.category}</td>
                 <td style={{ wordBreak: 'break-word' }}>{review.content}</td>
                 <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
                 <td>

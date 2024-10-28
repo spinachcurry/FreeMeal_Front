@@ -139,8 +139,8 @@ const MainPage = () => {
                           </a>
                   {/* </div> */}                      
                 {/* 로그인/회원가입 컴포넌트 추가 */}
-              </nav>
               <MyTap />
+              </nav>
               <div style={{paddingTop:'10%'}}>
                 <h1 className="headerfont">꽁밥</h1>
                 <p className="font">우리동네 믿고 먹는 맛집 대장!</p>
