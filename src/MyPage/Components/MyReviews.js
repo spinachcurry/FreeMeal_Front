@@ -55,7 +55,8 @@ const MyReviews = () => {
       console.log("Token: ", token);
 
       // 서버로 요청 보내기 (토큰 포함)
-      const response = await axios.post('http://localhost:8080/mypage/reviewAction', requestBody, {
+      const response = await axios.post( process.env.REACT_APP_PUBLIC_URL + '/mypage/reviewAction', requestBody, {
+      // const response = await axios.post('http://220.71.94.70:2040/mypage/reviewAction', requestBody, {
         headers: { Authorization: `Bearer ${token}` }  // 토큰을 헤더에 추가
       });
 
@@ -123,7 +124,9 @@ const MyReviews = () => {
 
   return (
     <div className="container1">
-      <h3 style={{color:'white'}}>내 리뷰 목록</h3>
+
+      {/* <h4 style={{color:'white', marginLeft:'20px'}}>내가 쓴 리뷰 목록</h4> */}
+
 
       <table className="table table-dark table-hover">
         <thead>
@@ -157,7 +160,7 @@ const MyReviews = () => {
       </table>
 
       {/* 페이지 네비게이션 */}
-      <div className="pagination">
+      <div className="pagination" style={{justifyContent:'center'}}>
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}

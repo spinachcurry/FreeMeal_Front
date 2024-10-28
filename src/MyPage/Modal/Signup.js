@@ -18,6 +18,7 @@ const Signup = ({ onClose }) => {
 
     // 회원가입 API 요청
     fetch('http://localhost:8080/mypage/signup', {
+    // fetch('http://220.71.94.70:2040/mypage/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, password, name, user_Nnm, phone, email }),

@@ -25,7 +25,8 @@ const MyFavoriteStores = () => {
 
     const fetchFavoriteStores = async () => {
       try {
-        const response = await axios.post('http://localhost:8080/mypage/handleDibs', {
+        const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/handleDibs', {
+        // const response = await axios.post('http://220.71.94.70:2040/mypage/handleDibs', {
           action: 'list', // 'list' 액션을 보냅니다
           userId: user.userId
         }, {
@@ -80,21 +81,23 @@ const MyFavoriteStores = () => {
   return imageList;
 }
   return (
-    <div className="container1">
-      <h3 style={{color:'white'}}>나의 찜 목록</h3>
+
+    <div style={{height:'100%', width:'100%'}}>
+      {/* <h2 style={{color:'white'}}>나의 찜 목록</h2> */}
+
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
       {currentStores.length > 0 ? (
         <>
-          <table className="table table-dark table-hover">
+          <table className="table table-dark table-hover" style={{height:'20'}}>
             <thead>
-              <tr>
-                <th> </th> 
+              <tr >
+                <th > </th> 
                 <th> </th>
                 <th> </th> 
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {currentStores.map(store => (
                 <tr key={store.id}> 
                   <td> 
