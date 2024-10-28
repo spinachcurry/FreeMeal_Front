@@ -35,7 +35,7 @@ const KakaoMap = ({location}) => {
         <Map center={loc} style={{ width: '100%', height: '400px' }} level={3}>
             {
                 list.map((v, i) => 
-                    <MapMarker position={{ lat: v.loc.lat, lng: v.loc.lng }} />
+                    <MapMarker key={{i}} position={{ lat: v.loc.lat, lng: v.loc.lng }} />
                 )
             }
             <MapTypeControl position={"TOPRIGHT"} />
