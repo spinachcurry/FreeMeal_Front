@@ -26,7 +26,8 @@ const SearchStores = () => {
   const numOfstore = 12;
   const getStoreData = async ({pageParam}) => {
     try {
-        const url = "http://localhost:8080/searchStore";
+        // const url = "http://localhost:8080/searchStore";
+        const url = process.env.REACT_APP_PUBLIC_URL + "/searchStore";
         const res = await axios.post(url, {
           areaNm: localNm, 
           keyword: searching, 
@@ -34,7 +35,7 @@ const SearchStores = () => {
           offset: pageParam,
           size: numOfstore
         });
-        console.log(res.data);
+        // console.log(res.data);
         setLoading(false);
         // return res.data;
         return {
@@ -65,7 +66,7 @@ const SearchStores = () => {
     queryFn: getStoreData,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      console.log(lastPage.offset);
+      // console.log(lastPage.offset);
       return lastPage.storeData.length < numOfstore? undefined : lastPage.offset;
     }
   })
@@ -120,9 +121,9 @@ const SearchStores = () => {
   }, []);
 
   //로딩중일때! 렌더링
-  if(loading) {
-    return <Loading loading={loading}/>;
-  }
+  // if(loading) {
+  //   return <Loading loading={loading}/>;
+  // }
   
   // 화면에 렌더링할 JSX
   return (

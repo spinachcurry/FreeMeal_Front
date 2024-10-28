@@ -7,23 +7,21 @@ body {
   font-family: Arial, sans-serif; /* 기본 글꼴 */
 } 
 .container1 {
-
   color:black;
   position: relative;
   padding: 1rem;
   border-radius: 10px; 
 } 
 .container2 {
-
   color:black;
   position: relative;
   padding: 1rem;
   border-radius: 10px;
-  
 } 
 .container1 p, .container1 h1 {
     color: #fff;
-  }    
+}
+    
 .back-to-home {
   position: absolute;
   top: 1rem;
@@ -105,14 +103,15 @@ body {
 .table1 {
   width: 100%;    
   margin-bottom: 10px; 
+  
 } 
 th{
   text-align: center;
   vertical-align: middle; 
 }
-tr{
+/* tr{
   height: 50px;
-}
+} */
 td{  
 border-color: 1px black;
   border-collapse: collapse;
@@ -122,13 +121,7 @@ border-color: 1px black;
 .mb-3{
   color: #b8b8b8;
 }
-.dibs-container{
-  display: 'flex';
-  align-items: 'center';
-  gap: '10px';
-  padding: '10px 10px'
 
-}
 /* menu 관련 css */ 
 .info_table1 {
   margin-left:20px;
@@ -140,8 +133,9 @@ border-color: 1px black;
   text-align: left;
 }
 .divmenu {
-  width: 200px;
-  height: 150px;
+ width: 100px;
+  height: 80px;
+
   border-Radius: 10px;
   overflow: hidden;
   margin-Left:100px;

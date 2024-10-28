@@ -11,7 +11,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
  
   const handleRequest = async (action, data = {}) => {
     try {
-      const response = await axios.post('http://localhost:8080/mypage/reviewAction', { action, ...data });
+      const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/reviewAction', { action, ...data });
       return response.data;
     } catch (err) {
       setError('오류가 발생했습니다.');
@@ -31,7 +31,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
   const handleReport = async (index, reviewId) => {
     const result = await handleRequest('reportReview', { reviewNo: reviewId });
     if (result) {
-      setReviews(reviews.map((review, i) => i === index ? { ...review, hidden: true } : review));
+      setReviews(reviews?.map((review, i) => i === index ? { ...review, hidden: true } : review));
       alert("리뷰가 신고되었습니다.");
     }
   };
@@ -40,10 +40,10 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
   const numOfreply = 5;
   const fetchReviews = async ({pageParam}) => {
     const fetchedReviews = await handleRequest('getStoreReviews', { address, offset:pageParam, size:numOfreply });
-    console.log(fetchedReviews);
+    // console.log(fetchedReviews);
     return {
       offset: fetchedReviews.offset,
-      reviews: fetchedReviews.reviews.map(review => ({ ...review, hidden: false }))
+      reviews: fetchedReviews?.reviews?.map(review => ({ ...review, hidden: false }))
     };
   };
 
@@ -58,24 +58,13 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
     queryFn: fetchReviews,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      console.log(lastPage.offset);
-      return lastPage.reviews.length < numOfreply? undefined : lastPage.offset;
+      // console.log(lastPage.offset);
+      return lastPage.reviews?.length < numOfreply? undefined : lastPage.offset;
     }
-  })
-
-  // useEffect(() => {
-  //   const fetchReviews = async () => {
-  //     const fetchedReviews = await handleRequest('getStoreReviews', { address, offset:0, size:5 });
-  //     console.log(fetchedReviews);
-  //     if (fetchedReviews) setReviews(fetchedReviews.reviews.map(review => ({ ...review, hidden: false })));
-  //   };
-  //   if (address) fetchReviews();
-  // }, [address]);
-
-
+  }) 
 
   return (
-    <div ref={ref} className="review-section" style={{ padding: '20px', margin: '20px 0' }}>
+    <div ref={ref} className="review-section" style={{ }}>
       {user ? (
           <>
         <table className="table table-dark table-hover">
@@ -119,9 +108,9 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
           </tr>
         </thead>
         <tbody>        
-          {data?.pages.length > 0 ? data.pages.map((page, i) => (
+          {data?.pages.length > 0 ? data?.pages?.map((page, i) => (
             <React.Fragment key={i}>
-              {page.reviews.map((review, index) => (!review.hidden && (
+              {page?.reviews?.map((review, index) => (!review.hidden && (
                 <tr key={index}>
                   <td style={{ wordBreak: 'break-word' }}>{review.content}</td>
                   <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
@@ -142,7 +131,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
         </tbody>
       </table>
       <div style={{width:'100%', textAlign:'center'}}>
-        <button
+        <button className='btn'
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
         >

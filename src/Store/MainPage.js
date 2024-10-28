@@ -65,9 +65,10 @@ const MainPage = () => {
 
     const fetchStores = async (coords) => {
         try {
-            const url = "http://localhost:8080/storeNearby";
-            const res = await axios.post(url, coords);
-            console.log(res.data);
+            // const url = "http://localhost:8080/storeNearby";
+            const url = process.env.REACT_APP_PUBLIC_URL + "/storeNearby";
+                        const res = await axios.post(url, coords);
+            // console.log(res.data);
             setStores(res.data.nearbyStore.map((item, i) => ({
                 id: i,
                 title: item.title,
@@ -113,10 +114,10 @@ const MainPage = () => {
         console.log("위치 가져오기 실패");
     };
 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(handleLocationSuccess, handleLocationError);
-        }
+    useEffect(() => {handleLocationSuccess();
+        // if (window.navigator.geolocation) {
+        //     window.navigator.geolocation.getCurrentPosition(handleLocationSuccess, handleLocationError);
+        // }
     }, []);
 
 
@@ -163,7 +164,7 @@ const MainPage = () => {
 
             {/* 나와 가장 가까운 맛집 추천 */}
       <div className='main-list'>
-        <h2 className='subfont' style={{ textAlign: 'left' }}>나와 가장 가까운 맛집 추천</h2>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>내 주변 맛집 TOP 10</h2>
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           navigation={{
@@ -200,7 +201,7 @@ const MainPage = () => {
       {/* 구매 금액 가장 높은 맛집 추천 */}
       <br />
       <div className='main-list'>
-        <h2 className='subfont' style={{ textAlign: 'left' }}>구매 금액 가장 높은 맛집 추천</h2>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>돈쭐난 맛집 TOP 10</h2>
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           navigation={{
@@ -237,7 +238,7 @@ const MainPage = () => {
       {/* 방문이 가장 많은 맛집 추천 */}
       <br />
       <div className='main-list'>
-        <h2 className='subfont' style={{ textAlign: 'left' }}>방문이 가장 많은 맛집 추천</h2>
+        <h2 className='subfont' style={{ textAlign: 'left' }}>문턱 닳은 맛집 TOP 10</h2>
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           navigation={{
