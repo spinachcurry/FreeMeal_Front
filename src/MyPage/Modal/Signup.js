@@ -17,7 +17,7 @@ const Signup = ({ onClose }) => {
     e.preventDefault();
 
     // 회원가입 API 요청
-    fetch('http://localhost:8080/mypage/signup', {
+    fetch(process.env.REACT_APP_PUBLIC_URL + '/mypage/signup', {
     // fetch('http://220.71.94.70:2040/mypage/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -43,7 +43,7 @@ const Signup = ({ onClose }) => {
   return (
     <div className="modal-overlay"onClick={handleOverlayClick}>
       <div className="modal-content" > 
-        <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
+        <button className="close-button" onClick={onClose}style={{top:'10px',backgroundcolor:'#000'}}>X</button>
         <div className="container2">
           <h2 >회원가입</h2>
         </div >
