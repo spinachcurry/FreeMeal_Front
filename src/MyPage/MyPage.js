@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './MyPage.css';
 import MyReviews from './Components/MyReviews'; 
 import MyFavoriteStores from './Components/MyFavoriteStores'; 
+import HeaderSection from '../Store/components/HeaderSection';
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 const MyPage = () => {
@@ -20,17 +21,13 @@ const MyPage = () => {
 
   if (!user) {
     return <p>로그인이 필요합니다.</p>;
-  }
-
+  } 
 
   const profileImage = user.profileImageUrl ? host + user.profileImageUrl :'./img/user1.png';
   return (
     <>
-      <div className="container1 text-center py-5">
-      <h1 className='header'>
-            <a className='logo' href='/'>
-                <img src={`${process.env.PUBLIC_URL}/img/newlogo.png`} alt='로고'/>
-            </a> 마이 페이지</h1>  
+      <HeaderSection showTags={false}/>
+      <div className="container1 text-center py-5"> 
         <br/> 
         <img 
           src={profileImage} 
@@ -48,9 +45,10 @@ const MyPage = () => {
         </div>
       </div>   
       <div className="container1 ">
-        {activeTab === 'MyReviews' && <MyReviews />}
-        {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
- 
+        <div style={{ margin: 'auto', width:'90%', alignItems: 'center'}}>
+          {activeTab === 'MyReviews' && <MyReviews />}
+          {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
+        </div>
         <footer className="footer">
           <div className="footer-info" > 
           <h1 className="headerfont">꽁밥</h1>

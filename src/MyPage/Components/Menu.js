@@ -31,7 +31,7 @@ const Menu = ({ store }) => {
                             <th><h4>메뉴</h4></th> 
                             <td>
                             <div>
-                                {store.menuItems.map((menuItem, index) => (
+                                {store.menuItems.slice(0, 7).map((menuItem, index) => (
                                     <div key={index} className='inline-div' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <div>{menuItem.name !== null ? menuItem.name : '데이터 없음'}</div>
                                     <div>{menuItem.price !== null ? menuItem.price : ' '}</div>
