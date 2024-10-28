@@ -38,6 +38,7 @@ const Menu = ({ store }) => {
                                 </div>
                                 )) 
                               }
+
                             </div>
                             </td>
                         </tr>

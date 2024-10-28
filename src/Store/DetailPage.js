@@ -158,6 +158,7 @@ const toggleDibs = async () => {
 
         // 서버로 찜 상태를 전송
         const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/handleDibs', { 
+
                 action: "toggle",
                 userId: user.userId,
                 address: store.address,
@@ -286,7 +287,9 @@ useEffect(() => {
                 <Shares className='btn 'style={{color:'white'}} areaNm={store.areaNm} title={store.title} />
             </div>  
             <Menu store={store} /> 
-        <ReviewSection ref={reviewSectionRef} title={store.title} category={store.category} address={store.address}/>
+            <div style={{ width:'90%', margin:'auto',alignItems: 'center'}}>
+                 <ReviewSection ref={reviewSectionRef} title={store.title} category={store.category} address={store.address}/>
+            </div>
     </main>
             <footer className="footer">
                 <div className="footer-info">

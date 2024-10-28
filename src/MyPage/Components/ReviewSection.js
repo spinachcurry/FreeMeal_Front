@@ -61,21 +61,10 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
       // console.log(lastPage.offset);
       return lastPage.reviews?.length < numOfreply? undefined : lastPage.offset;
     }
-  })
-
-  // useEffect(() => {
-  //   const fetchReviews = async () => {
-  //     const fetchedReviews = await handleRequest('getStoreReviews', { address, offset:0, size:5 });
-  //     console.log(fetchedReviews);
-  //     if (fetchedReviews) setReviews(fetchedReviews.reviews.map(review => ({ ...review, hidden: false })));
-  //   };
-  //   if (address) fetchReviews();
-  // }, [address]);
-
-
+  }) 
 
   return (
-    <div ref={ref} className="review-section" style={{ padding: '20px', margin: '20px 0' }}>
+    <div ref={ref} className="review-section" style={{ }}>
       {user ? (
           <>
         <table className="table table-dark table-hover">

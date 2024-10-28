@@ -6,6 +6,7 @@ import MyReviews from './Components/MyReviews';
 import MyFavoriteStores from './Components/MyFavoriteStores'; 
 import HeaderSection from '../Store/components/HeaderSection'; 
 
+
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 const MyPage = () => {
   const [user, setUser] = useState(null);
@@ -24,11 +25,15 @@ const MyPage = () => {
     return <p>로그인이 필요합니다.</p>;
   }
 
+
   const profileImage = user.profileImageUrl ? host + user.profileImageUrl :'./img/user1.png';
   return (
     <>
+
       <HeaderSection showTags={false}/> 
       <div className="container1 text-center py-5">
+
+
         <img 
           src={profileImage} 
           alt="프로필 이미지" 
@@ -45,9 +50,10 @@ const MyPage = () => {
         </div>
       </div>   
       <div className="container1 ">
-        {activeTab === 'MyReviews' && <MyReviews />}
-        {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
- 
+        <div style={{ margin: 'auto', width:'90%', alignItems: 'center'}}>
+          {activeTab === 'MyReviews' && <MyReviews />}
+          {activeTab === 'MyFavoriteStores' && <MyFavoriteStores  userId={user.userId}/>}
+        </div>
         <footer className="footer">
           <div className="footer-info" > 
           <h1 className="headerfont">꽁밥</h1>

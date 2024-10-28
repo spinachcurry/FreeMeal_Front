@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Signup from '../../MyPage/Modal/Signup';
+import MyTap from '../../MyPage/Components/MyTap';
 import '../components/HeaderSection.css';
 
 const HeaderSection = ({ showTags = true, localNm, searching, criteria }) => { 
@@ -99,18 +100,7 @@ const HeaderSection = ({ showTags = true, localNm, searching, criteria }) => {
                     <div className='navBox nav-hidden'></div>
                 )}
                 <div className='user-actions'>
-                    {user ? (
-                        <>
-                            <span>환영합니다, {user.userId}님</span>
-                            <button onClick={handleLogout}>로그아웃</button>
-                        </>
-                    ) : (
-                        <>
-                            <button onClick={() => navigate('/login')}>로그인</button>
-                            <button onClick={() => setSignupModalOpen(true)}>회원가입</button>
-                            {isSignupOpen && <Signup onClose={() => setSignupModalOpen(false)} />}
-                        </>
-                    )}
+                    <MyTap /> 
                 </div>
             </div>
         </header>
