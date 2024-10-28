@@ -43,7 +43,7 @@ const Signup = ({ onClose }) => {
   return (
     <div className="modal-overlay"onClick={handleOverlayClick}>
       <div className="modal-content" > 
-        <button className="close-button" onClick={onClose}style={{top:'10px'}}>X</button>
+        <button className="close-button" onClick={onClose}style={{top:'10px',backgroundcolor:'#000'}}>X</button>
         <div className="container2">
           <h2 >회원가입</h2>
         </div >

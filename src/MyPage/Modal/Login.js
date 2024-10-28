@@ -22,8 +22,8 @@ const LoginModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/mypage/login', { userId, password });
-      // const response = await axios.post('http://220.71.94.70:2040/mypage/login', { userId, password });
+      // const response = await axios.post('http://localhost:8080/mypage/login', { userId, password });
+      const response = await axios.post(process.env.REACT_APP_PUBLIC_URL +'/mypage/login', { userId, password });
 
       if (response.data.status) { 
         const { user, jwtToken } = response.data;
