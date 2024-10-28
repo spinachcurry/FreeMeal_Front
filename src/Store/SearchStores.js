@@ -9,12 +9,14 @@ import { PacmanLoader } from 'react-spinners';
 import Loading from './components/Loading'; 
 import PigRating from './components/PigRating';
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer';
 
 const SearchStores = () => {
   const [loading, setLoading] = useState(true); 
   const [searchParams, setSearchParams] = useSearchParams();
   const [stores, setStores] = useState([]); 
   const [criteria, setCriteria] = useState(searchParams.get("criteria") == null ? 'party' : searchParams.get("criteria"));
+  const [ref, inView] = useInView();
   const localNm = searchParams.get("areaNm");
   const searching = searchParams.get("keyword");
 
@@ -68,6 +70,12 @@ const SearchStores = () => {
     }
   })
 
+  useEffect(()=>{
+    if(inView && hasNextPage){
+      fetchNextPage();
+    }
+  }, [inView]);
+
   // 로그인 관련 코드
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -104,44 +112,6 @@ const SearchStores = () => {
       return imageList;
     }
 
-
-
-  //가게 목록 와꾸
-  const ShowstoreList = async(keykeyword) =>  {
-    setLoading(true);
-    try {
-         const url = "http://localhost:8080/searchStore";
-         const res = await axios.post(url, keykeyword);
-         console.log(res.data);
-       setStores(res.data.storeData.map((item, i) => ({ 
-       address: item.address, 
-       category: item.category,
-       id: i,
-       title: item.title,
-       imgSrc: jointImageList(item.menuItems, item.imgURLs),
-       rating: <PigRating popularity={item.bills}/>,
-       areaNm: item.areaNm,
-     })));
-
-      } catch(error) {
-       console.log("오류났다잉~:", error);
-     } finally {
-      setLoading(false);
-     }
-   };
-
- useEffect(()=> {
-  // console.log(criteria);
-   if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
-     const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
-     console.log(data);
-    //  ShowstoreList(keykeyword);     
-   }else {
-     alert("검색어가 없습니다.");
-   }
-//  }, [criteria]);
- }, []);
-
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -158,11 +128,10 @@ const SearchStores = () => {
   return (
     <div className="container-fluid p-0 bg-dark text-white" style={{ height: '1500px' }}>
         <HeaderSection localNm={localNm} searching={searching} criteria={criteria}/>
-        <main style={{display:'flex', justifyContent:'center', paddingTop:'100px'}}>
-            <div className='container'>
-                <ul className='ulul'>
-                  
-                    <>
+        <main style={{display:'flex', flexDirection:'column', justifyContent:'center', paddingTop:'100px'}}>
+                <>
+                  <div className='container'>           
+                    <ul className='ulul'>
                       {data?.pages.map((page, i) => (                        
                         <React.Fragment key={i}>
                             {page?.storeData.map(store => (
@@ -189,46 +158,23 @@ const SearchStores = () => {
                             ))}
                         </React.Fragment>                  
                       ))}
-                      <div>
-                        <button
-                          onClick={() => fetchNextPage()}
-                          disabled={!hasNextPage || isFetchingNextPage}
-                        >
-                          {isFetchingNextPage? 
-                            'Loading more...'
-                            : hasNextPage?
-                              'Load More'
-                              : 'Nothing more to load'}
-                        </button>
-                      </div>
-                      <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
-                    </>
+                    </ul>
+                  </div>
+                  <div ref={ref} style={{textAlign:'center'}}>
+                    {/* <button
+                      onClick={() => fetchNextPage()}
+                      disabled={!hasNextPage || isFetchingNextPage}
+                    > */}
+                      {isFetchingNextPage? 
+                        '가게를 더 가져오는 중…'
+                        : hasNextPage?
+                          '가게 더 가져오기'
+                          : '가져올 가게가 더 없습니다.'}
+                    {/* </button> */}
+                  </div>
+                  <div style={{textAlign:'center'}}>{isFetching && !isFetchingNextPage ? '가게를 가져오고 있습니다.' : null}</div>
+                </>
                   
-
-                    {/* {stores.map((store) => (
-                      <li className='data' key={store.id}>
-                        <div style={{ border:'1px solid grey', height:'100%'}}>
-                          <div className='imgBox'>
-                          <Link className='link' to={`/detail/${store.areaNm}/${store.title}`} >
-                            <figure>
-                                <img className='img' src={store.imgSrc[0]} alt={store.title}></img>
-                            </figure>
-                            <figcaption>
-                              <div className='textBox' target='_blank'>
-                                <h5>{store.title}</h5>
-                              </div>
-                              <div>
-                                <span className='score' style={{color:'white'}}>{store.rating}</span>
-                              </div>
-                                <span className='address'>{store.address}</span>
-                            </figcaption>
-                          </Link>
-                          </div>
-                          </div>
-                        </li>
-                      ))} */}
-                  </ul>
-            </div>
         </main>
         <footer className="footer">
             <div className="footer-info">
