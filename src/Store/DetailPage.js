@@ -157,7 +157,7 @@ const toggleDibs = async () => {
         const didStatus = isDibbed ? 0 : 1;
 
         // 서버로 찜 상태를 전송
-        const response = await axios.post('http://localhost:8080/mypage/handleDibs', { 
+        const response = await axios.post('http://220.74.92.0:2040/mypage/handleDibs', { 
                 action: "toggle",
                 userId: user.userId,
                 address: store.address,
@@ -287,7 +287,9 @@ useEffect(() => {
                 <Shares className='btn 'style={{color:'white'}} areaNm={store.areaNm} title={store.title} />
             </div>  
             <Menu store={store} /> 
-        <ReviewSection ref={reviewSectionRef} title={store.title} category={store.category} address={store.address}/>
+            <div style={{ width:'90%', margin:'auto',alignItems: 'center'}}>
+                 <ReviewSection ref={reviewSectionRef} title={store.title} category={store.category} address={store.address}/>
+            </div>
     </main>
             <footer className="footer">
                 <div className="footer-info">
