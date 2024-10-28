@@ -8,6 +8,7 @@ import HeaderSection from './components/HeaderSection';
 import { PacmanLoader } from 'react-spinners';
 import Loading from './components/Loading'; 
 import PigRating from './components/PigRating';
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 const SearchStores = () => {
   const [loading, setLoading] = useState(true); 
@@ -18,6 +19,54 @@ const SearchStores = () => {
   const searching = searchParams.get("keyword");
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  //가게 가져오기
+  const numOfstore = 12;
+  const getStoreData = async ({pageParam}) => {
+    try {
+        const url = "http://localhost:8080/searchStore";
+        const res = await axios.post(url, {
+          areaNm: localNm, 
+          keyword: searching, 
+          criteria: criteria,
+          offset: pageParam,
+          size: numOfstore
+        });
+        console.log(res.data);
+        setLoading(false);
+        // return res.data;
+        return {
+          offset: res.data.offset,
+          storeData: res.data.storeData.map((item, i) => ({ 
+                    address: item.address, 
+                    category: item.category,
+                    id: i + pageParam,
+                    title: item.title,
+                    imgSrc: jointImageList(item.menuItems, item.imgURLs),
+                    rating: <PigRating popularity={item.bills}/>,
+                    areaNm: item.areaNm,
+                  }))
+        };
+    }catch{
+      console.log("오류라오!");
+    }
+  }
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage
+  } = useInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: getStoreData,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      console.log(lastPage.offset);
+      return lastPage.storeData.length < numOfstore? undefined : lastPage.offset;
+    }
+  })
 
   // 로그인 관련 코드
   const navigate = useNavigate();
@@ -34,26 +83,25 @@ const SearchStores = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('jwtToken');
   };
-
   
   // 검색 후 가게 목록 반복할 코드
   const jointImageList = (menuItems, imgURLs) => {
     let imageList = [];
 
     menuItems.forEach(item => {
-    if(item.image != null){
-        imageList = [...imageList, item.image];
-    }
+      if(item.image != null){
+          imageList = [...imageList, item.image];
+      }
     });
 
     imgURLs.forEach(item => {
-    imageList = [...imageList, item];
+      imageList = [...imageList, item];
     })
 
     if(imageList.length === 0) {
-    imageList = ["/img/noimage.png"]; 
+      imageList = ["/img/noimage.png"]; 
     }
-    return imageList;
+      return imageList;
     }
 
 
@@ -86,8 +134,8 @@ const SearchStores = () => {
   // console.log(criteria);
    if(localNm !==null && localNm !== "" && searching !== null && searching !== "") {
      const keykeyword = {areaNm: localNm, keyword: searching, criteria: criteria};
-     
-     ShowstoreList(keykeyword);     
+     console.log(data);
+    //  ShowstoreList(keykeyword);     
    }else {
      alert("검색어가 없습니다.");
    }
@@ -105,7 +153,6 @@ const SearchStores = () => {
   if(loading) {
     return <Loading loading={loading}/>;
   }
-
   
   // 화면에 렌더링할 JSX
   return (
@@ -114,7 +161,51 @@ const SearchStores = () => {
         <main style={{display:'flex', justifyContent:'center', paddingTop:'100px'}}>
             <div className='container'>
                 <ul className='ulul'>
-                    {stores.map((store) => (
+                  
+                    <>
+                      {data?.pages.map((page, i) => (                        
+                        <React.Fragment key={i}>
+                            {page?.storeData.map(store => (
+                              <li className='data' key={store.id}>
+                                <div style={{ border:'1px solid grey', height:'100%'}}>
+                                  <div className='imgBox'>
+                                  <Link className='link' to={`/detail/${store.areaNm}/${store.title}`} >
+                                    <figure>
+                                        <img className='img' src={store.imgSrc[0]} alt={store.title}></img>
+                                    </figure>
+                                    <figcaption>
+                                      <div className='textBox' target='_blank'>
+                                        <h5>{store.title}</h5>
+                                      </div>
+                                      <div>
+                                        <span className='score' style={{color:'white'}}>{store.rating}</span>
+                                      </div>
+                                        <span className='address'>{store.address}</span>
+                                    </figcaption>
+                                  </Link>
+                                  </div>
+                                </div>
+                              </li>
+                            ))}
+                        </React.Fragment>                  
+                      ))}
+                      <div>
+                        <button
+                          onClick={() => fetchNextPage()}
+                          disabled={!hasNextPage || isFetchingNextPage}
+                        >
+                          {isFetchingNextPage? 
+                            'Loading more...'
+                            : hasNextPage?
+                              'Load More'
+                              : 'Nothing more to load'}
+                        </button>
+                      </div>
+                      <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+                    </>
+                  
+
+                    {/* {stores.map((store) => (
                       <li className='data' key={store.id}>
                         <div style={{ border:'1px solid grey', height:'100%'}}>
                           <div className='imgBox'>
@@ -135,7 +226,7 @@ const SearchStores = () => {
                           </div>
                           </div>
                         </li>
-                      ))}
+                      ))} */}
                   </ul>
             </div>
         </main>
