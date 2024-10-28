@@ -17,7 +17,7 @@ const Signup = ({ onClose }) => {
     e.preventDefault();
 
     // 회원가입 API 요청
-    fetch('http://localhost:8080/mypage/signup', {
+    fetch(process.env.REACT_APP_PUBLIC_URL + '/mypage/signup', {
     // fetch('http://220.71.94.70:2040/mypage/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
