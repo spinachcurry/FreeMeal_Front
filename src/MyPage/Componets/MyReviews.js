@@ -55,7 +55,8 @@ const MyReviews = () => {
       console.log("Token: ", token);
 
       // 서버로 요청 보내기 (토큰 포함)
-      const response = await axios.post(process.env.REACT_APP_PUBLIC_URL +'/mypage/reviewAction', requestBody, {
+      const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/reviewAction', requestBody, {
+
         headers: { Authorization: `Bearer ${token}` }  // 토큰을 헤더에 추가
       });
 
@@ -93,7 +94,7 @@ const MyReviews = () => {
     setSelectedReview(null);
     setUpdatedContent('');
   };
- 
+
   // 모달 외부 클릭 시 닫기
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -105,7 +106,8 @@ const MyReviews = () => {
   const handleSaveChanges = () => {
     if (!selectedReview) return;
     handleReviewAction("updateReview", null, selectedReview); // 리뷰 수정 요청
-  }; 
+  };
+
   // 페이징 처리
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -169,9 +171,10 @@ const MyReviews = () => {
       </div>
 
       {/* 모달 창 */}
-      {isModalOpen && ( 
+      {isModalOpen && (
         <div className="modal-overlay" onClick={handleOverlayClick}>
-          <div className="modal-content1" onClick={(e) => e.stopPropagation()}> 
+          <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
+
             <h3>리뷰 수정</h3>
             <textarea
               style={{width:'460px'}}
