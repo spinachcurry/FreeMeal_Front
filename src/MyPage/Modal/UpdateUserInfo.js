@@ -20,7 +20,7 @@ const UpdateUserInfo = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    const host = "http://localhost:8080/mypage/view?url=";
+    const host = process.env.REACT_APP_PUBLIC_URL + "/mypage/view?url=";
     // const host = "http://220.71.94.70:2040/mypage/view?url=";
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
@@ -81,7 +81,7 @@ const UpdateUserInfo = () => {
       headers: { Authorization: localStorage.getItem('jwtToken') }
     };
 
-    axios.post('http://localhost:8080/mypage/updateUser', formData, setting)
+    axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/updateUser', formData, setting)
       .then(res => {
         console.log(res);
         if (res.data.status) {
