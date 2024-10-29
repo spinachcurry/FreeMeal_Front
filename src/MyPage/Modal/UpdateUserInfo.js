@@ -81,7 +81,7 @@ const UpdateUserInfo = () => {
       headers: { Authorization: localStorage.getItem('jwtToken') }
     };
 
-    axios.post('http://localhost:8080/mypage/updateUser', formData, setting)
+    axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/updateUser', formData, setting)
       .then(res => {
         console.log(res);
         if (res.data.status) {
