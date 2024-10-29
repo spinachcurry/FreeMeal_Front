@@ -55,7 +55,7 @@ const MyReviews = () => {
       console.log("Token: ", token);
 
       // 서버로 요청 보내기 (토큰 포함)
-      const response = await axios.post('http://localhost:8080/mypage/reviewAction', requestBody, {
+      const response = await axios.post(process.env.REACT_APP_PUBLIC_URL +'/mypage/reviewAction', requestBody, {
         headers: { Authorization: `Bearer ${token}` }  // 토큰을 헤더에 추가
       });
 
@@ -93,15 +93,7 @@ const MyReviews = () => {
     setSelectedReview(null);
     setUpdatedContent('');
   };
-
-<<<<<<<< HEAD:src/MyPage/Componets/MyReviews.js
-  // 리뷰 수정 저장
-  const handleSaveChanges = () => {
-    if (!selectedReview) return;
-    handleReviewAction("updateReview", null, selectedReview); // 리뷰 수정 요청
-  };
-
-========
+ 
   // 모달 외부 클릭 시 닫기
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -113,9 +105,7 @@ const MyReviews = () => {
   const handleSaveChanges = () => {
     if (!selectedReview) return;
     handleReviewAction("updateReview", null, selectedReview); // 리뷰 수정 요청
-  };
-
->>>>>>>> 83961d55ae40c769f508a7f81d53bdbe051e6152:src/MyPage/Components/MyReviews.js
+  }; 
   // 페이징 처리
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -179,14 +169,9 @@ const MyReviews = () => {
       </div>
 
       {/* 모달 창 */}
-      {isModalOpen && (
-<<<<<<<< HEAD:src/MyPage/Componets/MyReviews.js
-        <div className="modal-overlay">
-          <div className="modal-content1">
-========
+      {isModalOpen && ( 
         <div className="modal-overlay" onClick={handleOverlayClick}>
-          <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
->>>>>>>> 83961d55ae40c769f508a7f81d53bdbe051e6152:src/MyPage/Components/MyReviews.js
+          <div className="modal-content1" onClick={(e) => e.stopPropagation()}> 
             <h3>리뷰 수정</h3>
             <textarea
               style={{width:'460px'}}
