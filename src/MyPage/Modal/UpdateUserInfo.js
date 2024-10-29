@@ -20,7 +20,7 @@ const UpdateUserInfo = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    const host = "http://localhost:8080/mypage/view?url=";
+    const host = process.env.REACT_APP_PUBLIC_URL +"/mypage/view?url=";
     // const host = "http://220.71.94.70:2040/mypage/view?url=";
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
