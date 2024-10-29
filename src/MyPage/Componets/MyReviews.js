@@ -56,6 +56,7 @@ const MyReviews = () => {
 
       // 서버로 요청 보내기 (토큰 포함)
       const response = await axios.post(process.env.REACT_APP_PUBLIC_URL + '/mypage/reviewAction', requestBody, {
+
         headers: { Authorization: `Bearer ${token}` }  // 토큰을 헤더에 추가
       });
 
@@ -93,7 +94,6 @@ const MyReviews = () => {
     setSelectedReview(null);
     setUpdatedContent('');
   };
-
 
   // 모달 외부 클릭 시 닫기
   const handleOverlayClick = (e) => {
@@ -174,6 +174,7 @@ const MyReviews = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleOverlayClick}>
           <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
+
             <h3>리뷰 수정</h3>
             <textarea
               style={{width:'460px'}}
