@@ -49,10 +49,18 @@ const MyReviews = () => {
           rating: statusOrReviewData.rating
         };
       }
+      // deleteReview 요청일 경우
+      else if(action === "deleteReview"){
+        requestBody = {
+          action: "deleteReview",
+          reviewNo: statusOrReviewData.reviewNo,
+          userId: statusOrReviewData.userId
+        };
+      }
 
       // 디버깅을 위한 콘솔 로그 추가
-      console.log("Request Body: ", requestBody);
-      console.log("Token: ", token);
+      // console.log("Request Body: ", requestBody);
+      // console.log("Token: ", token);
 
       // 서버로 요청 보내기 (토큰 포함)
       const response = await axios.post( process.env.REACT_APP_PUBLIC_URL + '/mypage/reviewAction', requestBody, {
@@ -67,6 +75,12 @@ const MyReviews = () => {
       // updateReview 요청에 대한 처리
       else if (action === "updateReview") {
         alert('리뷰 수정 성공');
+        setIsModalOpen(false);
+        handleReviewAction("getReviews", user.userId, user.status); // 수정 후 리뷰 목록 다시 불러오기
+      } 
+      // deleteReview 요청에 대한 처리
+      else if (action === "deleteReview") {
+        alert('리뷰 삭제 성공');
         setIsModalOpen(false);
         handleReviewAction("getReviews", user.userId, user.status); // 수정 후 리뷰 목록 다시 불러오기
       }
@@ -106,6 +120,11 @@ const MyReviews = () => {
   const handleSaveChanges = () => {
     if (!selectedReview) return;
     handleReviewAction("updateReview", null, selectedReview); // 리뷰 수정 요청
+  };
+
+  const handleDeleteChanges = () => {
+    if (!selectedReview) return;
+    handleReviewAction("deleteReview", null, selectedReview); // 리뷰 삭제 요청
   };
 
   // 페이징 처리
@@ -184,8 +203,9 @@ const MyReviews = () => {
               onChange={(e) => setUpdatedContent(e.target.value)}
             /><br/>
             <div style={{ display: 'flex', justifyContent: 'center'}}>
-              <button style={{marginRight:'10px',width:'250px'}} onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
-              <button style={{width:'250px'}}onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
+              <button style={{marginRight:'10px',width:'100px'}} onClick={handleSaveChanges} className="btn btn-light my-2">저장</button>
+              <button style={{marginRight:'10px',width:'100px'}} onClick={handleDeleteChanges} className="btn btn-light my-2">삭제</button>
+              <button style={{width:'100px'}}onClick={handleCloseModal} className="btn btn-light my-2">취소</button>
             </div>
           </div>
         </div>
