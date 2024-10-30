@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
 
 const Menu = ({ store }) => {
+
+    const [page, setPage] = useState(0);
+    
+
     if (!store) return <div>No data available</div>;
 
     return (
@@ -30,22 +34,22 @@ const Menu = ({ store }) => {
                         <tr>
                             <th><h4>메뉴</h4></th> 
                             <td>
-                            <div>
-                                {store.menuItems.slice(0, 7).map((menuItem, index) => ( 
-                                <div key={index} className='inline-div' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div>{menuItem.name !== null ? menuItem.name : '데이터 없음'}</div>
-                                <div>{menuItem.price !== null ? menuItem.price : ' '}</div>
-                                </div>
-                                )) 
-                              }
+                                <div>
+                                    {store.menuItems.slice(0, 7).map((menuItem, index) => ( 
+                                    <div key={index} className='inline-div' style={{ display: 'flex', justifyContent: 'space-between', padding:'3px'}}>
+                                        <div>{menuItem.name !== null ? menuItem.name : '데이터 없음'}</div>
+                                        <div>{menuItem.price !== null ? menuItem.price : ' '}</div>
+                                    </div>
+                                    )) 
+                                }
 
-                            </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <th><h4>주소</h4></th>
                             <td> 
-                                <div className='inline-div'>
+                                <div className='inline-div'> 
                                     <span>지번</span> : <label>{store?.lodaAddress ? store.lodaAddress : store.address}</label>
                                 </div>
                             </td>

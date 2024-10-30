@@ -23,7 +23,8 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
     const newReview = { userId: user.userId, address, content: newReviewContent };
     const result = await handleRequest('addReview', newReview);
     if (result) {
-      setReviews([...reviews, { ...newReview, title, category, modifiedDate: new Date().toISOString(), hidden: false }]);
+      refetch({ refetchPage: (page, index) => index > -1 })
+      //setReviews([...reviews, { ...newReview, title, category, modifiedDate: new Date().toISOString(), hidden: false }]);
       setNewReviewContent('');
     }
   };
@@ -31,7 +32,8 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
   const handleReport = async (index, reviewId) => {
     const result = await handleRequest('reportReview', { reviewNo: reviewId });
     if (result) {
-      setReviews(reviews?.map((review, i) => i === index ? { ...review, hidden: true } : review));
+      //setReviews(reviews?.map((review, i) => i === index ? { ...review, hidden: true } : review));
+      refetch({ refetchPage: (page, index) => index > -1 })
       alert("리뷰가 신고되었습니다.");
     }
   };
@@ -52,16 +54,17 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    isFetchingNextPage
+    isFetchingNextPage,
+    refetch
   } = useInfiniteQuery({
     queryKey: ['projects'],
     queryFn: fetchReviews,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       // console.log(lastPage.offset);
-      return lastPage.reviews?.length < numOfreply? undefined : lastPage.offset;
+      return lastPage?.reviews?.length < numOfreply? undefined : lastPage.offset;
     }
-  }) 
+  })
 
   return (
     <div ref={ref} className="review-section" style={{ }}>
@@ -107,7 +110,10 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
             <th style={{width:'15%'}}> 작성자</th>
           </tr>
         </thead>
-        <tbody>        
+        <tbody>
+          {
+            
+          }
           {data?.pages.length > 0 ? data?.pages?.map((page, i) => (
             <React.Fragment key={i}>
               {page?.reviews?.map((review, index) => (!review.hidden && (
@@ -131,7 +137,7 @@ const ReviewSection = forwardRef(({ address, title, category }, ref) => {
         </tbody>
       </table>
       <div style={{width:'100%', textAlign:'center'}}>
-        <button className='btn'
+        <button className='btn btn-secondary'
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
         >

@@ -1,6 +1,7 @@
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loading from './components/Loading'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import './SearchStores.css';
 import HeaderSection from './components/HeaderSection'; 
@@ -57,14 +58,15 @@ const SearchStores = () => {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    isFetchingNextPage
+    isFetchingNextPage,
+    status
   } = useInfiniteQuery({
     queryKey: ['projects'],
     queryFn: getStoreData,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       // console.log(lastPage.offset);
-      return lastPage.storeData.length < numOfstore? undefined : lastPage.offset;
+      return lastPage?.storeData?.length < numOfstore? undefined : lastPage.offset;
     }
   })
 
@@ -117,10 +119,10 @@ const SearchStores = () => {
     }
   }, []);
 
-  //로딩중일때! 렌더링
-  // if(loading) {
-  //   return <Loading loading={loading}/>;
-  // }
+  // 로딩중일때! 렌더링
+  if(loading || status === 'loading' || status === 'error') {
+    return <Loading loading={loading}/>;
+  }
   
   // 화면에 렌더링할 JSX
   return (
@@ -166,7 +168,7 @@ const SearchStores = () => {
                       {isFetchingNextPage? 
                         '가게를 더 가져오는 중…'
                         : hasNextPage?
-                          '가게 더 가져오기'
+                          ' '
                           : '가져올 가게가 더 없습니다.'}
                     {/* </button> */}
                   </div>

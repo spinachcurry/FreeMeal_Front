@@ -67,8 +67,8 @@ const MainPage = () => {
         try {
             // const url = "http://localhost:8080/storeNearby";
             const url = process.env.REACT_APP_PUBLIC_URL + "/storeNearby";
-                        const res = await axios.post(url, coords);
-            // console.log(res.data);
+            const res = await axios.post(url, coords);
+            console.log(res.data);
             setStores(res.data.nearbyStore.map((item, i) => ({
                 id: i,
                 title: item.title,
@@ -151,10 +151,14 @@ const MainPage = () => {
                         <option value="전체" style={{ backgroundColor: 'white', color: 'black' }}>지역 선택</option>
                         <option value="강남구" style={{ backgroundColor: 'white', color: 'black' }}>강남구</option>
                         <option value="강동구" style={{ backgroundColor: 'white', color: 'black' }}>강동구</option>
-                        <option value="강서구" style={{ backgroundColor: 'white', color: 'black' }}>강서구</option>
-                        <option value="양천구" style={{ backgroundColor: 'white', color: 'black' }}>양천구</option>
+                        <option value="강북구" style={{ backgroundColor: 'white', color: 'black' }}>강북구</option>
+                        <option value="관악구" style={{ backgroundColor: 'white', color: 'black' }}>관악구</option>
+                        <option value="노원구" style={{ backgroundColor: 'white', color: 'black' }}>노원구</option>
+                        <option value="도봉구" style={{ backgroundColor: 'white', color: 'black' }}>도봉구</option>
+                        <option value="동대문구" style={{ backgroundColor: 'white', color: 'black' }}>동대문구</option>
+                        <option value="동작구" style={{ backgroundColor: 'white', color: 'black' }}>동작구</option>
                         <option value="마포구" style={{ backgroundColor: 'white', color: 'black' }}>마포구</option>
-                        <option value="종로구" style={{ backgroundColor: 'white', color: 'black' }}>종로구</option>
+                        <option value="양천구" style={{ backgroundColor: 'white', color: 'black' }}>양천구</option>
                     </select>
                     <input type="text" className="form-control s9-3" placeholder="음식, 가게명" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)} style={{ width: '15vw' }} />
                     <button className='btn btn-danger' onClick={handleSearch} style={{ flex: 0.5, backgroundColor: 'red', border: 'red' }}>검색</button>

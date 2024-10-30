@@ -131,7 +131,7 @@ const MyReviews = () => {
       <table className="table table-dark table-hover">
         <thead>
           <tr>
-            <th>가게 명</th>
+            <th>가게명</th>
             <th>카테고리</th>
             <th>리뷰 내용</th>
             <th>작성일</th>
@@ -147,7 +147,7 @@ const MyReviews = () => {
                 <td>{user.status === "3" && `${review.userId}:`} {review.content}</td>
                 <td>{new Date(review.modifiedDate).toLocaleDateString()}</td>
                 <td>
-                  <button onClick={() => handleOpenModal(review)} className="btn btn-primary my-2">수정</button>
+                  <button onClick={() => handleOpenModal(review)} className="btn btn-primary my-2">수정</button>                  
                 </td>
               </tr>
             ))

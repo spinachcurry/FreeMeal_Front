@@ -76,12 +76,17 @@ const HeaderSection = ({ showTags = true, localNm, searching, criteria }) => {
                                 <option value="전체">지역</option>
                                 <option value="강남구">강남구</option>
                                 <option value="강동구">강동구</option>
-                                <option value="강서구">강서구</option>
-                                <option value="강서구">양천구</option>
-                                <option value="강서구">강북구</option>
+                                <option value="강북구">강북구</option>
+                                <option value="관악구">관악구</option>
+                                <option value="노원구">노원구</option>
+                                <option value="도봉구">도봉구</option>
+                                <option value="동대문구">동대문구</option>
+                                <option value="동작구">동작구</option>
+                                <option value="마포구">마포구</option>
+                                <option value="양천구">양천구</option>
                             </select>
                             <input type='text' placeholder='메뉴, 매장, 음식' onChange={(e) => setKeyword(e.target.value)} onKeyDown={(e) => onSubmitSearch(e)} />
-                            <button onClick={onSubmitSearch}>
+                            <button onClick={handleSearch}>
                             <img src={`${process.env.PUBLIC_URL}/img/search_white7.png`} style={{ width: '20px' }} alt="search"/>
                                 <span>검색</span>
                             </button>
